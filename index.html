@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto AD ASTRA</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/reloj.css">
+  <script src="scripts/hora.js" defer></script>
+  <script src="scripts/marco.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+</head>
+<body>
+  <main>
+    <svg id="reloj" viewBox="0 0 1200 1200" role="img" aria-label="Reloj astronómico">
+      <g id="capa-fija">
+        <circle class="guia" cx="600" cy="600" r="480" />
+        <circle class="guia" cx="600" cy="600" r="315.1" />
+        <circle class="guia" cx="600" cy="600" r="206.8" />
+      </g>
+      <g id="capa-marco"></g>
+      <g id="capa-hora">
+        <line id="aguja-hora" class="aguja" x1="600" y1="600" x2="600" y2="120" />
+      </g>
+      <g id="capa-minuto">
+        <line id="aguja-minuto" class="aguja aguja-minuto" x1="600" y1="600" x2="600" y2="190" />
+      </g>
+      <g id="capa-segundo">
+        <line id="aguja-segundo" class="aguja aguja-segundo" x1="600" y1="600" x2="600" y2="200" />
+      </g>
+    </svg>
+    <p id="hora-digital"></p>
+  </main>
+</body>
+</html>
