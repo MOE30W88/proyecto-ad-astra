@@ -19,3 +19,15 @@ function actualizar() {
 
 actualizar();
 dibujarMarco();
+
+const textoUbicacion = document.getElementById("ubicacion");
+
+function mostrarUbicacion(u) {
+  textoUbicacion.textContent = `Lat ${u.latitud.toFixed(4)}°  Lon ${u.longitud.toFixed(4)}°`;
+}
+
+function mostrarErrorUbicacion(mensaje) {
+  textoUbicacion.textContent = mensaje;
+}
+
+pedirUbicacion(mostrarUbicacion, mostrarErrorUbicacion);
