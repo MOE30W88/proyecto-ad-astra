@@ -48,3 +48,11 @@
   font-size: 12px;
   opacity: 0.7;
 }
+
+#sol {
+  fill: #f5c344;
+}
+
+.aguja-noche {
+  stroke: #4a7ab5;
+}
