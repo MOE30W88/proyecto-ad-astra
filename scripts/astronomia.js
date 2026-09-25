@@ -81,3 +81,87 @@ function intensidadSolar(altura) {
   const normalizado = (altura - FIN_CREPUSCULO) / (CENIT - FIN_CREPUSCULO);
   return Math.max(0, Math.min(1, normalizado));
 }
+
+const PERIODO_SINODICO = 29.530588853;
+const REFERENCIA_LUNA_NUEVA = 5.25972;
+
+function edadLunar(fecha) {
+  const d = diasJuliano(fecha);
+  const diferencia = d - REFERENCIA_LUNA_NUEVA;
+  return ((diferencia % PERIODO_SINODICO) + PERIODO_SINODICO) % PERIODO_SINODICO;
+}
+
+function fraccionIluminada(fecha) {
+  const edad = edadLunar(fecha);
+  const fraccionDelCiclo = edad / PERIODO_SINODICO;
+  return (1 - Math.cos(2 * Math.PI * fraccionDelCiclo)) / 2;
+}
+
+function posicionLunar(fecha) {
+  const d = diasJuliano(fecha);
+
+  const longitudMedia = normalizarGrados(218.316 + 13.176396 * d);
+  const anomaliaMedia = normalizarGrados(134.963 + 13.064993 * d);
+  const argumentoLatitud = normalizarGrados(93.272 + 13.229350 * d);
+
+  const anomaliaRad = (anomaliaMedia * Math.PI) / 180;
+  const latitudRad = (argumentoLatitud * Math.PI) / 180;
+
+  const longitudEcliptica = normalizarGrados(longitudMedia + 6.289 * Math.sin(anomaliaRad));
+  const latitudEcliptica = 5.128 * Math.sin(latitudRad);
+
+  return { longitudEcliptica, latitudEcliptica };
+}
+
+function posicionLunarEcuatorial(fecha) {
+  const { longitudEcliptica, latitudEcliptica } = posicionLunar(fecha);
+
+  const lonRad = (longitudEcliptica * Math.PI) / 180;
+  const latRad = (latitudEcliptica * Math.PI) / 180;
+  const oblicuidadRad = (OBLICUIDAD * Math.PI) / 180;
+
+  const declinacion =
+    (Math.asin(
+      Math.sin(latRad) * Math.cos(oblicuidadRad) +
+        Math.cos(latRad) * Math.sin(oblicuidadRad) * Math.sin(lonRad)
+    ) *
+      180) /
+    Math.PI;
+
+  const y = Math.sin(lonRad) * Math.cos(oblicuidadRad) - Math.tan(latRad) * Math.sin(oblicuidadRad);
+  const x = Math.cos(lonRad);
+  const ascensionRecta = normalizarGrados((Math.atan2(y, x) * 180) / Math.PI);
+
+  return { declinacion, ascensionRecta };
+}
+
+function posicionLunarHorizonte(fecha, latitud, longitudGeografica) {
+  const { declinacion, ascensionRecta } = posicionLunarEcuatorial(fecha);
+  const anguloHorario = normalizarGrados(horaSideral(fecha, longitudGeografica) - ascensionRecta);
+
+  const latRad = (latitud * Math.PI) / 180;
+  const decRad = (declinacion * Math.PI) / 180;
+  const haRad = (anguloHorario * Math.PI) / 180;
+
+  const altura =
+    (Math.asin(
+      Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad)
+    ) *
+      180) /
+    Math.PI;
+
+  const azimut =
+    (Math.atan2(
+      -Math.sin(haRad),
+      Math.tan(decRad) * Math.cos(latRad) - Math.sin(latRad) * Math.cos(haRad)
+    ) *
+      180) /
+    Math.PI;
+
+  return { altura, azimut: normalizarGrados(azimut) };
+}
+
+function intensidadLunarPorAltura(altura) {
+  const normalizado = altura / 90;
+  return Math.max(0, Math.min(1, normalizado));
+}

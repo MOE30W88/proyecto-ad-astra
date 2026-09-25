@@ -3,6 +3,7 @@ const agujaMinuto = document.getElementById("aguja-minuto");
 const agujaSegundo = document.getElementById("aguja-segundo");
 const texto = document.getElementById("hora-digital");
 const sol = document.getElementById("sol");
+const luna = document.getElementById("luna");
 
 function actualizar() {
   const ahora = new Date();
@@ -10,6 +11,7 @@ function actualizar() {
   agujaMinuto.setAttribute("transform", `rotate(${anguloDelMinuto(ahora)} 600 600)`);
   agujaSegundo.setAttribute("transform", `rotate(${anguloDelSegundo(ahora)} 600 600)`);
   actualizarSol(ahora);
+  actualizarLuna(ahora);
 
   const horaActual = textoDeLaHora(ahora);
   if (texto.textContent !== horaActual) {
@@ -48,3 +50,18 @@ function mostrarErrorUbicacion(mensaje) {
 }
 
 pedirUbicacion(mostrarUbicacion, mostrarErrorUbicacion);
+
+function actualizarLuna(fecha) {
+  if (ubicacion.latitud === null) return;
+  const { altura } = posicionLunarHorizonte(fecha, ubicacion.latitud, ubicacion.longitud);
+  const radio = radioDesdeAltura(altura);
+  const angulo = anguloDeLaHora(fecha);
+  const p = polar(radio, angulo);
+
+  const intensidad = intensidadLunarPorAltura(altura) * fraccionIluminada(fecha);
+
+  luna.setAttribute("cx", p.x);
+  luna.setAttribute("cy", p.y);
+  luna.style.opacity = 0.05 + intensidad * 0.8;
+  luna.style.filter = `drop-shadow(0 0 ${2 + intensidad * 10}px #cfd8e3)`;
+}
