@@ -34,7 +34,7 @@ function posicionSolar(fecha) {
       180) /
     Math.PI;
 
-  return { declinacion, ascensionRecta: normalizarGrados(ascensionRecta) };
+    return { longitudEcliptica, declinacion, ascensionRecta: normalizarGrados(ascensionRecta) };
 }
 
 function horaSideral(fecha, longitudGeografica) {
@@ -164,4 +164,9 @@ function posicionLunarHorizonte(fecha, latitud, longitudGeografica) {
 function intensidadLunarPorAltura(altura) {
   const normalizado = altura / 90;
   return Math.max(0, Math.min(1, normalizado));
+}
+
+function anguloZodiaco(fecha) {
+  const { longitudEcliptica } = posicionSolar(fecha);
+  return normalizarGrados(longitudEcliptica - 300);
 }

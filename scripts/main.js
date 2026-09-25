@@ -4,12 +4,16 @@ const agujaSegundo = document.getElementById("aguja-segundo");
 const texto = document.getElementById("hora-digital");
 const sol = document.getElementById("sol");
 const luna = document.getElementById("luna");
+const capaZodiaco = document.getElementById("capa-zodiaco");
 
 function actualizar() {
   const ahora = new Date();
   agujaHora.setAttribute("transform", `rotate(${anguloDeLaHora(ahora)} 600 600)`);
   agujaMinuto.setAttribute("transform", `rotate(${anguloDelMinuto(ahora)} 600 600)`);
   agujaSegundo.setAttribute("transform", `rotate(${anguloDelSegundo(ahora)} 600 600)`);
+  const anguloZod = anguloZodiaco(ahora);
+  capaZodiaco.setAttribute("transform", `rotate(${anguloZod} 600 600)`);
+  actualizarEtiquetasZodiaco(anguloZod);
   actualizarSol(ahora);
   actualizarLuna(ahora);
 
@@ -38,6 +42,7 @@ function actualizarSol(fecha) {
 
 actualizar();
 dibujarMarco();
+dibujarZodiaco();
 
 const textoUbicacion = document.getElementById("ubicacion");
 
