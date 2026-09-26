@@ -11,6 +11,9 @@
   <script src="scripts/marco.js" defer></script>
   <script src="scripts/ubicacion.js" defer></script>
   <script src="scripts/astronomia.js" defer></script>
+  <script src="scripts/indicador-zodiaco.js" defer></script>
+  <script src="scripts/tropicos.js" defer></script>
+  <script src="scripts/referencias-estacionales.js" defer></script>
   <script src="scripts/eventos-solares.js" defer></script>
   <script src="scripts/zodiaco.js" defer></script>
   <script src="scripts/main.js" defer></script>
@@ -22,20 +25,23 @@
         <circle class="guia" cx="600" cy="600" r="480" />
         <circle class="guia" cx="600" cy="600" r="600" />
       </g>
+      <!-- <g id="capa-tropicos"></g> -->
+      <g id="capa-referencias-estacionales"></g>
       <g id="capa-eventos-solares"></g>
       <g id="capa-marco"></g>
-      <g id="capa-hora">
-        <line id="aguja-hora" class="aguja" x1="600" y1="600" x2="600" y2="120" />
-      </g>
       <g id="capa-zodiaco">
         <circle class="guia-zodiaco" cx="600" cy="463.4" r="343.4" />
         <circle class="guia-zodiaco" cx="600" cy="463.4" r="230" />
       </g>
+      <g id="capa-indicador-zodiaco"></g>
       <g id="capa-minuto">
-        <line id="aguja-minuto" class="aguja aguja-minuto" x1="600" y1="600" x2="600" y2="190" />
+        <line id="aguja-minuto" class="aguja aguja-minuto" x1="600" y1="600" x2="600" y2="120" />
       </g>
       <g id="capa-segundo">
-        <line id="aguja-segundo" class="aguja aguja-segundo" x1="600" y1="600" x2="600" y2="200" />
+        <line id="aguja-segundo" class="aguja aguja-segundo" x1="600" y1="600" x2="600" y2="120" />
+      </g>
+      <g id="capa-hora">
+        <line id="aguja-hora" class="aguja" x1="600" y1="600" x2="600" y2="120" />
       </g>
       <g id="capa-sol">
         <circle id="sol" cx="600" cy="600" r="38" />
@@ -43,11 +49,10 @@
       <g id="capa-luna">
         <circle id="luna" cx="600" cy="600" r="30" />
       </g>
-      <g id="capa-fija">
-        <circle class="guia" cx="600" cy="600" r="480" />
+      <g id="capa-fija-ejes">
         <line class="eje-cartesiano" x1="0" y1="600" x2="1200" y2="600" />
         <line class="eje-cartesiano" x1="600" y1="0" x2="600" y2="1200" />
-       </g>
+      </g>
     </svg>
     <p id="hora-digital"></p>
     <p id="ubicacion"></p>

@@ -4,17 +4,17 @@
   stroke-width: 2;
 }
 .aguja {
-  stroke: #f2d27a;
-  stroke-width: 3;
+  stroke: #ffffff;
+  stroke-width: 5;
   stroke-linecap: round;
 }
 .aguja-minuto {
-  stroke: #ffffff;
-  stroke-width: 2;
+  stroke: #8fb4d9;
+  stroke-width: 3;
 }
 .aguja-segundo {
-  stroke: #a57900;
-  stroke-width: 1.5;
+  stroke: #ffffff;
+  stroke-width: 1;
 }
 .marca {
   stroke: #fcfbf9;
@@ -50,11 +50,11 @@
 }
 
 #sol {
-  fill: #f5c344;
+  fill: #ffee07;
 }
 
 .aguja-noche {
-  stroke: #b0d0f8;
+  stroke: #ffffff;
 }
 
 #luna {
@@ -90,4 +90,33 @@
 
 .sector-evento-solar {
   transition: fill 3s linear;
+}
+
+.indicador-zodiaco {
+  fill: #f2d27a;
+  opacity: 0.35;
+  stroke: #f2d27a;
+  stroke-width: 3;
+  stroke-opacity: 0.9;
+}
+
+.tropico {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-dasharray: 3 5;
+  opacity: 0.85;
+}
+.tropico-cancer {
+  stroke: #d9534f;
+}
+.tropico-capricornio {
+  stroke: #4f8fd9;
+}
+
+.referencia-estacional {
+  fill: none;
+  stroke: #f7f8f7;
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  opacity: 0.1;
 }
