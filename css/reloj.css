@@ -1,28 +1,28 @@
 .guia {
   fill: none;
-  stroke: #c9a24b;
+  stroke: #fdfcf9;
   stroke-width: 2;
 }
 .aguja {
   stroke: #f2d27a;
-  stroke-width: 4;
+  stroke-width: 3;
   stroke-linecap: round;
 }
 .aguja-minuto {
-  stroke: #8fb4d9;
-  stroke-width: 3;
+  stroke: #ffffff;
+  stroke-width: 2;
 }
 .aguja-segundo {
-  stroke: #e0685a;
+  stroke: #a57900;
   stroke-width: 1.5;
 }
 .marca {
-  stroke: #c9a24b;
+  stroke: #fcfbf9;
   stroke-width: 2;
 }
 
 .numero {
-  fill: #c9a24b;
+  fill: #f8f7f3;
   font-family: Georgia, serif;
   font-size: 32px;
   text-anchor: middle;
@@ -54,7 +54,7 @@
 }
 
 .aguja-noche {
-  stroke: #4a7ab5;
+  stroke: #b0d0f8;
 }
 
 #luna {
@@ -79,4 +79,15 @@
   font-size: 17px;
   text-anchor: middle;
   dominant-baseline: central;
+}
+
+.eje-cartesiano {
+  stroke: #ffffff;
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  opacity: 0.15;        
+}
+
+.sector-evento-solar {
+  transition: fill 3s linear;
 }

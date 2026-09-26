@@ -1,6 +1,8 @@
 const ubicacion = {
   latitud: null,
   longitud: null,
+  ciudad: null,
+  pais: null,
 };
 
 function mensajeDeError(error) {
@@ -16,6 +18,28 @@ function mensajeDeError(error) {
   }
 }
 
+async function obtenerPaisYCiudad(lat, lon) {
+  try {
+    const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`, {
+      headers: {
+        'Accept-Language': 'es' 
+      }
+    });
+    const datos = await respuesta.json();
+    if (datos && datos.address) {
+      ubicacion.ciudad = datos.address.city || datos.address.town || datos.address.village || datos.address.county || "";
+      ubicacion.pais = datos.address.country || "";
+      return {
+        ciudad: ubicacion.ciudad,
+        pais: ubicacion.pais
+      };
+    }
+  } catch (e) {
+    console.error("No se pudo obtener la localidad", e);
+  }
+  return null;
+}
+
 function pedirUbicacion(alExito, alError) {
   if (!("geolocation" in navigator)) {
     alError("Este navegador no soporta geolocalización.");
@@ -23,9 +47,12 @@ function pedirUbicacion(alExito, alError) {
   }
 
   navigator.geolocation.getCurrentPosition(
-    (posicion) => {
+    async (posicion) => {
       ubicacion.latitud = posicion.coords.latitude;
       ubicacion.longitud = posicion.coords.longitude;
+      
+      await obtenerPaisYCiudad(ubicacion.latitud, ubicacion.longitud);
+      
       alExito(ubicacion);
     },
     (error) => {

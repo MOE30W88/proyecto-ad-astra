@@ -17,14 +17,18 @@ function polarZodiaco(radio, gradosDesdeArriba) {
 }
 
 function crearDivisionZodiaco(grados) {
-  const a = polarZodiaco(RADIO_ZODIACO - 20, grados);
-  const b = polarZodiaco(RADIO_ZODIACO + 20, grados);
+  const a = polarZodiaco(RADIO_ZODIACO, grados);
+  const b = polarZodiaco(RADIO_ZODIACO - 20, grados);
+
   const linea = document.createElementNS(SVG_NS, "line");
+
   linea.setAttribute("x1", a.x);
   linea.setAttribute("y1", a.y);
   linea.setAttribute("x2", b.x);
   linea.setAttribute("y2", b.y);
+
   linea.setAttribute("class", "division-zodiaco");
+
   return linea;
 }
 

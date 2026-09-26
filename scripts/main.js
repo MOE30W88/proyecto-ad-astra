@@ -6,6 +6,9 @@ const sol = document.getElementById("sol");
 const luna = document.getElementById("luna");
 const capaZodiaco = document.getElementById("capa-zodiaco");
 
+const RADIO_ORBITA_SOL = 650;
+const RADIO_ORBITA_LUNA = 690;
+
 function actualizar() {
   const ahora = new Date();
   agujaHora.setAttribute("transform", `rotate(${anguloDeLaHora(ahora)} 600 600)`);
@@ -14,8 +17,13 @@ function actualizar() {
   const anguloZod = anguloZodiaco(ahora);
   capaZodiaco.setAttribute("transform", `rotate(${anguloZod} 600 600)`);
   actualizarEtiquetasZodiaco(anguloZod);
-  actualizarSol(ahora);
-  actualizarLuna(ahora);
+
+  let alturaSolar = null;
+  if (ubicacion.latitud !== null) {
+    alturaSolar = posicionSolarHorizonte(ahora, ubicacion.latitud, ubicacion.longitud).altura;
+  }
+  actualizarSol(ahora, alturaSolar);
+  actualizarLuna(ahora, alturaSolar);
 
   const horaActual = textoDeLaHora(ahora);
   if (texto.textContent !== horaActual) {
@@ -25,19 +33,17 @@ function actualizar() {
   requestAnimationFrame(actualizar);
 }
 
-function actualizarSol(fecha) {
+function actualizarSol(fecha, alturaSolar) {
   if (ubicacion.latitud === null) return;
-  const { altura } = posicionSolarHorizonte(fecha, ubicacion.latitud, ubicacion.longitud);
-  const radio = radioDesdeAltura(altura);
   const angulo = anguloDeLaHora(fecha);
-  const p = polar(radio, angulo);
-  const intensidad = intensidadSolar(altura);
+  const p = polar(RADIO_ORBITA_SOL, angulo);
+  const intensidad = intensidadSolar(alturaSolar);
 
   sol.setAttribute("cx", p.x);
   sol.setAttribute("cy", p.y);
-  sol.style.opacity = 0.05 + intensidad * 0.95;
-  sol.style.filter = `drop-shadow(0 0 ${4 + intensidad * 14}px #f5c344)`;
-  agujaHora.classList.toggle("aguja-noche", altura <= 0);
+  sol.style.opacity = intensidad;
+  sol.style.filter = intensidad > 0 ? `drop-shadow(0 0 ${4 + intensidad * 14}px #f5c344)` : "none";
+  agujaHora.classList.toggle("aguja-noche", alturaSolar <= 0);
 }
 
 actualizar();
@@ -45,28 +51,41 @@ dibujarMarco();
 dibujarZodiaco();
 
 const textoUbicacion = document.getElementById("ubicacion");
+const textoPaisCiudad = document.getElementById("pais-ciudad");
 
 function mostrarUbicacion(u) {
-  textoUbicacion.textContent = `Lat ${u.latitud.toFixed(4)}°  Lon ${u.longitud.toFixed(4)}°`;
+  const latStr = `Lat: ${u.latitud.toFixed(4)}°`;
+  const lonStr = `Lon: ${u.longitud.toFixed(4)}°`;
+  textoUbicacion.textContent = `${latStr}    —    ${lonStr}`;
+
+  if (u.ciudad || u.pais) {
+    const partes = [u.ciudad, u.pais].filter(Boolean);
+    textoPaisCiudad.textContent = partes.join(", ");
+  } else {
+    textoPaisCiudad.textContent = "";
+  }
+  dibujarEventosSolares();
+  setInterval(dibujarEventosSolares, 60000);
 }
 
 function mostrarErrorUbicacion(mensaje) {
   textoUbicacion.textContent = mensaje;
+  textoPaisCiudad.textContent = "";
 }
 
 pedirUbicacion(mostrarUbicacion, mostrarErrorUbicacion);
 
-function actualizarLuna(fecha) {
+function actualizarLuna(fecha, alturaSolar) {
   if (ubicacion.latitud === null) return;
   const { altura } = posicionLunarHorizonte(fecha, ubicacion.latitud, ubicacion.longitud);
-  const radio = radioDesdeAltura(altura);
   const angulo = anguloDeLaHora(fecha);
-  const p = polar(radio, angulo);
+  const p = polar(RADIO_ORBITA_LUNA, angulo);
 
-  const intensidad = intensidadLunarPorAltura(altura) * fraccionIluminada(fecha);
+  const intensidad = intensidadLunar(altura, alturaSolar, fraccionIluminada(fecha));
 
   luna.setAttribute("cx", p.x);
   luna.setAttribute("cy", p.y);
-  luna.style.opacity = 0.05 + intensidad * 0.8;
-  luna.style.filter = `drop-shadow(0 0 ${2 + intensidad * 10}px #cfd8e3)`;
+  luna.style.opacity = intensidad;
+  luna.style.filter = intensidad > 0 ? `drop-shadow(0 0 ${2 + intensidad * 10}px #cfd8e3)` : "none";
 }
+

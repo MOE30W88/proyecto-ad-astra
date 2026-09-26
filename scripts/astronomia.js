@@ -76,10 +76,9 @@ function radioDesdeAltura(altura) {
 }
 
 function intensidadSolar(altura) {
-  const FIN_CREPUSCULO = -6;
-  const CENIT = 90;
-  const normalizado = (altura - FIN_CREPUSCULO) / (CENIT - FIN_CREPUSCULO);
-  return Math.max(0, Math.min(1, normalizado));
+  if (altura <= 0) return 0;
+  const INICIO_PLENO = 15; // grados sobre el horizonte para brillo máximo
+  return Math.max(0, Math.min(1, altura / INICIO_PLENO));
 }
 
 const PERIODO_SINODICO = 29.530588853;
@@ -161,9 +160,16 @@ function posicionLunarHorizonte(fecha, latitud, longitudGeografica) {
   return { altura, azimut: normalizarGrados(azimut) };
 }
 
-function intensidadLunarPorAltura(altura) {
-  const normalizado = altura / 90;
-  return Math.max(0, Math.min(1, normalizado));
+function intensidadLunar(alturaLuna, alturaSolar, fraccion) {
+  if (alturaLuna <= 0) return 0;
+  const INICIO_PLENO = 10; // atenuación propia cerca del horizonte
+
+  const factorHorizonte = Math.max(0, Math.min(1, alturaLuna / INICIO_PLENO));
+  const factorNocturno = 1 - intensidadSolar(alturaSolar); // 1 = noche cerrada, 0 = pleno día
+  const pisoDiurno = 0.15; // nunca 100% invisible de día, pero sí muy tenue
+  const visibilidadCielo = pisoDiurno + factorNocturno * (1 - pisoDiurno);
+
+  return factorHorizonte * visibilidadCielo * fraccion;
 }
 
 function anguloZodiaco(fecha) {
