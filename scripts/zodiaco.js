@@ -1,11 +1,21 @@
 const CENTRO_ZODIACO_X = 600;
 const CENTRO_ZODIACO_Y = 463.4;
 const RADIO_ZODIACO = 343.4;
-const etiquetasZodiaco = [];
+const RADIO_ETIQUETA = 290;
 
 const SIGNOS = [
-  "Capricornio", "Sagitario", "Escorpio", "Libra", "Virgo", "Leo",
-  "Cáncer", "Géminis", "Tauro", "Aries", "Piscis", "Acuario",
+  { nombre: "Capricornio", simbolo: "♑" },
+  { nombre: "Sagitario", simbolo: "♐" },
+  { nombre: "Escorpio", simbolo: "♏" },
+  { nombre: "Libra", simbolo: "♎" },
+  { nombre: "Virgo", simbolo: "♍" },
+  { nombre: "Leo", simbolo: "♌" },
+  { nombre: "Cáncer", simbolo: "♋" },
+  { nombre: "Géminis", simbolo: "♊" },
+  { nombre: "Tauro", simbolo: "♉" },
+  { nombre: "Aries", simbolo: "♈" },
+  { nombre: "Piscis", simbolo: "♓" },
+  { nombre: "Acuario", simbolo: "♒" },
 ];
 
 function polarZodiaco(radio, gradosDesdeArriba) {
@@ -19,44 +29,71 @@ function polarZodiaco(radio, gradosDesdeArriba) {
 function crearDivisionZodiaco(grados) {
   const a = polarZodiaco(RADIO_ZODIACO, grados);
   const b = polarZodiaco(RADIO_ZODIACO - 20, grados);
-
   const linea = document.createElementNS(SVG_NS, "line");
-
   linea.setAttribute("x1", a.x);
   linea.setAttribute("y1", a.y);
   linea.setAttribute("x2", b.x);
   linea.setAttribute("y2", b.y);
-
   linea.setAttribute("class", "division-zodiaco");
-
   return linea;
 }
 
-function crearEtiquetaZodiaco(texto, grados, radio) {
-  const p = polarZodiaco(radio, grados);
-  const elemento = document.createElementNS(SVG_NS, "text");
-  elemento.setAttribute("x", p.x);
-  elemento.setAttribute("y", p.y);
-  elemento.setAttribute("class", "etiqueta-zodiaco");
-  elemento.textContent = texto;
-  etiquetasZodiaco.push({ elemento, x: p.x, y: p.y });
-  return elemento;
+const etiquetasZodiaco = []; 
+
+function crearEtiquetaCurvaZodiaco(signo, medio) {
+  const texto = `${signo.simbolo}  ${signo.nombre}`;
+  const grupo = document.createElementNS(SVG_NS, "g");
+
+  const anguloInicio = medio - 15;
+  const anguloFin = medio + 15;
+
+  const p1 = polarZodiaco(RADIO_ETIQUETA, anguloInicio);
+  const p2 = polarZodiaco(RADIO_ETIQUETA, anguloFin);
+  const sweep = 1; // Fijo para mantener la misma dirección uniforme
+
+  const pathId = "path-zodiaco-" + Math.random().toString(36).substr(2, 9);
+  const path = document.createElementNS(SVG_NS, "path");
+  path.setAttribute("id", pathId);
+  path.setAttribute("d", `M ${p1.x} ${p1.y} A ${RADIO_ETIQUETA} ${RADIO_ETIQUETA} 0 0 ${sweep} ${p2.x} ${p2.y}`);
+  path.setAttribute("fill", "none");
+  grupo.appendChild(path);
+
+  const textoEl = document.createElementNS(SVG_NS, "text");
+  textoEl.setAttribute("class", "etiqueta-zodiaco");
+
+  const textPath = document.createElementNS(SVG_NS, "textPath");
+  textPath.setAttribute("href", "#" + pathId);
+  textPath.setAttribute("startOffset", "50%");
+  textPath.setAttribute("text-anchor", "middle");
+  textPath.textContent = texto;
+
+  textoEl.appendChild(textPath);
+  grupo.appendChild(textoEl);
+
+  etiquetasZodiaco.push({ elemento: grupo, path: path, medio: medio });
+
+  return grupo;
 }
 
 function dibujarZodiaco() {
   const capa = document.getElementById("capa-zodiaco");
-  const RADIO_ETIQUETA = 290;
-
   for (let i = 0; i < 12; i++) {
     const inicio = i * 30;
     const medio = inicio + 15;
     capa.appendChild(crearDivisionZodiaco(inicio));
-    capa.appendChild(crearEtiquetaZodiaco(SIGNOS[i], medio, RADIO_ETIQUETA));
+    capa.appendChild(crearEtiquetaCurvaZodiaco(SIGNOS[i], medio));
   }
 }
 
 function actualizarEtiquetasZodiaco(anguloRotacion) {
-  etiquetasZodiaco.forEach(({ elemento, x, y }) => {
-    elemento.setAttribute("transform", `rotate(${-anguloRotacion} ${x} ${y})`);
+  etiquetasZodiaco.forEach(({ path, medio }) => {
+    const anguloInicio = medio - 15;
+    const anguloFin = medio + 15;
+
+    const p1 = polarZodiaco(RADIO_ETIQUETA, anguloInicio);
+    const p2 = polarZodiaco(RADIO_ETIQUETA, anguloFin);
+    const sweep = 1;
+
+    path.setAttribute("d", `M ${p1.x} ${p1.y} A ${RADIO_ETIQUETA} ${RADIO_ETIQUETA} 0 0 ${sweep} ${p2.x} ${p2.y}`);
   });
 }

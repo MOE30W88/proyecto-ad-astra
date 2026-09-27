@@ -5,6 +5,7 @@ const texto = document.getElementById("hora-digital");
 const sol = document.getElementById("sol");
 const luna = document.getElementById("luna");
 const capaZodiaco = document.getElementById("capa-zodiaco");
+const capaCalendario = document.getElementById("capa-calendario");
 
 const RADIO_ORBITA_SOL = 650;
 const RADIO_ORBITA_LUNA = 660;
@@ -18,6 +19,11 @@ function actualizar() {
   capaZodiaco.setAttribute("transform", `rotate(${anguloZod} 600 600)`);
   actualizarEtiquetasZodiaco(anguloZod);
   actualizarIndicadorZodiaco(anguloZod);
+  actualizarEventoEstacional(ahora, anguloZod);
+
+  const anguloCal = anguloCalendario(ahora);
+  capaCalendario.setAttribute("transform", `rotate(${anguloCal} 600 600)`);
+  actualizarEtiquetasCalendario(anguloCal);
 
   let alturaSolar = null;
   if (ubicacion.latitud !== null) {
@@ -51,6 +57,8 @@ actualizar();
 dibujarMarco();
 dibujarZodiaco();
 dibujarReferenciasEstacionales();
+dibujarCalendario();
+dibujarMarcadorCalendario();
 
 const textoUbicacion = document.getElementById("ubicacion");
 const textoPaisCiudad = document.getElementById("pais-ciudad");

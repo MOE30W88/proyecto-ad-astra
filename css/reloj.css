@@ -75,10 +75,11 @@
 
 .etiqueta-zodiaco {
   fill: #c9a24b;
-  font-family: Georgia, serif;
-  font-size: 17px;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', Georgia, serif;
+  font-size: 16px;
   text-anchor: middle;
   dominant-baseline: central;
+  letter-spacing: 2px; 
 }
 
 .eje-cartesiano {
@@ -102,21 +103,55 @@
 
 .tropico {
   fill: none;
-  stroke-width: 2.5;
+  stroke-width: 3;
   stroke-dasharray: 3 5;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 .tropico-cancer {
-  stroke: #d9534f;
+  stroke: #5ec253;
 }
 .tropico-capricornio {
-  stroke: #4f8fd9;
+  stroke: #ffa126;
+}
+
+.eje-lectura-estacional {
+  stroke: cyan;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 6;
+  opacity: 0.4;
+}
+
+.punto-evento-estacional {
+  fill: cyan;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+.etiqueta-evento-estacional {
+  fill: cyan;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  text-anchor: middle;
+  dominant-baseline: central;
 }
 
 .referencia-estacional {
   fill: none;
-  stroke: #f7f8f7;
+  stroke: #ffffff;
   stroke-width: 2;
-  stroke-dasharray: 4 4;
-  opacity: 0.1;
+  stroke-dasharray: 2 8;
+  opacity: 0.3;
 }
+
+.marca-calendario { stroke: #98999b; stroke-width: 1; opacity: 0.6; }
+.marca-mes { stroke-width: 2; opacity: 0.9; }
+.marca-dia-quinto { stroke-width: 1.5; }
+.etiqueta-mes {
+  fill: #cddef7;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  letter-spacing: 2px;
+}
+.marcador-calendario { fill: #d94f3d; opacity: 0.75; }
