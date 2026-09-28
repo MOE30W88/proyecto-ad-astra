@@ -1,0 +1,92 @@
+#contenedor-app {
+  display: flex;
+  transition: margin-left 0.3s ease;
+}
+
+.boton-viajar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  background: #1a2138;
+  color: #f2d27a;
+  border: 1px solid #f2d27a;
+  padding: 8px 14px;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cajon-viajero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: #0f1424;
+  border-right: 1px solid #2a3050;
+  padding: 70px 20px 20px;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 90;
+  overflow-y: auto;
+}
+
+.cajon-viajero.abierto {
+  transform: translateX(0);
+}
+
+#contenedor-app.desplazado {
+  margin-left: 280px;
+}
+
+.seccion-viajero {
+  color: #cddef7;
+  font-family: Georgia, serif;
+  margin-bottom: 24px;
+}
+
+.seccion-viajero h3 {
+  color: #f2d27a;
+  margin-bottom: 12px;
+}
+
+.seccion-viajero label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.seccion-viajero input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  background: #1a2138;
+  border: 1px solid #2a3050;
+  color: #cddef7;
+  border-radius: 4px;
+}
+
+.fila-botones {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.fila-botones button {
+  flex: 1;
+  background: #1a2138;
+  color: #cddef7;
+  border: 1px solid #2a3050;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.boton-velocidad.activa {
+  background: #f2d27a;
+  color: #0f1424;
+  border-color: #f2d27a;
+}

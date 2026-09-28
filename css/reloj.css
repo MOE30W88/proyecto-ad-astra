@@ -57,15 +57,14 @@
   stroke: #ffffff;
 }
 
-#luna {
-  fill: #cfd8e3;
-}
+.luna-fondo-oscuro { fill: #2a2f3a; }
+.luna-porcion-iluminada { fill: #cfd8e3; }
 
 .guia-zodiaco {
   fill: none;
   stroke: #c9a24b;
   stroke-width: 2;
-  stroke-dasharray: 6 4;
+
 }
 
 .division-zodiaco {
@@ -76,7 +75,7 @@
 .etiqueta-zodiaco {
   fill: #c9a24b;
   font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', Georgia, serif;
-  font-size: 16px;
+  font-size: 18px;
   text-anchor: middle;
   dominant-baseline: central;
   letter-spacing: 2px; 
@@ -118,7 +117,7 @@
   stroke: cyan;
   stroke-width: 1.5;
   stroke-dasharray: 4 6;
-  opacity: 0.4;
+  opacity: 0.7;
 }
 
 .punto-evento-estacional {
@@ -155,3 +154,21 @@
   letter-spacing: 2px;
 }
 .marcador-calendario { fill: #d94f3d; opacity: 0.75; }
+
+.orbita-terrestre {
+  fill: none;
+  stroke: #8899aa;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  opacity: 0.5;
+}
+.marca-orbital { fill: #8899aa; opacity: 0.6; }
+#tierra-orbital { fill: #4f8fd9; stroke: #ffffff; stroke-width: 1; }
+#sol-central { fill: #ffee07; filter: drop-shadow(0 0 20px #ffcc00); }
+
+.etiqueta-eje {
+  fill: #8fb4d9;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  dominant-baseline: central;
+}

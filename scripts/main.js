@@ -6,21 +6,37 @@ const sol = document.getElementById("sol");
 const luna = document.getElementById("luna");
 const capaZodiaco = document.getElementById("capa-zodiaco");
 const capaCalendario = document.getElementById("capa-calendario");
+const fechaDigital = document.getElementById("fecha-digital");
 
-const RADIO_ORBITA_SOL = 650;
-const RADIO_ORBITA_LUNA = 660;
+const RADIO_ORBITA_SOL = 540;
+const RADIO_ORBITA_LUNA = 570;
+const etiquetaHuso = document.getElementById("etiqueta-huso");
+
+let anioCalendarioDibujado = null;
 
 function actualizar() {
-  const ahora = new Date();
+  const ahora = obtenerFechaActual();
+
+  const textoHuso = textoHusoHorario(obtenerHusoHorario(ahora));
+  if (etiquetaHuso.textContent !== textoHuso) {
+    etiquetaHuso.textContent = textoHuso;
+  }
+
   agujaHora.setAttribute("transform", `rotate(${anguloDeLaHora(ahora)} 600 600)`);
   agujaMinuto.setAttribute("transform", `rotate(${anguloDelMinuto(ahora)} 600 600)`);
   agujaSegundo.setAttribute("transform", `rotate(${anguloDelSegundo(ahora)} 600 600)`);
   const anguloZod = anguloZodiaco(ahora);
   capaZodiaco.setAttribute("transform", `rotate(${anguloZod} 600 600)`);
+  actualizarTraslacion(ahora);
   actualizarEtiquetasZodiaco(anguloZod);
   actualizarIndicadorZodiaco(anguloZod);
   actualizarEventoEstacional(ahora, anguloZod);
 
+  const anioActual = ahora.getFullYear();
+  if (anioActual !== anioCalendarioDibujado) {
+    dibujarCalendario(anioActual);
+    anioCalendarioDibujado = anioActual;
+  }
   const anguloCal = anguloCalendario(ahora);
   capaCalendario.setAttribute("transform", `rotate(${anguloCal} 600 600)`);
   actualizarEtiquetasCalendario(anguloCal);
@@ -36,6 +52,11 @@ function actualizar() {
   if (texto.textContent !== horaActual) {
     texto.textContent = horaActual;
   }
+
+  const fechaFormateada = ahora.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  if (fechaDigital.textContent !== fechaFormateada) {
+    fechaDigital.textContent = fechaFormateada;
+}
 
   requestAnimationFrame(actualizar);
 }
@@ -55,9 +76,10 @@ function actualizarSol(fecha, alturaSolar) {
 
 actualizar();
 dibujarMarco();
+inicializarViajero();
+dibujarOrbitaTerrestre();
 dibujarZodiaco();
 dibujarReferenciasEstacionales();
-dibujarCalendario();
 dibujarMarcadorCalendario();
 
 const textoUbicacion = document.getElementById("ubicacion");
@@ -92,11 +114,12 @@ function actualizarLuna(fecha, alturaSolar) {
   const angulo = anguloDeLaHora(fecha);
   const p = polar(RADIO_ORBITA_LUNA, angulo);
 
-  const intensidad = intensidadLunar(altura, alturaSolar, fraccionIluminada(fecha));
+  const intensidad = intensidadLunar(altura, alturaSolar, 1);
+  const grupo = document.getElementById("capa-fase-lunar");
+  grupo.setAttribute("transform", `translate(${p.x} ${p.y})`);
+  grupo.style.opacity = intensidad;
+  grupo.style.filter = intensidad > 0 ? `drop-shadow(0 0 ${2 + intensidad * 10}px #cfd8e3)` : "none";
 
-  luna.setAttribute("cx", p.x);
-  luna.setAttribute("cy", p.y);
-  luna.style.opacity = intensidad;
-  luna.style.filter = intensidad > 0 ? `drop-shadow(0 0 ${2 + intensidad * 10}px #cfd8e3)` : "none";
+  actualizarFaseLunar(fecha);
 }
 

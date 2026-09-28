@@ -35,19 +35,7 @@ function rgb([r, g, b]) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-function dibujarSectorSuave(anguloInicio, anguloFin, radioInterno, radioExterno, color, capa) {
-  const p1 = polar(radioExterno, anguloInicio);
-  const p2 = polar(radioExterno, anguloFin);
-  const p3 = polar(radioInterno, anguloFin);
-  const p4 = polar(radioInterno, anguloInicio);
 
-  const d = `M ${p1.x} ${p1.y} A ${radioExterno} ${radioExterno} 0 0 1 ${p2.x} ${p2.y} L ${p3.x} ${p3.y} A ${radioInterno} ${radioInterno} 0 0 0 ${p4.x} ${p4.y} Z`;
-
-  const path = document.createElementNS(SVG_NS, "path");
-  path.setAttribute("d", d);
-  path.style.fill = color;
-  capa.appendChild(path);
-}
 
 let sectoresEventosSolares = null; // se crean una sola vez, luego solo se actualiza su color
 
@@ -85,7 +73,7 @@ function dibujarEventosSolares() {
     sectoresEventosSolares = crearSectoresEventosSolares(capa);
   }
 
-  const fecha = new Date();
+  const fecha = obtenerFechaActual();
 
   sectoresEventosSolares.forEach(({ path, minutoMedio }) => {
     const fechaMinuto = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), 0, minutoMedio, 0);

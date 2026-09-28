@@ -51,7 +51,7 @@ function crearEtiquetaCurvaZodiaco(signo, medio) {
   const p2 = polarZodiaco(RADIO_ETIQUETA, anguloFin);
   const sweep = 1; // Fijo para mantener la misma dirección uniforme
 
-  const pathId = "path-zodiaco-" + Math.random().toString(36).substr(2, 9);
+  const pathId = "path-zodiaco-" + Math.random().toString(36).slice(2, 11);
   const path = document.createElementNS(SVG_NS, "path");
   path.setAttribute("id", pathId);
   path.setAttribute("d", `M ${p1.x} ${p1.y} A ${RADIO_ETIQUETA} ${RADIO_ETIQUETA} 0 0 ${sweep} ${p2.x} ${p2.y}`);

@@ -3,6 +3,7 @@ const ubicacion = {
   longitud: null,
   ciudad: null,
   pais: null,
+  esManual: false,
 };
 
 function mensajeDeError(error) {
@@ -50,6 +51,7 @@ function pedirUbicacion(alExito, alError) {
     async (posicion) => {
       ubicacion.latitud = posicion.coords.latitude;
       ubicacion.longitud = posicion.coords.longitude;
+      ubicacion.esManual = false;
       
       await obtenerPaisYCiudad(ubicacion.latitud, ubicacion.longitud);
       
@@ -60,4 +62,41 @@ function pedirUbicacion(alExito, alError) {
     },
     { timeout: 10000, maximumAge: 600000 }
   );
+}
+
+function establecerUbicacionManual(lat, lon) {
+  ubicacion.esManual = true;
+  ubicacion.latitud = lat;
+  ubicacion.longitud = lon;
+  ubicacion.ciudad = "";
+  ubicacion.pais = "";
+
+  obtenerPaisYCiudad(lat, lon).then((resultado) => {
+    if (resultado) {
+      const partes = [resultado.ciudad, resultado.pais].filter(Boolean);
+      document.getElementById("pais-ciudad").textContent = partes.join(", ");
+    }
+  });
+
+  document.getElementById("ubicacion").textContent =
+    `Lat: ${lat.toFixed(4)}°    —    Lon: ${lon.toFixed(4)}°`;
+
+  dibujarEventosSolares();
+  dibujarTropicos();
+}
+
+function obtenerHusoHorario(fecha) {
+  if (ubicacion.latitud === null) return null;
+  if (!ubicacion.esManual) return -fecha.getTimezoneOffset() / 60;
+  return Math.round(ubicacion.longitud / 15);
+}
+
+function textoHusoHorario(huso) {
+  if (huso === null) return "";
+  const signo = huso < 0 ? "-" : "+";
+  const abs = Math.abs(huso);
+  const horas = Math.floor(abs);
+  const minutos = Math.round((abs - horas) * 60);
+  const sufijo = minutos ? `:${String(minutos).padStart(2, "0")}` : "";
+  return `(GMT${signo}${horas}${sufijo})`;
 }

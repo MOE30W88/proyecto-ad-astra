@@ -2,6 +2,14 @@
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
+const CALENDARIO = {
+  anillo: 780,        // aro exterior: el calendario cuelga de su cara interna
+  largoDia: 10,
+  largoQuinto: 14,
+  largoMes: 20,
+  radioEtiqueta: 750,
+};
+
 function esBisiesto(anio) {
   return (anio % 4 === 0 && anio % 100 !== 0) || anio % 400 === 0;
 }
@@ -61,7 +69,7 @@ function crearEtiquetaMesCurva(texto, anguloMedio, radio) {
   const p2 = polar(radio, anguloFin);
   const sweep = 1; // Fijo para mantener la misma dirección en todo el círculo
 
-  const pathId = "path-mes-" + Math.random().toString(36).substr(2, 9);
+  const pathId = "path-mes-" + Math.random().toString(36).slice(2, 11);
   const path = document.createElementNS(SVG_NS, "path");
   path.setAttribute("id", pathId);
   path.setAttribute("d", `M ${p1.x} ${p1.y} A ${radio} ${radio} 0 0 ${sweep} ${p2.x} ${p2.y}`);
@@ -85,37 +93,36 @@ function crearEtiquetaMesCurva(texto, anguloMedio, radio) {
   return grupo;
 }
 
-function dibujarCalendario() {
+function dibujarCalendario(anio) {
   const capa = document.getElementById("capa-calendario");
-  const anio = new Date().getFullYear();
-  const RADIO_INTERNO = 600;
-  const RADIO_EXTERNO_DIA = 612;
-  const RADIO_EXTERNO_MES = 622;
-  const RADIO_ETIQUETA_MES = 638;
+  capa.innerHTML = "";
+
+  const anioObjetivo = anio || obtenerFechaActual().getFullYear();
 
   for (let mes = 0; mes < 12; mes++) {
-    const anguloInicio = anguloDeInicioDeMes(anio, mes);
-    const dias = diasEnMes(anio, mes);
-    const anchoMes = (dias / diasEnAnio(anio)) * 360;
+    const anguloInicio = anguloDeInicioDeMes(anioObjetivo, mes);
+    const dias = diasEnMes(anioObjetivo, mes);
+    const anchoMes = (dias / diasEnAnio(anioObjetivo)) * 360;
 
-    capa.appendChild(crearMarcaCalendario(anguloInicio, RADIO_INTERNO, RADIO_EXTERNO_MES, "marca-calendario marca-mes"));
+    capa.appendChild(crearMarcaCalendario(anguloInicio, CALENDARIO.anillo - CALENDARIO.largoMes, CALENDARIO.anillo, "marca-calendario marca-mes"));
 
     const anguloMedio = anguloInicio + anchoMes / 2;
-    capa.appendChild(crearEtiquetaMesCurva(MESES[mes], anguloMedio, RADIO_ETIQUETA_MES));
+    capa.appendChild(crearEtiquetaMesCurva(MESES[mes], anguloMedio, CALENDARIO.radioEtiqueta));
 
     for (let dia = 1; dia <= dias; dia++) {
       const anguloDia = anguloInicio + ((dia - 1) / dias) * anchoMes;
       const esQuinto = dia % 5 === 0 || dia === 1;
-      capa.appendChild(crearMarcaCalendario(anguloDia, RADIO_INTERNO, esQuinto ? RADIO_EXTERNO_DIA + 5 : RADIO_EXTERNO_DIA, esQuinto ? "marca-calendario marca-dia-quinto" : "marca-calendario marca-dia"));
+      const largo = esQuinto ? CALENDARIO.largoQuinto : CALENDARIO.largoDia;
+      capa.appendChild(crearMarcaCalendario(anguloDia, CALENDARIO.anillo - largo, CALENDARIO.anillo, esQuinto ? "marca-calendario marca-dia-quinto" : "marca-calendario marca-dia"));
     }
   }
 }
 
 function dibujarMarcadorCalendario() {
   const capa = document.getElementById("capa-marcador-calendario");
-  const punta = polar(600, 0);
-  const baseIzq = polar(618, -1);
-  const baseDer = polar(618, 1);
+  const punta = polar(CALENDARIO.anillo, 0);
+  const baseIzq = polar(CALENDARIO.anillo + 18, -0.8);
+  const baseDer = polar(CALENDARIO.anillo + 18, 0.8);
   const marcador = document.createElementNS(SVG_NS, "polygon");
   marcador.setAttribute("points", `${punta.x},${punta.y} ${baseIzq.x},${baseIzq.y} ${baseDer.x},${baseDer.y}`);
   marcador.setAttribute("class", "marcador-calendario");

@@ -58,15 +58,7 @@ function posicionSolarHorizonte(fecha, latitud, longitudGeografica) {
       180) /
     Math.PI;
 
-  const azimut =
-    (Math.atan2(
-      -Math.sin(haRad),
-      Math.tan(decRad) * Math.cos(latRad) - Math.sin(latRad) * Math.cos(haRad)
-    ) *
-      180) /
-    Math.PI;
-
-  return { altura, azimut: normalizarGrados(azimut) };
+  return { altura };
 }
 
 function radioDesdeAltura(altura) {
@@ -149,15 +141,7 @@ function posicionLunarHorizonte(fecha, latitud, longitudGeografica) {
       180) /
     Math.PI;
 
-  const azimut =
-    (Math.atan2(
-      -Math.sin(haRad),
-      Math.tan(decRad) * Math.cos(latRad) - Math.sin(latRad) * Math.cos(haRad)
-    ) *
-      180) /
-    Math.PI;
-
-  return { altura, azimut: normalizarGrados(azimut) };
+  return { altura };
 }
 
 function intensidadLunar(alturaLuna, alturaSolar, fraccion) {

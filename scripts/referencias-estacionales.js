@@ -27,9 +27,9 @@ function dibujarReferenciasEstacionales() {
 
   const ejeLectura = document.createElementNS(SVG_NS, "line");
   ejeLectura.setAttribute("x1", 600);
-  ejeLectura.setAttribute("y1", 0);
+  ejeLectura.setAttribute("y1", -230);
   ejeLectura.setAttribute("x2", 600);
-  ejeLectura.setAttribute("y2", 1200);
+  ejeLectura.setAttribute("y2", 1430);
   ejeLectura.setAttribute("class", "eje-lectura-estacional");
   capa.appendChild(ejeLectura);
 }
