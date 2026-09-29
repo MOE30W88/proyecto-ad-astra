@@ -41,92 +41,141 @@
             <a href="#">Blog</a>
           </div>
         </nav>
-        <section id="caja-reloj" class="caja-reloj">
-        <svg
-          id="reloj"
-          viewBox="-360 -360 1920 1920"
-          role="img"
-          aria-label="Reloj astronómico"
-        >
-          <g id="capa-fija">
-            <circle class="guia" cx="600" cy="600" r="480" />
-            <circle class="guia" cx="600" cy="600" r="600" />
-            <circle class="guia" cx="600" cy="600" r="780" />
-          </g>
-          <g id="capa-tropicos"></g>
-          <g id="capa-referencias-estacionales"></g>
-          <g id="capa-eventos-solares"></g>
-          <g id="capa-marco"></g>
-          <g id="capa-minuto">
-            <line
-              id="aguja-minuto"
-              class="aguja aguja-minuto"
-              x1="600"
-              y1="600"
-              x2="600"
-              y2="120"
-            />
-          </g>
-          <g id="capa-segundo">
-            <line
-              id="aguja-segundo"
-              class="aguja aguja-segundo"
-              x1="600"
-              y1="600"
-              x2="600"
-              y2="120"
-            />
-          </g>
-          <g id="capa-hora">
-            <line
-              id="aguja-hora"
-              class="aguja"
-              x1="600"
-              y1="600"
-              x2="600"
-              y2="120"
-            />
-          </g>
-          <g id="capa-zodiaco">
-            <circle class="guia-zodiaco" cx="600" cy="463.4" r="343.4" />
-            <circle class="guia-zodiaco" cx="600" cy="463.4" r="230" />
-          </g>
-          <g id="capa-indicador-zodiaco"></g>
-          <g id="capa-marcador-estacional"></g>
-          <g id="capa-orbita-terrestre"></g>
-          <g id="capa-calendario"></g>
-          <g id="capa-marcador-calendario"></g>
-          <g id="capa-sol">
-            <circle id="sol" cx="600" cy="600" r="43" />
-          </g>
-          <g id="capa-luna">
-            <g id="capa-fase-lunar"></g>
-          </g>
-          <g id="capa-marcadores-reloj"></g>
-          <g id="capa-fija-ejes">
-            <line
-              class="eje-cartesiano"
-              x1="-230"
-              y1="600"
-              x2="1430"
-              y2="600"
-            />
-            <text class="etiqueta-eje" x="1445" y="600">0° Horizonte</text>
-            <text
-              id="etiqueta-huso"
-              class="etiqueta-eje"
-              x="600"
-              y="-250"
-              text-anchor="middle"
-            ></text>
-          </g>
-          <g id="capa-sol-central">
-            <circle id="sol-central" cx="600" cy="600" r="35" />
-          </g>
-        </svg>
-        <p id="hora-digital"></p>
-        <p id="fecha-digital"></p>
-        </section>
+        <div class="fila-reloj">
+          <aside id="cajon-viajero" class="cajon-viajero">
+            <section class="seccion-viajero">
+              <h3>Reloj</h3>
+              <label for="input-fecha-hora">Fecha y hora</label>
+              <input type="datetime-local" id="input-fecha-hora" />
+              <div class="fila-botones">
+                <button id="boton-ir-fecha">Ir a esta fecha</button>
+                <button id="boton-ahora">⟲ Ahora</button>
+              </div>
+              <label>Velocidad</label>
+              <div class="fila-botones" id="botones-velocidad">
+                <button data-velocidad="1" class="boton-velocidad activa">
+                  x1
+                </button>
+                <button data-velocidad="100" class="boton-velocidad">x100</button>
+                <button data-velocidad="1000" class="boton-velocidad">
+                  x1000
+                </button>
+                <button data-velocidad="10000" class="boton-velocidad">
+                  x10000
+                </button>
+              </div>
+            </section>
+            <section class="seccion-viajero">
+              <h3>Mapa</h3>
+              <label for="input-latitud">Latitud</label>
+              <input
+                type="number"
+                id="input-latitud"
+                step="0.0001"
+                placeholder="13.6927"
+              />
+              <label for="input-longitud">Longitud</label>
+              <input
+                type="number"
+                id="input-longitud"
+                step="0.0001"
+                placeholder="-89.1917"
+              />
+              <div class="fila-botones">
+                <button id="boton-ir-ubicacion">Ir a esta ubicación</button>
+                <button id="boton-ubicacion-real">⟲ Mi ubicación</button>
+              </div>
+            </section>
+          </aside>
+          <section id="caja-reloj" class="caja-reloj">
+          <button id="boton-viajar" class="boton-viajar">☰ Viajar</button>
+          <svg
+            id="reloj"
+            viewBox="-360 -360 1920 1920"
+            role="img"
+            aria-label="Reloj astronómico"
+          >
+            <g id="capa-fija">
+              <circle class="guia" cx="600" cy="600" r="480" />
+              <circle class="guia" cx="600" cy="600" r="600" />
+              <circle class="guia" cx="600" cy="600" r="780" />
+            </g>
+            <g id="capa-tropicos"></g>
+            <g id="capa-referencias-estacionales"></g>
+            <g id="capa-eventos-solares"></g>
+            <g id="capa-marco"></g>
+            <g id="capa-minuto">
+              <line
+                id="aguja-minuto"
+                class="aguja aguja-minuto"
+                x1="600"
+                y1="600"
+                x2="600"
+                y2="120"
+              />
+            </g>
+            <g id="capa-segundo">
+              <line
+                id="aguja-segundo"
+                class="aguja aguja-segundo"
+                x1="600"
+                y1="600"
+                x2="600"
+                y2="120"
+              />
+            </g>
+            <g id="capa-hora">
+              <line
+                id="aguja-hora"
+                class="aguja"
+                x1="600"
+                y1="600"
+                x2="600"
+                y2="120"
+              />
+            </g>
+            <g id="capa-zodiaco">
+              <circle class="guia-zodiaco" cx="600" cy="463.4" r="343.4" />
+              <circle class="guia-zodiaco" cx="600" cy="463.4" r="230" />
+            </g>
+            <g id="capa-indicador-zodiaco"></g>
+            <g id="capa-marcador-estacional"></g>
+            <g id="capa-orbita-terrestre"></g>
+            <g id="capa-estaciones"></g>
+            <g id="capa-calendario"></g>
+            <g id="capa-marcador-calendario"></g>
+            <g id="capa-sol">
+              <circle id="sol" cx="600" cy="600" r="43" />
+            </g>
+            <g id="capa-luna">
+              <g id="capa-fase-lunar"></g>
+            </g>
+            <g id="capa-marcadores-reloj"></g>
+            <g id="capa-fija-ejes">
+              <line
+                class="eje-cartesiano"
+                x1="-230"
+                y1="600"
+                x2="1430"
+                y2="600"
+              />
+              <text class="etiqueta-eje" x="1445" y="600">0° Horizonte</text>
+              <text
+                id="etiqueta-huso"
+                class="etiqueta-eje"
+                x="600"
+                y="-250"
+                text-anchor="middle"
+              ></text>
+            </g>
+            <g id="capa-sol-central">
+              <circle id="sol-central" cx="600" cy="600" r="35" />
+            </g>
+          </svg>
+          <p id="hora-digital"></p>
+          <p id="fecha-digital"></p>
+          </section>
+        </div>
         <section id="panel-resultados" class="panel-resultados">
           <h2>Resultados actuales</h2>
           <div id="grid-civil" class="grid-datos"></div>
@@ -135,52 +184,6 @@
             <div id="grid-astro" class="grid-datos"></div>
           </details>
         </section>
-        <button id="boton-viajar" class="boton-viajar">☰ Viajar</button>
-        <aside id="cajon-viajero" class="cajon-viajero">
-          <section class="seccion-viajero">
-            <h3>Reloj</h3>
-            <label for="input-fecha-hora">Fecha y hora</label>
-            <input type="datetime-local" id="input-fecha-hora" />
-            <div class="fila-botones">
-              <button id="boton-ir-fecha">Ir a esta fecha</button>
-              <button id="boton-ahora">⟲ Ahora</button>
-            </div>
-            <label>Velocidad</label>
-            <div class="fila-botones" id="botones-velocidad">
-              <button data-velocidad="1" class="boton-velocidad activa">
-                x1
-              </button>
-              <button data-velocidad="100" class="boton-velocidad">x100</button>
-              <button data-velocidad="1000" class="boton-velocidad">
-                x1000
-              </button>
-              <button data-velocidad="10000" class="boton-velocidad">
-                x10000
-              </button>
-            </div>
-          </section>
-          <section class="seccion-viajero">
-            <h3>Mapa</h3>
-            <label for="input-latitud">Latitud</label>
-            <input
-              type="number"
-              id="input-latitud"
-              step="0.0001"
-              placeholder="13.6927"
-            />
-            <label for="input-longitud">Longitud</label>
-            <input
-              type="number"
-              id="input-longitud"
-              step="0.0001"
-              placeholder="-89.1917"
-            />
-            <div class="fila-botones">
-              <button id="boton-ir-ubicacion">Ir a esta ubicación</button>
-              <button id="boton-ubicacion-real">⟲ Mi ubicación</button>
-            </div>
-          </section>
-        </aside>
       </main>
     </div>
   </body>

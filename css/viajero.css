@@ -4,10 +4,10 @@
 }
 
 .boton-viajar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 5; 
   background: #1a2138;
   color: #f2d27a;
   border: 1px solid #f2d27a;
@@ -18,27 +18,29 @@
 }
 
 .cajon-viajero {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 280px;
-  height: 100vh;
-  background: #0f1424;
-  border-right: 1px solid #2a3050;
-  padding: 70px 20px 20px;
+  flex: 0 0 auto;
+  width: 0;
+  padding: 20px 0;
   box-sizing: border-box;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 90;
+  overflow-x: hidden;
   overflow-y: auto;
+  background: #0f1424;
+  border: 0 solid rgba(201, 162, 75, 0.35);
+  border-radius: 20px;
+  opacity: 0;
+  transition: width 0.3s ease, margin-right 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+
+.cajon-viajero > * {
+  min-width: 240px;
 }
 
 .cajon-viajero.abierto {
-  transform: translateX(0);
-}
-
-#contenedor-app.desplazado {
-  margin-left: 280px;
+  width: 280px;
+  padding: 20px;
+  margin-right: 1.5rem;
+  border-width: 1px;
+  opacity: 1;
 }
 
 .seccion-viajero {
@@ -89,4 +91,23 @@
   background: #f2d27a;
   color: #0f1424;
   border-color: #f2d27a;
+}
+
+@media (max-width: 800px) {
+  .fila-reloj {
+    flex-direction: column;
+  }
+
+  .cajon-viajero {
+    width: auto;
+    max-height: 0;
+    padding: 0 20px;
+  }
+
+  .cajon-viajero.abierto {
+    width: auto;
+    max-height: 700px;
+    padding: 20px;
+    margin: 0 0 1.5rem;
+  }
 }

@@ -3,11 +3,11 @@
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 const CALENDARIO = {
-  anillo: 780,        // aro exterior: el calendario cuelga de su cara interna
+  anillo: 780,        // aro exterior: las marcas salen hacia afuera
   largoDia: 10,
   largoQuinto: 14,
   largoMes: 20,
-  radioEtiqueta: 750,
+  radioEtiqueta: 760,
 };
 
 function esBisiesto(anio) {
@@ -102,7 +102,7 @@ function dibujarCalendario(anio) {
     const dias = diasEnMes(anioObjetivo, mes);
     const anchoMes = (dias / diasEnAnio(anioObjetivo)) * 360;
 
-    capa.appendChild(crearMarcaCalendario(anguloInicio, CALENDARIO.anillo - CALENDARIO.largoMes, CALENDARIO.anillo, "marca-calendario marca-mes"));
+    capa.appendChild(crearMarcaCalendario(anguloInicio, CALENDARIO.anillo, CALENDARIO.anillo + CALENDARIO.largoMes, "marca-calendario marca-mes"));
 
     const anguloMedio = anguloInicio + anchoMes / 2;
     capa.appendChild(crearEtiquetaMesCurva(MESES[mes], anguloMedio, CALENDARIO.radioEtiqueta));
@@ -111,16 +111,17 @@ function dibujarCalendario(anio) {
       const anguloDia = anguloInicio + ((dia - 1) / dias) * anchoMes;
       const esQuinto = dia % 5 === 0 || dia === 1;
       const largo = esQuinto ? CALENDARIO.largoQuinto : CALENDARIO.largoDia;
-      capa.appendChild(crearMarcaCalendario(anguloDia, CALENDARIO.anillo - largo, CALENDARIO.anillo, esQuinto ? "marca-calendario marca-dia-quinto" : "marca-calendario marca-dia"));
+      capa.appendChild(crearMarcaCalendario(anguloDia, CALENDARIO.anillo, CALENDARIO.anillo + largo, esQuinto ? "marca-calendario marca-dia-quinto" : "marca-calendario marca-dia"));
     }
   }
 }
 
 function dibujarMarcadorCalendario() {
   const capa = document.getElementById("capa-marcador-calendario");
-  const punta = polar(CALENDARIO.anillo, 0);
-  const baseIzq = polar(CALENDARIO.anillo + 18, -0.8);
-  const baseDer = polar(CALENDARIO.anillo + 18, 0.8);
+  const radioPunta = CALENDARIO.anillo + CALENDARIO.largoMes + 4;
+  const punta = polar(radioPunta, 0);
+  const baseIzq = polar(radioPunta + 18, -0.8);
+  const baseDer = polar(radioPunta + 18, 0.8);
   const marcador = document.createElementNS(SVG_NS, "polygon");
   marcador.setAttribute("points", `${punta.x},${punta.y} ${baseIzq.x},${baseIzq.y} ${baseDer.x},${baseDer.y}`);
   marcador.setAttribute("class", "marcador-calendario");

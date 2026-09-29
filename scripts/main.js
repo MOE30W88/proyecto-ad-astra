@@ -56,6 +56,7 @@ function actualizar() {
   }
   const anguloCal = anguloCalendario(ahora);
   capaCalendario.setAttribute("transform", `rotate(${anguloCal} 600 600)`);
+  actualizarAnilloEstaciones(ahora, anguloCal);
   actualizarEtiquetasCalendario(anguloCal);
  
   let alturaSolar = null;

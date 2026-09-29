@@ -146,9 +146,9 @@
 .marca-mes { stroke-width: 2; opacity: 0.9; }
 .marca-dia-quinto { stroke-width: 1.5; }
 .etiqueta-mes {
-  fill: #cddef7;
+  fill: #ffffff;
   font-family: Georgia, serif;
-  font-size: 18px;
+  font-size: 22px;
   text-anchor: middle;
   dominant-baseline: central;
   letter-spacing: 2px;
@@ -209,4 +209,10 @@
 
 .menu-enlaces a:hover {
   color: #f0e2b8;
+}
+
+.sector-estacion {
+  stroke: none;
+  fill-opacity: 0.4;
+  pointer-events: none;
 }
