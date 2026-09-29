@@ -12,7 +12,7 @@ function actualizarFaseLunar(fecha) {
   const capa = document.getElementById("capa-fase-lunar");
   capa.innerHTML = "";
 
-  const RADIO_DISCO = 26;
+  const RADIO_DISCO = 35;
   const fraccion = fraccionIluminada(fecha);
   const edad = edadLunar(fecha);
   const esCreciente = edad < PERIODO_SINODICO / 2;

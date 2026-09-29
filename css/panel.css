@@ -1,0 +1,106 @@
+/* css/panel.css — panel "Resultados actuales" */
+.panel-resultados {
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 20px;
+  padding: 1.25rem;
+  background: #0e1428;
+  font-family: Georgia, serif;
+  color: #c9d4e6;
+}
+ 
+.panel-resultados h2 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: #c9a24b;
+  text-align: center;
+}
+ 
+.bloque-tecnico {
+  margin-top: 1.25rem;
+}
+ 
+.bloque-tecnico summary {
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  color: #8fb4d9;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+ 
+.grid-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+ 
+.tarjeta {
+  position: relative;
+  padding: 0.6rem 0.75rem 1.9rem;
+  background: #131a33;
+  border: 1px solid rgba(143, 180, 217, 0.15);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+ 
+.tarjeta-cabecera {
+  text-align: center;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #8fb4d9;
+}
+ 
+.tarjeta-valor,
+.tarjeta #pais-ciudad {
+  margin: 0;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #f0e2b8;
+  opacity: 1;
+  text-align: center;
+}
+ 
+.tarjeta-sub,
+.tarjeta #ubicacion,
+.tarjeta #pais-ciudad {
+  margin: 0;
+  text-align: left;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  color: #8fb4d9;
+}
+ 
+.tarjeta-ayuda {
+  margin: 0.3rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #aebbd0;
+}
+ 
+.ayuda {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(143, 180, 217, 0.4);
+  background: transparent;
+  color: #8fb4d9;
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+}
+ 
+.ayuda:hover {
+  background: rgba(143, 180, 217, 0.15);
+}
+
+.tarjeta #ubicacion {
+  white-space: pre-line;
+}

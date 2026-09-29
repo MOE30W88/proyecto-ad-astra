@@ -79,9 +79,8 @@ function establecerUbicacionManual(lat, lon) {
   });
 
   document.getElementById("ubicacion").textContent =
-    `Lat: ${lat.toFixed(4)}°    —    Lon: ${lon.toFixed(4)}°`;
+    `Lat: ${lat.toFixed(4)}°\nLon: ${lon.toFixed(4)}°`;
 
-  dibujarEventosSolares();
   dibujarTropicos();
 }
 

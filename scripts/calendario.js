@@ -31,11 +31,9 @@ function diaDelAnio(fecha) {
 }
 
 function anguloCalendario(fecha) {
-  const anio = fecha.getFullYear();
-  const N = diasEnAnio(anio);
-  const fraccionDelDia = (fecha.getHours() * 3600 + fecha.getMinutes() * 60 + fecha.getSeconds()) / 86400;
-  const diaFraccional = diaDelAnio(fecha) + fraccionDelDia;
-  return normalizarGrados(-(diaFraccional / N) * 360);
+  const p = aHoraDePared(fecha);
+  const N = diasEnAnio(p.getUTCFullYear());
+  return normalizarGrados(-(diaDelAnioFraccional(p) / N) * 360);
 }
 
 function anguloDeInicioDeMes(anio, mesIndex) {
@@ -97,7 +95,7 @@ function dibujarCalendario(anio) {
   const capa = document.getElementById("capa-calendario");
   capa.innerHTML = "";
 
-  const anioObjetivo = anio || obtenerFechaActual().getFullYear();
+  const anioObjetivo = anio || aHoraDePared(obtenerFechaActual()).getUTCFullYear();
 
   for (let mes = 0; mes < 12; mes++) {
     const anguloInicio = anguloDeInicioDeMes(anioObjetivo, mes);

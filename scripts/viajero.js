@@ -17,7 +17,7 @@ function inicializarViajero() {
 
   botonIrFecha.addEventListener("click", () => {
     if (!inputFechaHora.value) return;
-    establecerFechaViajero(new Date(inputFechaHora.value));
+    establecerFechaViajero(instanteDesdeInput(inputFechaHora.value));
   });
 
   botonAhora.addEventListener("click", () => {

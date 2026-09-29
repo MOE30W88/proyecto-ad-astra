@@ -45,8 +45,8 @@
 
 .numero-minuto-chico {
   fill: #8fb4d9;
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 15px;
+  opacity: 0.9;
 }
 
 #sol {
@@ -153,7 +153,11 @@
   dominant-baseline: central;
   letter-spacing: 2px;
 }
-.marcador-calendario { fill: #d94f3d; opacity: 0.75; }
+.marcador-calendario { fill: #d94f3d; opacity: 1; }
+.marcador-reloj {
+  fill: #d94f3d;
+  opacity: 1;
+}
 
 .orbita-terrestre {
   fill: none;
@@ -171,4 +175,38 @@
   font-family: Georgia, serif;
   font-size: 20px;
   dominant-baseline: central;
+}
+
+.caja-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: #0e1428;
+  border: 1px solid rgba(201, 162, 75, 0.35);
+  border-radius: 16px;
+  font-family: Georgia, serif;
+}
+
+.menu-logo {
+  color: #c9a24b;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+.menu-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.menu-enlaces a {
+  color: #8fb4d9;
+  text-decoration: none;
+}
+
+.menu-enlaces a:hover {
+  color: #f0e2b8;
 }

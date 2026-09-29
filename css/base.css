@@ -7,11 +7,12 @@ body {
 }
 
 main {
-  width: min(94vmin, 900px);
+  width: min(94vw, 1600px);
 }
 
 #reloj {
-  width: 100%;
+  width: min(100%, 94vmin, 900px);
+  margin: 0 auto;
   height: auto;
   display: block;
 }
