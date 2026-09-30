@@ -1,6 +1,6 @@
 .guia {
   fill: none;
-  stroke: #fdfcf9;
+  stroke: #12234a;
   stroke-width: 2;
 }
 .aguja {
@@ -23,7 +23,7 @@
 
 .numero {
   fill: #f8f7f3;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   font-size: 32px;
   text-anchor: middle;
   dominant-baseline: central;
@@ -31,22 +31,22 @@
 
 .marca-minuto {
   stroke: #8fb4d9;
-  stroke-width: 1;
+  stroke-width: 1.6;
 }
 
 .marca-minuto-quinto {
-  stroke-width: 2;
+  stroke-width: 2.1;
 }
 
 .numero-minuto {
   fill: #8fb4d9;
-  font-size: 20px;
+  font-size: 28.5px;
 }
 
 .numero-minuto-chico {
   fill: #8fb4d9;
-  font-size: 15px;
-  opacity: 0.9;
+  font-size: 25px;
+  opacity: 0.5;
 }
 
 #sol {
@@ -62,20 +62,20 @@
 
 .guia-zodiaco {
   fill: none;
-  stroke: #c9a24b;
+  stroke: #ffe054;
   stroke-width: 2;
 
 }
 
 .division-zodiaco {
-  stroke: #c9a24b;
+  stroke: #ffe054;
   stroke-width: 2;
 }
 
 .etiqueta-zodiaco {
-  fill: #c9a24b;
-  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', Georgia, serif;
-  font-size: 18px;
+  fill: #ffe054;
+  font-family: var(--fuente);
+  font-size: 22px;
   text-anchor: middle;
   dominant-baseline: central;
   letter-spacing: 2px; 
@@ -128,7 +128,7 @@
 
 .etiqueta-evento-estacional {
   fill: cyan;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   font-size: 20px;
   text-anchor: middle;
   dominant-baseline: central;
@@ -147,8 +147,8 @@
 .marca-dia-quinto { stroke-width: 1.5; }
 .etiqueta-mes {
   fill: #ffffff;
-  font-family: Georgia, serif;
-  font-size: 22px;
+  font-family: var(--fuente);
+  font-size: 28px;
   text-anchor: middle;
   dominant-baseline: central;
   letter-spacing: 2px;
@@ -161,20 +161,21 @@
 
 .orbita-terrestre {
   fill: none;
-  stroke: #8899aa;
-  stroke-width: 1.5;
+  stroke: #ffffff;
+  stroke-width: 1;
   stroke-dasharray: 4 4;
-  opacity: 0.5;
+  opacity: 0.2;
 }
-.marca-orbital { fill: #8899aa; opacity: 0.6; }
-#tierra-orbital { fill: #4f8fd9; stroke: #ffffff; stroke-width: 1; }
+.marca-orbital { fill: #ffffff; opacity: 0.125; }
+#tierra-orbital { fill: #4f8fd9; stroke: #ffffff; stroke-width: 0.5; }
 #sol-central { fill: #ffee07; filter: drop-shadow(0 0 20px #ffcc00); }
 
 .etiqueta-eje {
   fill: #8fb4d9;
-  font-family: Georgia, serif;
-  font-size: 20px;
+  font-family: var(--fuente);
+  font-size: 28px;
   dominant-baseline: central;
+  letter-spacing: 3px;
 }
 
 .caja-menu {
@@ -182,33 +183,64 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem 1.5rem;
-  padding: 0.9rem 1.5rem;
-  background: #0e1428;
-  border: 1px solid rgba(201, 162, 75, 0.35);
-  border-radius: 16px;
-  font-family: Georgia, serif;
+  gap: 0.75rem 2rem;
+  padding: 1.1rem 1.5rem;
+  background: rgba(7, 17, 38, 0.35);
+  border: none;
+  border-bottom: 1px solid rgba(143, 180, 217, 0.12);
+  border-radius: 0;
+  font-family: var(--fuente);
+  backdrop-filter: blur(8px);
 }
 
 .menu-logo {
-  color: #c9a24b;
-  letter-spacing: 3px;
+  color: #d8c58c;
+  letter-spacing: 4px;
   text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.25s ease;
+}
+
+.menu-logo:hover {
+  color: #f0e2b8;
 }
 
 .menu-enlaces {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  align-items: center;
+  gap: 0.5rem 2.2rem;
 }
 
 .menu-enlaces a {
+  position: relative;
   color: #8fb4d9;
   text-decoration: none;
+  font-size: 0.95rem;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.menu-enlaces a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.55rem;
+  width: 100%;
+  height: 1px;
+  background: #8fb4d9;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
 }
 
 .menu-enlaces a:hover {
-  color: #f0e2b8;
+  color: #dce7f5;
+}
+
+.menu-enlaces a:hover::after {
+  transform: scaleX(1);
 }
 
 .sector-estacion {

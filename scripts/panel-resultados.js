@@ -7,6 +7,7 @@ const FASES_LUNARES = ["Luna nueva", "Creciente", "Cuarto creciente", "Gibosa cr
 const ESTACIONES = ["Primavera", "Verano", "Otoño", "Invierno"];
  
 // g: civil | astro — k: clave — t: título — a: ayuda didáctica
+// Iconos: basta guardar iconos/<clave>.svg (clave = k). Opcional: icono: "otra/ruta.svg". Sin archivo se muestra ✦.
 const TARJETAS = [
   { g: "civil", k: "lugar", t: "Lugar", a: "Ciudad y país del lugar que el reloj está usando." },
   { g: "civil", k: "coordenadas", t: "Coordenadas", a: "Latitud: distancia al ecuador (+ norte, − sur). Longitud: distancia al meridiano de Greenwich (+ este, − oeste)." },
@@ -45,16 +46,21 @@ function construirPanel() {
     const idValor = IDS_EXTERNOS[t.k];
     const el = document.createElement("div");
     el.className = "tarjeta";
+    // Icono automático: iconos/<clave>.svg (o la ruta de t.icono). Si el archivo no existe se queda el ✦
+    // Ruta absoluta: dentro de una variable CSS, una ruta relativa se resolvería desde css/ y fallaría
+    const rutaIcono = new URL(t.icono || `iconos/${t.k}.svg`, document.baseURI).href;
+    const sonda = new Image();
+    sonda.onload = () => {
+      el.classList.add("con-icono");
+      el.style.setProperty("--icono", `url("${rutaIcono}")`);
+    };
+    sonda.src = rutaIcono;
     el.innerHTML =
       `<div class="tarjeta-cabecera">${t.t}</div>` +
       `<strong class="tarjeta-valor" ${idValor ? `id="${idValor}"` : ""}>—</strong>` +
       `<span class="tarjeta-sub"></span>` +
-      `<p class="tarjeta-ayuda" hidden>${t.a}</p>` +
+      `<p class="tarjeta-ayuda">${t.a}</p>` +
       `<button type="button" class="ayuda" aria-label="¿Qué es ${t.t}?">?</button>`;
-    const ayuda = el.querySelector(".tarjeta-ayuda");
-    el.querySelector(".ayuda").addEventListener("click", () => {
-      ayuda.hidden = !ayuda.hidden;
-    });
     grid.appendChild(el);
     if (!idValor) {
       refsPanel[t.k] = {
@@ -70,6 +76,19 @@ function poner(k, valor, sub = "") {
   const r = refsPanel[k];
   if (!r) return;
   if (r.valor.textContent !== valor) r.valor.textContent = valor;
+  if (r.sub.textContent !== sub) r.sub.textContent = sub;
+}
+ 
+// El símbolo va en su propio <span> (fuente de símbolos, dorado) y con \uFE0E para forzar la
+// versión de texto y evitar el emoji de color.
+let ultimoSigno = "";
+function ponerSigno(signo, sub) {
+  const r = refsPanel.signo;
+  const html = `<span class="simbolo-zodiacal">${signo.simbolo}\uFE0E</span> ${signo.nombre}`;
+  if (html !== ultimoSigno) {
+    r.valor.innerHTML = html;
+    ultimoSigno = html;
+  }
   if (r.sub.textContent !== sub) r.sub.textContent = sub;
 }
  
@@ -105,7 +124,7 @@ function actualizarPanelResultados(ahora) {
  
   const solar = posicionSolar(ahora);
   const signo = SIGNOS[Math.floor(normalizarGrados(-anguloZodiaco(ahora)) / 30)];
-  poner("signo", `${signo.simbolo} ${signo.nombre}`, `zodiaco tropical · ${solar.longitudEcliptica.toFixed(1)}°`);
+  ponerSigno(signo, `zodiaco tropical · ${solar.longitudEcliptica.toFixed(1)}°`);
   poner("declinacion", `${solar.declinacion.toFixed(2)}°`);
  
   if (ubicacion.latitud === null) return;

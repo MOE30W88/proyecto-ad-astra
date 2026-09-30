@@ -1,0 +1,31 @@
+/* css/tema.css — variables de color por modo. La página lee siempre estas variables. */
+ 
+/* Tipografías (Google Fonts: Playfair Display; símbolos zodiacales: Segoe UI Symbol) */
+:root {
+  --fuente: "Playfair Display", Georgia, serif;
+  --fuente-simbolos: "Segoe UI Symbol", "Apple Symbols", "Noto Sans Symbols 2", "DejaVu Sans", sans-serif;
+}
+ 
+/* Modo día: el azul del diseño */
+:root,
+[data-tema="dia"] {
+  --fondo: radial-gradient(ellipse at 50% 30%, #12234a 0%, #0a1226 55%, #070c1a 100%);
+  --panel: rgba(12, 21, 43, 0.9);
+  --linea: rgba(143, 180, 217, 0.25);
+  --texto: #e6eefc;
+  --texto-suave: #a9bbd8; /* contraste ≥ 4.5:1 sobre el fondo */
+  --acento: #c9a24b;
+  --fondo-traslacion: rgba(3, 7, 18, 0.72); /* disco oscuro tras las órbitas */
+}
+ 
+/* Modo noche: por ahora el azul plano de antes. Aquí irá el fondo de la Vía Láctea. */
+[data-tema="noche"] {
+  --fondo: #0b1020;
+  --panel: rgba(8, 13, 28, 0.92);
+  --linea: rgba(143, 180, 217, 0.2);
+  --texto: #dfe8fa;
+  --texto-suave: #9db0cf;
+  --acento: #c9a24b;
+  --fondo-traslacion: rgba(2, 5, 12, 0.8);
+}
+ 

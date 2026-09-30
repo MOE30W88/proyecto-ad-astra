@@ -1,0 +1,38 @@
+/* css/velocidad.css — controles flotantes de velocidad a los lados del reloj, bajo la hora y la fecha */
+.controles-tiempo {
+  position: absolute;
+  /* misma altura de referencia que la hora/fecha (centro del reloj + 22px), justo debajo de ellas */
+  top: calc(0.5rem + var(--ancho-reloj) * 0.4717 + 22px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.controles-tiempo-izq { right: calc(52% + var(--ancho-reloj) * 0.4262 + 1rem); }
+.controles-tiempo-der { left: calc(49% + var(--ancho-reloj) * 0.5283 + 1rem); }
+.controles-tiempo-botones { display: flex; gap: 0.45rem; }
+
+.control-tiempo-boton {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--linea);
+  background: transparent;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.controles-tiempo-izq .control-tiempo-boton svg { transform: scaleX(-1); } /* mismos iconos, apuntando hacia atrás */
+.control-tiempo-boton:hover { background: rgba(201, 162, 75, 0.12); border-color: var(--acento); color: var(--acento); }
+.control-tiempo-boton.activa { border-color: var(--acento); color: var(--acento); background: rgba(201, 162, 75, 0.15); }
+
+.control-tiempo-etiqueta { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--texto-suave); opacity: 0.55; transition: color 0.2s, opacity 0.2s; }
+.controles-tiempo.activa .control-tiempo-etiqueta { color: var(--acento); opacity: 1; }
+
+@media (max-width: 1100px) {
+  .controles-tiempo { position: static; display: inline-flex; margin: 0.6rem 1rem 0; }
+}

@@ -1,0 +1,21 @@
+/* css/rotacion.css — capa Rotación: eje de inclinación (siempre) y globo terrestre (solo con el enfoque "Rotación") */
+
+/* Eje terrestre punteado */
+.eje-rotacion-linea { stroke: #8fd3f2; stroke-width: 2; stroke-dasharray: 10 12; opacity: 0.85; }
+.eje-rotacion-punta { fill: #8fd3f2; opacity: 0.9; }
+.eje-rotacion-arco { fill: none; stroke: #8fd3f2; stroke-width: 2; opacity: 0.85; }
+.texto-eje-rotacion { fill: #a9d6ee; font-family: var(--fuente); font-size: 26px; letter-spacing: 0.04em; }
+
+/* Globo: oculto salvo con el enfoque Rotación (este selector gana al atenuado del resto de capas) */
+#capa-rotacion { pointer-events: none; }
+#reloj:not(.enfoque-rotacion) #capa-rotacion { opacity: 0; }
+
+.globo-esfera { fill: url(#grad-globo); }
+.globo-limbo { fill: url(#grad-limbo); }
+.globo-borde { fill: none; stroke: #1e9bea; stroke-width: 6; }
+.globo-paralelo { stroke: #0b3a5c; stroke-width: 1.4; opacity: 0.35; }
+.globo-paralelo.ecuador { stroke-width: 3; opacity: 0.7; }
+.globo-paralelo.circulo-notable { stroke-dasharray: 8 8; opacity: 0.5; }
+.globo-meridiano { fill: none; stroke: #0b3a5c; stroke-width: 1.4; opacity: 0.4; }
+.globo-meridiano.meridiano-cero { stroke: #f2d27a; stroke-width: 3; opacity: 0.9; }
+.globo-ubicacion { fill: #ffe054; stroke: #7a5a00; stroke-width: 3; }

@@ -1,6 +1,6 @@
 // scripts/indicador-zodiaco.js
 
-const RADIO_ZODIACO_INTERNO = 230; // debe coincidir con el círculo guía interno en index.html
+const RADIO_ZODIACO_INTERNO = 260; // debe coincidir con el círculo guía interno en index.html
 
 function radioActualDelZodiaco(radioLocal, anguloRotacion) {
   const e = 600 - CENTRO_ZODIACO_Y;

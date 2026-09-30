@@ -1,0 +1,135 @@
+/* css/planetas.css — sistema solar: órbitas, planetas y cajón derecho */
+.orbita-planeta {
+  fill: none;
+  stroke: #cccccc;
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+  opacity: 0.1;
+}
+ 
+.planeta {
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1;
+}
+ 
+.boton-planetas {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  background: #1a2138;
+  color: #f2d27a;
+  border: 1px solid #f2d27a;
+  padding: 8px 14px;
+  font-family: var(--fuente);
+  cursor: pointer;
+  border-radius: 4px;
+}
+ 
+.cajon-planetas {
+  flex: 0 0 auto;
+  width: 0;
+  padding: 20px 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #0f1424;
+  border: 0 solid rgba(201, 162, 75, 0.35);
+  border-radius: 20px;
+  opacity: 0;
+  transition: width 0.3s ease, margin-left 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+ 
+.cajon-planetas > * {
+  min-width: 260px;
+}
+ 
+.cajon-planetas.abierto {
+  width: 300px;
+  padding: 20px;
+  margin-left: 1.5rem;
+  border-width: 1px;
+  opacity: 1;
+}
+ 
+.seccion-planetas {
+  color: #cddef7;
+  font-family: var(--fuente);
+}
+ 
+.seccion-planetas h3 {
+  margin: 0 0 8px;
+  color: #f2d27a;
+}
+ 
+.nota-planetas {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #8fb4d9;
+}
+ 
+.tabla-planetas {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+ 
+.tabla-planetas th {
+  padding-bottom: 6px;
+  text-align: right;
+  font-weight: normal;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8fb4d9;
+}
+ 
+.tabla-planetas th:first-child,
+.tabla-planetas td:first-child {
+  text-align: left;
+}
+ 
+.tabla-planetas td {
+  padding: 5px 0;
+  border-top: 1px solid rgba(143, 180, 217, 0.12);
+}
+ 
+.tabla-planetas td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+ 
+.punto-planeta {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+}
+ 
+.arco-planetas {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: #cddef7;
+}
+ 
+.arco-planetas strong {
+  color: #f0e2b8;
+  font-weight: normal;
+}
+ 
+@media (max-width: 800px) {
+  .cajon-planetas {
+    width: auto;
+    max-height: 0;
+    padding: 0 20px;
+  }
+ 
+  .cajon-planetas.abierto {
+    width: auto;
+    max-height: 700px;
+    padding: 20px;
+    margin: 1.5rem 0 0;
+  }
+}

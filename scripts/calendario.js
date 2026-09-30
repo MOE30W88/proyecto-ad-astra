@@ -8,6 +8,8 @@ const CALENDARIO = {
   largoQuinto: 14,
   largoMes: 20,
   radioEtiqueta: 760,
+  radioDigitos: 830,
+  pasoDigitos: 5,
 };
 
 function esBisiesto(anio) {
@@ -91,7 +93,19 @@ function crearEtiquetaMesCurva(texto, anguloMedio, radio) {
   return grupo;
 }
 
+function crearDigitoCalendario(dia, grados) {
+  const p = polar(CALENDARIO.radioDigitos, grados);
+  const texto = document.createElementNS(SVG_NS, "text");
+  texto.setAttribute("x", p.x);
+  texto.setAttribute("y", p.y);
+  texto.setAttribute("transform", `rotate(${grados} ${p.x} ${p.y})`);
+  texto.setAttribute("class", "digito-calendario");
+  texto.textContent = dia;
+  return texto;
+}
+
 function dibujarCalendario(anio) {
+  etiquetasCalendario.length = 0;
   const capa = document.getElementById("capa-calendario");
   capa.innerHTML = "";
 
@@ -112,6 +126,9 @@ function dibujarCalendario(anio) {
       const esQuinto = dia % 5 === 0 || dia === 1;
       const largo = esQuinto ? CALENDARIO.largoQuinto : CALENDARIO.largoDia;
       capa.appendChild(crearMarcaCalendario(anguloDia, CALENDARIO.anillo, CALENDARIO.anillo + largo, esQuinto ? "marca-calendario marca-dia-quinto" : "marca-calendario marca-dia"));
+      if (dia === 1 || dia % CALENDARIO.pasoDigitos === 0) {
+        capa.appendChild(crearDigitoCalendario(dia, anguloDia + anchoMes / dias / 2));
+      }
     }
   }
 }

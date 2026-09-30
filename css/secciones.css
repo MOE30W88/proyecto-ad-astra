@@ -1,0 +1,11 @@
+/* css/secciones.css — secciones inferiores de la página: infografía y pie (solo estructura, sin contenido todavía) */
+.seccion-pagina { width: min(100% - 4rem, 1500px); margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--linea); }
+.seccion-pagina h2 { margin: 0 0 1.5rem; text-align: center; font-weight: normal; font-size: 1.15rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--acento); }
+/* Recuadro provisional para ver el tamaño de la sección; quitar la clase "esqueleto" al llenarla */
+.contenido-seccion.esqueleto { min-height: 320px; border: 1px dashed var(--linea); border-radius: 14px; }
+
+.pie { border-top: 1px solid var(--linea); padding: 2.5rem clamp(1rem, 4vw, 3rem) 1.5rem; }
+.pie-columnas { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; width: min(100%, 1500px); margin: 0 auto; }
+.pie-bloque { min-height: 120px; }
+.pie-bloque h3 { margin: 0 0 1rem; font-weight: normal; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--acento); }
+.pie-copy { margin: 2rem 0 0; text-align: center; font-size: 0.78rem; letter-spacing: 0.12em; color: var(--texto-suave); }

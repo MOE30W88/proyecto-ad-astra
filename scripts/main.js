@@ -22,6 +22,7 @@ function actualizar() {
   const ahora = obtenerFechaActual();
   actualizarEventosSolaresSiCambio(ahora);
   actualizarPanelResultados(ahora);
+  actualizarPanelPlanetas(ahora);
  
   const textoHuso = textoHusoHorario(obtenerHusoHorario(ahora));
   if (etiquetaHuso.textContent !== textoHuso) {
@@ -57,6 +58,8 @@ function actualizar() {
   const anguloCal = anguloCalendario(ahora);
   capaCalendario.setAttribute("transform", `rotate(${anguloCal} 600 600)`);
   actualizarAnilloEstaciones(ahora, anguloCal);
+  actualizarConstelaciones(ahora, anguloCal);
+  actualizarRotacion(ahora);
   actualizarEtiquetasCalendario(anguloCal);
  
   let alturaSolar = null;

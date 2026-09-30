@@ -1,9 +1,23 @@
+/*css/base.css */
+
 body {
   margin: 0;
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: #0b1020;
+  background:
+    radial-gradient(
+      circle at 50% 38%,
+      rgba(35, 75, 125, 0.16) 0%,
+      rgba(18, 40, 75, 0.10) 32%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(25, 55, 100, 0.10) 0%,
+      transparent 45%
+    ),
+    #071126;
 }
 
 main {
@@ -20,15 +34,15 @@ main {
 #hora-digital {
   margin: 1rem 0 0;
   text-align: center;
-  font-family: Georgia, serif;
-  font-size: 1.5rem;
+  font-family: var(--fuente);
+  font-size: 0.3rem;
   color: #c9a24b;
 }
 
 #ubicacion {
   margin: 0.25rem 0 0;
   text-align: center;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   font-size: 1rem;
   color: #8fb4d9;
   letter-spacing: 0.5px; /* Separa un poco los caracteres generales */
@@ -37,7 +51,7 @@ main {
 #pais-ciudad {
   margin: 0.15rem 0 0;
   text-align: center;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   font-size: 0.9rem;
   color: #c9a24b; /* Tono dorado sutil */
   opacity: 0.85;
@@ -46,7 +60,7 @@ main {
 #fecha-digital {
   margin: 0.25rem 0 0;
   text-align: center;
-  font-family: Georgia, serif;
-  font-size: 1rem;
-  color: #8fb4d9;
+  font-family: var(--fuente);
+  font-size: 0.3rem;
+  color: #c9a24b;
 }

@@ -13,7 +13,6 @@ function inicializarViajero() {
   const inputFechaHora = document.getElementById("input-fecha-hora");
   const botonIrFecha = document.getElementById("boton-ir-fecha");
   const botonAhora = document.getElementById("boton-ahora");
-  const botonesVelocidad = document.querySelectorAll(".boton-velocidad");
 
   botonIrFecha.addEventListener("click", () => {
     if (!inputFechaHora.value) return;
@@ -23,18 +22,9 @@ function inicializarViajero() {
   botonAhora.addEventListener("click", () => {
     volverAAhora();
     inputFechaHora.value = "";
-    botonesVelocidad.forEach((b) => b.classList.remove("activa"));
-    botonesVelocidad[0].classList.add("activa");
+    reiniciarControlesVelocidad(); // velocidad.js: vuelve a x1 hacia adelante
   });
 
-  botonesVelocidad.forEach((b) => {
-    b.addEventListener("click", () => {
-      const valor = Number(b.dataset.velocidad);
-      establecerMultiplicador(valor);
-      botonesVelocidad.forEach((otro) => otro.classList.remove("activa"));
-      b.classList.add("activa");
-    });
-  });
 
     const inputLatitud = document.getElementById("input-latitud");
     const inputLongitud = document.getElementById("input-longitud");

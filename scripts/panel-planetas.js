@@ -1,0 +1,67 @@
+// scripts/panel-planetas.js
+// Cajón derecho "Sistema solar": tabla con los datos reales de cada planeta.
+// Se construye al cargar y se actualiza ~2 veces por segundo mientras está abierto.
+ 
+const filasPlanetas = {}; // nombre -> { distancia, longitud }
+let ultimoRefrescoPlanetas = 0;
+ 
+function textoPeriodo(anios) {
+  if (anios < 1) return `${Math.round(anios * 365.25)} d`;
+  return `${anios.toFixed(anios < 10 ? 2 : 1).replace(".", ",")} a`;
+}
+ 
+function construirTablaPlanetas() {
+  const cuerpo = document.getElementById("tabla-planetas-cuerpo");
+  if (!cuerpo) return;
+  PLANETAS.forEach((p) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML =
+      `<td><span class="punto-planeta" style="background:${p.color}"></span>${p.nombre}</td>` +
+      `<td class="num"></td><td class="num"></td><td class="num">${textoPeriodo(p.periodo)}</td>`;
+    cuerpo.appendChild(fila);
+    const celdas = fila.querySelectorAll("td");
+    filasPlanetas[p.nombre] = { distancia: celdas[1], longitud: celdas[2] };
+  });
+}
+ 
+// Arco mínimo (°) que contiene a todas las longitudes: menor = más alineados
+function arcoQueAbarcan(longitudes) {
+  const orden = [...longitudes].sort((a, b) => a - b);
+  let mayorHueco = 360 - orden[orden.length - 1] + orden[0];
+  for (let i = 1; i < orden.length; i++) {
+    mayorHueco = Math.max(mayorHueco, orden[i] - orden[i - 1]);
+  }
+  return 360 - mayorHueco;
+}
+ 
+function actualizarPanelPlanetas(ahora) {
+  const cajon = document.getElementById("cajon-planetas");
+  if (!cajon || !cajon.classList.contains("abierto")) return;
+  const t = performance.now();
+  if (t - ultimoRefrescoPlanetas < 500) return;
+  ultimoRefrescoPlanetas = t;
+ 
+  const longitudes = [];
+  PLANETAS.forEach((p) => {
+    const pos = posicionHeliocentrica(p, ahora);
+    longitudes.push(pos.longitud);
+    const fila = filasPlanetas[p.nombre];
+    fila.distancia.textContent = pos.distancia.toFixed(3).replace(".", ",");
+    fila.longitud.textContent = `${pos.longitud.toFixed(1).replace(".", ",")}°`;
+  });
+  document.getElementById("arco-planetas").textContent =
+    `${arcoQueAbarcan(longitudes).toFixed(0)}°`;
+}
+ 
+function inicializarCajonPlanetas() {
+  const boton = document.getElementById("boton-planetas");
+  const cajon = document.getElementById("cajon-planetas");
+  if (!boton || !cajon) return;
+  boton.addEventListener("click", () => {
+    cajon.classList.toggle("abierto");
+    ultimoRefrescoPlanetas = 0; // refresca de inmediato al abrir
+  });
+}
+ 
+construirTablaPlanetas();
+inicializarCajonPlanetas();

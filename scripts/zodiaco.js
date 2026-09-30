@@ -1,7 +1,7 @@
 const CENTRO_ZODIACO_X = 600;
 const CENTRO_ZODIACO_Y = 463.4;
 const RADIO_ZODIACO = 343.4;
-const RADIO_ETIQUETA = 290;
+const RADIO_ETIQUETA = 300;
 
 const SIGNOS = [
   { nombre: "Capricornio", simbolo: "♑" },
@@ -65,7 +65,12 @@ function crearEtiquetaCurvaZodiaco(signo, medio) {
   textPath.setAttribute("href", "#" + pathId);
   textPath.setAttribute("startOffset", "50%");
   textPath.setAttribute("text-anchor", "middle");
-  textPath.textContent = texto;
+  const simbolo = document.createElementNS(SVG_NS, "tspan");
+  simbolo.setAttribute("class", "simbolo-zodiacal");
+  simbolo.textContent = `${signo.simbolo}\uFE0E`;
+  const nombre = document.createElementNS(SVG_NS, "tspan");
+  nombre.textContent = `\u00A0${signo.nombre}`;
+  textPath.append(simbolo, nombre);
 
   textoEl.appendChild(textPath);
   grupo.appendChild(textoEl);

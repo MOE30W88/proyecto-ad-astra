@@ -12,7 +12,7 @@
   color: #f2d27a;
   border: 1px solid #f2d27a;
   padding: 8px 14px;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   cursor: pointer;
   border-radius: 4px;
 }
@@ -45,7 +45,7 @@
 
 .seccion-viajero {
   color: #cddef7;
-  font-family: Georgia, serif;
+  font-family: var(--fuente);
   margin-bottom: 24px;
 }
 

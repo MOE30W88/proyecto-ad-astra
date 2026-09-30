@@ -3,13 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proyecto AD ASTRA</title>
+    <title>AD ASTRA — Reloj astronómico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/reloj.css" />
     <link rel="stylesheet" href="css/viajero.css" />
-    <link rel="stylesheet" href="css/caja-reloj.css" />
     <link rel="stylesheet" href="css/panel.css" />
+    <link rel="stylesheet" href="css/planetas.css" />
+    <link rel="stylesheet" href="css/tema.css" />
+    <link rel="stylesheet" href="css/estructura.css" />
+    <link rel="stylesheet" href="css/rotacion.css" />
+    <link rel="stylesheet" href="css/velocidad.css" />
+    <link rel="stylesheet" href="css/secciones.css" />
     <script src="scripts/hora-local.js" defer></script>
     <script src="scripts/hora.js" defer></script>
     <script src="scripts/estado-tiempo.js" defer></script>
@@ -19,6 +27,7 @@
     <script src="scripts/ubicacion.js" defer></script>
     <script src="scripts/astronomia.js" defer></script>
     <script src="scripts/fase-lunar.js" defer></script>
+    <script src="scripts/planetas.js" defer></script>
     <script src="scripts/traslacion.js" defer></script>
     <script src="scripts/indicador-zodiaco.js" defer></script>
     <script src="scripts/tropicos.js" defer></script>
@@ -27,22 +36,47 @@
     <script src="scripts/zodiaco.js" defer></script>
     <script src="scripts/efemerides-solares.js" defer></script>
     <script src="scripts/panel-resultados.js" defer></script>
+    <script src="scripts/panel-planetas.js" defer></script>
+    <script src="scripts/enfoque-capas.js" defer></script>
+    <script src="scripts/constelaciones.js" defer></script>
+    <script src="scripts/rotacion.js" defer></script>
+    <script src="scripts/velocidad.js" defer></script>
+    <script src="scripts/tema.js" defer></script>
     <script src="scripts/main.js" defer></script>
   </head>
   <body>
     <div id="contenedor-app">
-      <main>
-        <nav id="caja-menu" class="caja-menu">
-          <a class="menu-logo" href="#caja-reloj">AD ASTRA</a>
-          <div class="menu-enlaces">
-            <a href="#caja-reloj">Reloj</a>
-            <a href="#panel-resultados">Resultados</a>
-            <a href="#">Cómo funciona</a>
-            <a href="#">Blog</a>
-          </div>
+      <header class="cabecera">
+        <a class="logo" href="#">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="15" cy="15" r="13"/><path d="M15 2v26M9 22 21 8"/></svg>
+          <span>AD ASTRA</span>
+        </a>
+        <nav class="nav-capas" aria-label="Capas del reloj">
+          <button type="button" data-enfoque="todas" class="activa">Astrolabio</button>
+          <button type="button" data-enfoque="reloj">Reloj</button>
+          <button type="button" data-enfoque="dia-noche">Día y noche</button>
+          <button type="button" data-enfoque="zodiaco">Zodíaco</button>
+          <button type="button" data-enfoque="calendario">Calendario</button>
+          <button type="button" data-enfoque="sistema-solar">Sistema solar</button>
+          <button type="button" data-enfoque="rotacion">Rotación</button>
         </nav>
-        <div class="fila-reloj">
-          <aside id="cajon-viajero" class="cajon-viajero">
+        <button type="button" id="boton-tema" class="boton-tema" title="Modo día / noche (próximamente)" aria-label="Modo día / noche (próximamente)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </header>
+      <main>
+        <section class="hero">
+          <p class="hero-etiqueta">Reloj astronómico</p>
+          <h1 class="hero-titular">El cielo, el tiempo y la posición del Sol en una sola esfera.</h1>
+        </section>
+        <section id="escenario" class="escenario">
+          <button type="button" id="boton-viajar" class="tirador tirador-izq" title="Viajar en el tiempo y el lugar" aria-label="Viajar en el tiempo y el lugar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+          </button>
+          <button type="button" id="boton-planetas" class="tirador tirador-der" title="Sistema solar" aria-label="Sistema solar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="8"/><circle cx="18" cy="7" r="1.6" fill="currentColor"/></svg>
+          </button>
+          <aside id="cajon-viajero" class="panel-flotante panel-izq">
             <section class="seccion-viajero">
               <h3>Reloj</h3>
               <label for="input-fecha-hora">Fecha y hora</label>
@@ -51,140 +85,159 @@
                 <button id="boton-ir-fecha">Ir a esta fecha</button>
                 <button id="boton-ahora">⟲ Ahora</button>
               </div>
-              <label>Velocidad</label>
-              <div class="fila-botones" id="botones-velocidad">
-                <button data-velocidad="1" class="boton-velocidad activa">
-                  x1
-                </button>
-                <button data-velocidad="100" class="boton-velocidad">x100</button>
-                <button data-velocidad="1000" class="boton-velocidad">
-                  x1000
-                </button>
-                <button data-velocidad="10000" class="boton-velocidad">
-                  x10000
-                </button>
-              </div>
             </section>
             <section class="seccion-viajero">
               <h3>Mapa</h3>
               <label for="input-latitud">Latitud</label>
-              <input
-                type="number"
-                id="input-latitud"
-                step="0.0001"
-                placeholder="13.6927"
-              />
+              <input type="number" id="input-latitud" step="0.0001" placeholder="13.6927" />
               <label for="input-longitud">Longitud</label>
-              <input
-                type="number"
-                id="input-longitud"
-                step="0.0001"
-                placeholder="-89.1917"
-              />
+              <input type="number" id="input-longitud" step="0.0001" placeholder="-89.1917" />
               <div class="fila-botones">
                 <button id="boton-ir-ubicacion">Ir a esta ubicación</button>
                 <button id="boton-ubicacion-real">⟲ Mi ubicación</button>
               </div>
             </section>
           </aside>
-          <section id="caja-reloj" class="caja-reloj">
-          <button id="boton-viajar" class="boton-viajar">☰ Viajar</button>
+          <aside id="cajon-planetas" class="panel-flotante panel-der">
+            <section class="seccion-planetas">
+              <h3>Sistema solar</h3>
+              <p class="nota-planetas">Posiciones heliocéntricas reales. Las distancias del dial usan una escala comprimida.</p>
+              <table class="tabla-planetas">
+                <thead><tr><th>Planeta</th><th>UA</th><th>Long.</th><th>Período</th></tr></thead>
+                <tbody id="tabla-planetas-cuerpo"></tbody>
+              </table>
+              <p class="arco-planetas">Arco que abarcan los 8 planetas: <strong id="arco-planetas">—</strong><br />(menor = más alineados)</p>
+            </section>
+          </aside>
           <svg
-            id="reloj"
-            viewBox="-360 -360 1920 1920"
-            role="img"
-            aria-label="Reloj astronómico"
-          >
-            <g id="capa-fija">
-              <circle class="guia" cx="600" cy="600" r="480" />
-              <circle class="guia" cx="600" cy="600" r="600" />
-              <circle class="guia" cx="600" cy="600" r="780" />
-            </g>
-            <g id="capa-tropicos"></g>
-            <g id="capa-referencias-estacionales"></g>
-            <g id="capa-eventos-solares"></g>
-            <g id="capa-marco"></g>
-            <g id="capa-minuto">
-              <line
-                id="aguja-minuto"
-                class="aguja aguja-minuto"
-                x1="600"
-                y1="600"
-                x2="600"
-                y2="120"
-              />
-            </g>
-            <g id="capa-segundo">
-              <line
-                id="aguja-segundo"
-                class="aguja aguja-segundo"
-                x1="600"
-                y1="600"
-                x2="600"
-                y2="120"
-              />
-            </g>
-            <g id="capa-hora">
-              <line
-                id="aguja-hora"
-                class="aguja"
-                x1="600"
-                y1="600"
-                x2="600"
-                y2="120"
-              />
-            </g>
-            <g id="capa-zodiaco">
-              <circle class="guia-zodiaco" cx="600" cy="463.4" r="343.4" />
-              <circle class="guia-zodiaco" cx="600" cy="463.4" r="230" />
-            </g>
-            <g id="capa-indicador-zodiaco"></g>
-            <g id="capa-marcador-estacional"></g>
-            <g id="capa-orbita-terrestre"></g>
-            <g id="capa-estaciones"></g>
-            <g id="capa-calendario"></g>
-            <g id="capa-marcador-calendario"></g>
-            <g id="capa-sol">
-              <circle id="sol" cx="600" cy="600" r="43" />
-            </g>
-            <g id="capa-luna">
-              <g id="capa-fase-lunar"></g>
-            </g>
-            <g id="capa-marcadores-reloj"></g>
-            <g id="capa-fija-ejes">
-              <line
-                class="eje-cartesiano"
-                x1="-230"
-                y1="600"
-                x2="1430"
-                y2="600"
-              />
-              <text class="etiqueta-eje" x="1445" y="600">0° Horizonte</text>
-              <text
-                id="etiqueta-huso"
-                class="etiqueta-eje"
-                x="600"
-                y="-250"
-                text-anchor="middle"
-              ></text>
-            </g>
-            <g id="capa-sol-central">
-              <circle id="sol-central" cx="600" cy="600" r="35" />
-            </g>
-          </svg>
+          id="reloj"
+          viewBox="-460 -400 2120 1990"
+          role="img"
+          aria-label="Reloj astronómico"
+        >
+          <g id="capa-fija">
+            <circle class="guia" cx="600" cy="600" r="480" />
+            <circle class="guia" cx="600" cy="600" r="600" />
+            <circle class="guia" cx="600" cy="600" r="780" />
+            <circle class="guia" cx="600" cy="600" r="900" />
+          </g>
+          <g id="capa-tropicos"></g>
+          <g id="capa-referencias-estacionales"></g>
+          <g id="capa-eventos-solares"></g>
+          <g id="capa-fondo-reloj">
+            <circle class="aro-lectura-reloj" cx="600" cy="600" r="665" />
+          </g>
+          <g id="capa-marco"></g>
+          <g id="capa-orbitas-planetarias"></g>
+          <g id="capa-minuto">
+            <line
+              id="aguja-minuto"
+              class="aguja aguja-minuto"
+              x1="600"
+              y1="600"
+              x2="600"
+              y2="120"
+            />
+          </g>
+          <g id="capa-segundo">
+            <line
+              id="aguja-segundo"
+              class="aguja aguja-segundo"
+              x1="600"
+              y1="600"
+              x2="600"
+              y2="120"
+            />
+          </g>
+          <g id="capa-hora">
+            <line
+              id="aguja-hora"
+              class="aguja"
+              x1="600"
+              y1="600"
+              x2="600"
+              y2="120"
+            />
+          </g>
+          <g id="capa-zodiaco">
+            <circle class="guia-zodiaco" cx="600" cy="463.4" r="343.4" />
+            <circle class="guia-zodiaco" cx="600" cy="463.4" r="260" />
+          </g>
+          <g id="capa-indicador-zodiaco"></g>
+          <g id="capa-marcador-estacional"></g>
+          <g id="capa-orbita-terrestre"></g>
+          <g id="capa-planetas"></g>
+          <g id="capa-estaciones"></g>
+          <g id="capa-calendario"></g>
+          <g id="capa-marcador-calendario"></g>
+          <g id="capa-sol">
+            <circle id="sol" cx="600" cy="600" r="43" />
+          </g>
+          <g id="capa-luna">
+            <g id="capa-fase-lunar"></g>
+          </g>
+          <g id="capa-marcadores-reloj"></g>
+          <g id="capa-fija-ejes">
+            <line
+              class="eje-cartesiano"
+              x1="-360"
+              y1="600"
+              x2="1560"
+              y2="600"
+            />
+            <text class="etiqueta-eje" x="1600" y="600" text-anchor="middle" transform="rotate(90 1620 600)" >0° Horizonte</text>
+            <text
+              id="etiqueta-huso"
+              class="etiqueta-eje"
+              x="600"
+              y="-390"
+              text-anchor="middle"
+            ></text>
+          </g>
+          <g id="capa-sol-central">
+            <circle id="sol-central" cx="600" cy="600" r="35" />
+          </g>
+          <g id="capa-rotacion"></g>
+          <g id="capa-eje-rotacion"></g>
+        </svg>
           <p id="hora-digital"></p>
           <p id="fecha-digital"></p>
-          </section>
+          <div id="controles-tiempo-izq" class="controles-tiempo controles-tiempo-izq" data-sentido="-1" role="group" aria-label="Retroceder el tiempo">
+        <div class="controles-tiempo-botones">
+          <button type="button" class="control-tiempo-boton" data-tipo="normal" title="Reproducir hacia atrás (x1)" aria-label="Reproducir hacia atrás (x1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+          <button type="button" class="control-tiempo-boton" data-tipo="rapido" title="Retroceder más rápido (x10, x100, x1000…)" aria-label="Retroceder más rápido (x10, x100, x1000…)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5v14l9-7zM12 5v14l9-7z"/></svg></button>
         </div>
+        <span class="control-tiempo-etiqueta">x1</span>
+      </div>
+          <div id="controles-tiempo-der" class="controles-tiempo controles-tiempo-der" data-sentido="1" role="group" aria-label="Adelantar el tiempo">
+        <div class="controles-tiempo-botones">
+          <button type="button" class="control-tiempo-boton" data-tipo="rapido" title="Adelantar más rápido (x10, x100, x1000…)" aria-label="Adelantar más rápido (x10, x100, x1000…)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5v14l9-7zM12 5v14l9-7z"/></svg></button>
+          <button type="button" class="control-tiempo-boton" data-tipo="normal" title="Reproducir a velocidad normal (x1)" aria-label="Reproducir a velocidad normal (x1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+        </div>
+        <span class="control-tiempo-etiqueta">x1</span>
+      </div>
+        </section>
         <section id="panel-resultados" class="panel-resultados">
           <h2>Resultados actuales</h2>
           <div id="grid-civil" class="grid-datos"></div>
-          <details class="bloque-tecnico" open>
+          <details class="bloque-tecnico">
             <summary>Lectura astronómica</summary>
             <div id="grid-astro" class="grid-datos"></div>
           </details>
         </section>
+        <section id="infografia" class="seccion-pagina">
+          <h2>Infografía</h2>
+          <div class="contenido-seccion esqueleto"></div>
+        </section>
       </main>
+      <footer id="pie" class="pie">
+        <div class="pie-columnas">
+          <div id="pie-redes" class="pie-bloque"><h3>Redes</h3></div>
+          <div id="pie-proyecto" class="pie-bloque"><h3>Proyecto</h3></div>
+          <div id="pie-legal" class="pie-bloque"><h3>Legal</h3></div>
+        </div>
+        <p class="pie-copy">© 2026 AD ASTRA</p>
+      </footer>
     </div>
   </body>
 </html>
