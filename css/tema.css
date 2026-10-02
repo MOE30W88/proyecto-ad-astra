@@ -1,31 +1,104 @@
-/* css/tema.css — variables de color por modo. La página lee siempre estas variables. */
- 
+/* css/tema.css — variables de color por modo. La página lee siempre estas variables.
+   DÍA  = piedra clara (tinta azul-negra, acento oro oscuro).   NOCHE = espacio oscuro.
+   Regla: ningún archivo CSS usa colores sueltos; todo sale de estas variables. */
+
 /* Tipografías (Google Fonts: Playfair Display; símbolos zodiacales: Segoe UI Symbol) */
 :root {
   --fuente: "Playfair Display", Georgia, serif;
   --fuente-simbolos: "Segoe UI Symbol", "Apple Symbols", "Noto Sans Symbols 2", "DejaVu Sans", sans-serif;
 }
- 
-/* Modo día: el azul del diseño */
+
+/* ───────── MODO DÍA (por defecto): fondo piedra, tinta oscura ───────── */
 :root,
 [data-tema="dia"] {
-  --fondo: radial-gradient(ellipse at 50% 30%, #12234a 0%, #0a1226 55%, #070c1a 100%);
-  --panel: rgba(12, 21, 43, 0.9);
-  --linea: rgba(143, 180, 217, 0.25);
-  --texto: #e6eefc;
-  --texto-suave: #a9bbd8; /* contraste ≥ 4.5:1 sobre el fondo */
-  --acento: #c9a24b;
-  --fondo-traslacion: rgba(3, 7, 18, 0.72); /* disco oscuro tras las órbitas */
+  /* superficies y texto */
+  /* centro algo más oscuro: el contrario del brillo central del modo noche */
+  --fondo: radial-gradient(ellipse at 30% 40%, #d8d6d0 0%, #e1dfda 55%, #ecebe7 100%);
+  --estrellas-intensidad: 1;
+  --panel: rgba(244, 243, 239, 0.92);
+  --linea: rgba(27, 34, 51, 0.22);
+  --texto: #1b2233;
+  --texto-suave: #5b6679;
+  --acento: #8f6b1c;
+  --fondo-traslacion: rgba(27, 34, 51, 0.08);   /* disco tras las órbitas */
+  --aro-lectura: rgba(246, 244, 238, 0.78);     /* aro tras los números del Reloj al enfocarlo */
+  --sombra: 0 8px 24px rgba(27, 34, 51, 0.18);
+  /* acentos */
+  --oro: #8f6b1c;
+  --oro-claro: #7a5a14;
+  --hielo: #46688f;
+  --alerta: #b3402f;
+  /* tintas */
+  --tinta: #1b2233;
+  --tinta-suave: #38425a;
+  --tinta-tenue: #5b6679;
+  /* superficies del reloj */
+  --marino: #c8cdd8;
+  --superficie: #f4f3ef;
+  --superficie-2: #e8e6e0;
+  --borde-sutil: rgba(27, 34, 51, 0.16);
+  --borde-oro: rgba(143, 107, 28, 0.4);
+  /* astros (con contorno para que se vean sobre fondo claro) */
+  --sol: #e0a21c;
+  --sol-brillo: #b67a0a;
+  --sol-contorno: #7a4f00;
+  --luna-luz: #ece8dc;
+  --luna-sombra: #394156;
+  --luna-contorno: #394156;
+  --tierra: #2f6aa6;
+  --estacion-opacidad: 0.8;   /* el anillo de estaciones necesita más cuerpo sobre fondo claro */
+  /* trópicos */
+  --tropico-cancer: #4f7d57;
+  --tropico-capricornio: #a8683a;
+  /* globo de Rotación */
+  --globo-1: #dfe9f3;
+  --globo-2: #9db9d4;
+  --globo-3: #46688f;
+  --globo-linea: #1b2233;
 }
- 
-/* Modo noche: por ahora el azul plano de antes. Aquí irá el fondo de la Vía Láctea. */
+
+/* ───────── MODO NOCHE: espacio profundo. Las estrellas sutiles las pinta css/fondo-estrellas.css ───────── */
 [data-tema="noche"] {
-  --fondo: #0b1020;
-  --panel: rgba(8, 13, 28, 0.92);
+  --fondo: radial-gradient(ellipse at 30% 40%, #090f24 0%, #050813 55%, #03050c 100%);
+  --estrellas-intensidad: 1;
+  --panel: rgba(6, 10, 22, 0.88);
   --linea: rgba(143, 180, 217, 0.2);
   --texto: #dfe8fa;
   --texto-suave: #9db0cf;
   --acento: #c9a24b;
   --fondo-traslacion: rgba(2, 5, 12, 0.8);
+  --aro-lectura: rgba(3, 7, 18, 0.6);
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --oro: #c9a24b;
+  --oro-claro: #e8d08a;
+  --hielo: #8fb4d9;
+  --alerta: #cf5a4a;
+
+  --tinta: #e6eefc;
+  --tinta-suave: #c4d3ea;
+  --tinta-tenue: #a9bbd8;
+
+  --marino: #12234a;
+  --superficie: #0e1428;
+  --superficie-2: #161e3a;
+  --borde-sutil: rgba(143, 180, 217, 0.18);
+  --borde-oro: rgba(201, 162, 75, 0.35);
+
+  --sol: #f4cf6a;
+  --sol-brillo: #e3a63a;
+  --sol-contorno: transparent;
+  --luna-luz: #cfd8e3;
+  --luna-sombra: #2a2f3a;
+  --luna-contorno: transparent;
+  --tierra: #5b93d1;
+  --estacion-opacidad: 0.4;
+
+  --tropico-cancer: #86b08c;
+  --tropico-capricornio: #c98d62;
+
+  --globo-1: #c3d6e8;
+  --globo-2: #7fa3c6;
+  --globo-3: #2f527a;
+  --globo-linea: #0b2a4a;
 }
- 

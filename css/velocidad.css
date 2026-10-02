@@ -27,12 +27,15 @@
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 .controles-tiempo-izq .control-tiempo-boton svg { transform: scaleX(-1); } /* mismos iconos, apuntando hacia atrás */
-.control-tiempo-boton:hover { background: rgba(201, 162, 75, 0.12); border-color: var(--acento); color: var(--acento); }
-.control-tiempo-boton.activa { border-color: var(--acento); color: var(--acento); background: rgba(201, 162, 75, 0.15); }
+.control-tiempo-boton:hover { background: color-mix(in srgb, var(--oro) 12%, transparent); border-color: var(--acento); color: var(--acento); }
+.control-tiempo-boton.activa { border-color: var(--acento); color: var(--acento); background: color-mix(in srgb, var(--oro) 15%, transparent); }
 
 .control-tiempo-etiqueta { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--texto-suave); opacity: 0.55; transition: color 0.2s, opacity 0.2s; }
 .controles-tiempo.activa .control-tiempo-etiqueta { color: var(--acento); opacity: 1; }
 
+/* Pantallas angostas: los controles pasan bajo el reloj, cada uno debajo de su hora/fecha */
 @media (max-width: 1100px) {
-  .controles-tiempo { position: static; display: inline-flex; margin: 0.6rem 1rem 0; }
+  .controles-tiempo { position: static; margin: 0.4rem 0 0; }
+  .controles-tiempo-izq { grid-column: 1; grid-row: 3; justify-self: end; }
+  .controles-tiempo-der { grid-column: 2; grid-row: 3; justify-self: start; }
 }

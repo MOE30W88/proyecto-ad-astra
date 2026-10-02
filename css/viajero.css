@@ -8,9 +8,9 @@
   top: 16px;
   left: 16px;
   z-index: 5; 
-  background: #1a2138;
-  color: #f2d27a;
-  border: 1px solid #f2d27a;
+  background: var(--superficie-2);
+  color: var(--oro-claro);
+  border: 1px solid var(--oro-claro);
   padding: 8px 14px;
   font-family: var(--fuente);
   cursor: pointer;
@@ -24,8 +24,8 @@
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-  background: #0f1424;
-  border: 0 solid rgba(201, 162, 75, 0.35);
+  background: var(--superficie);
+  border: 0 solid var(--borde-oro);
   border-radius: 20px;
   opacity: 0;
   transition: width 0.3s ease, margin-right 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
@@ -44,13 +44,13 @@
 }
 
 .seccion-viajero {
-  color: #cddef7;
+  color: var(--tinta-suave);
   font-family: var(--fuente);
   margin-bottom: 24px;
 }
 
 .seccion-viajero h3 {
-  color: #f2d27a;
+  color: var(--oro-claro);
   margin-bottom: 12px;
 }
 
@@ -65,9 +65,9 @@
   width: 100%;
   box-sizing: border-box;
   padding: 6px;
-  background: #1a2138;
-  border: 1px solid #2a3050;
-  color: #cddef7;
+  background: var(--superficie-2);
+  border: 1px solid var(--borde-sutil);
+  color: var(--tinta-suave);
   border-radius: 4px;
 }
 
@@ -79,18 +79,18 @@
 
 .fila-botones button {
   flex: 1;
-  background: #1a2138;
-  color: #cddef7;
-  border: 1px solid #2a3050;
+  background: var(--superficie-2);
+  color: var(--tinta-suave);
+  border: 1px solid var(--borde-sutil);
   padding: 6px;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .boton-velocidad.activa {
-  background: #f2d27a;
-  color: #0f1424;
-  border-color: #f2d27a;
+  background: var(--oro-claro);
+  color: var(--superficie);
+  border-color: var(--oro-claro);
 }
 
 @media (max-width: 800px) {

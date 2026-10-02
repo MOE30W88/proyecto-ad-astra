@@ -48,7 +48,7 @@ function construirPanel() {
     el.className = "tarjeta";
     // Icono automático: iconos/<clave>.svg (o la ruta de t.icono). Si el archivo no existe se queda el ✦
     // Ruta absoluta: dentro de una variable CSS, una ruta relativa se resolvería desde css/ y fallaría
-    const rutaIcono = new URL(t.icono || `iconos/${t.k}.svg`, document.baseURI).href;
+    const rutaIcono = new URL(t.icono || `svg/iconos/${t.k}.svg`, document.baseURI).href;
     const sonda = new Image();
     sonda.onload = () => {
       el.classList.add("con-icono");

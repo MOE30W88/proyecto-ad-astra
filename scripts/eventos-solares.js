@@ -5,14 +5,14 @@ const PASO_MINUTOS = 2; // resolución del degradado: más bajo = más suave, m�
 const PARADAS_COLOR = [
   { altura: -90, color: [4, 6, 18] }, // noche profunda, casi negro azulado
   { altura: -18, color: [10, 12, 40] }, // fin crepúsculo astronómico
-  { altura: -12, color: [45, 20, 70] }, // crepúsculo náutico: violeta
-  { altura: -8, color: [120, 35, 65] }, // transición violeta → rojo
-  { altura: -4, color: [200, 60, 40] }, // crepúsculo civil: rojo/naranja intenso
-  { altura: -1, color: [230, 130, 40] }, // naranja cálido cerca del horizonte
-  { altura: 0, color: [235, 180, 80] }, // horizonte: dorado
-  { altura: 8, color: [80, 120, 170] }, // transición a azul día
-  { altura: 30, color: [63, 110, 168] }, // día
-  { altura: 90, color: [63, 110, 168] }, // cenit
+  { altura: -12, color: [44, 26, 72] }, // crepúsculo náutico: violeta
+  { altura: -8, color: [106, 44, 78] }, // transición violeta → rojo
+  { altura: -4, color: [178, 76, 62] }, // crepúsculo civil: rojo/naranja intenso
+  { altura: -1, color: [208, 138, 72] }, // naranja cálido cerca del horizonte
+  { altura: 0, color: [222, 184, 108] }, // horizonte: dorado
+  { altura: 8, color: [86, 118, 160] }, // transición a azul día
+  { altura: 30, color: [68, 104, 150] }, // día
+  { altura: 90, color: [68, 104, 150] }, // cenit
 ];
  
 function colorPorAltura(altura) {

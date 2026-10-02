@@ -66,21 +66,11 @@ scripts/
 - El anillo de estaciones usa el Sol al mediodía UTC de cada día, por lo que sus fronteras son aproximadas (del orden de ±1 día) y la mezcla de colores abarca ±12° de longitud en cada una.
 - Los eclipses no están implementados: las fórmulas actuales no alcanzan la precisión necesaria.
 
-## Cumplidas en la sesión 28-09-2026
-
-- **Agujas**: ajustar sus largos a las nuevas marcas
-- **Hora local del lugar**: que el reloj muestre la hora del lugar al viajar de huso (hoy sigue mostrando la de la computadora)
-- **Deuda técnica**: el anillo día/noche se recalcula cada 60 s reales, así que tras un salto de fecha o a velocidades altas puede quedar desfasado
-- **Panel de información**: "Resultados actuales"
-- **Sub-capa de estaciones**: anillo de 4 colores (740–780) bajo el calendario, calculado con la longitud eclíptica real del Sol
-- **Marcas del calendario**: ahora salen hacia el exterior del aro (r=780); el marcador de hoy se desplazó para no montarse sobre ellas y los nombres de los meses quedaron centrados en r=760
-
 ## Pendientes
 
-- **Panel de información**: "Próximos eventos"
-- **Distinción de capas por cursor**: resaltar la capa bajo el cursor y mostrar su nombre
-- **Círculo interior**: nuevas ideas por definir
 - **Nodos lunares y eclipses**: incluye la luna roja (el motor de color ya está preparado)
 - **Astrales**: lluvias de meteoros, cometas y planetas, según visibilidad por ubicación
-- **Viajero avanzado**: mapa interactivo y selector de fecha propio
-- **Landing page** con sección de blog, y publicación en GitHub Pages
+
+- **Panel de información**: "Próximos eventos"
+- **Landing page** (construyendola por secciones)
+- **Publicación en GitHub Pages**

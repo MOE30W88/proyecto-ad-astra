@@ -1,0 +1,47 @@
+/* css/fondo-estrellas.css — fondo del modo noche: espacio oscuro con estrellas sutiles que parpadean muy lento */
+#fondo-estrellas {
+  display: block;
+  opacity: var(--estrellas-intensidad);
+  position: fixed;
+  inset: 0;
+  z-index: -1;           /* detrás de todo el contenido */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Capa de estrellas fijas con un parpadeo lentísimo (dos capas desfasadas) */
+.estrellas-fondo {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  background-repeat: repeat;
+  animation: estrellas-parpadeo 9s ease-in-out infinite alternate;
+}
+.estrellas-a {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 47% 71%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 83% 34%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 31% 88%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 66% 9%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 91% 79%, var(--tinta) 50%, transparent 51%);
+  background-size: 520px 520px;
+}
+.estrellas-b {
+  background-image:
+    radial-gradient(1px 1px at 27% 43%, var(--oro-claro) 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 58% 22%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1px 1px at 74% 62%, var(--hielo) 50%, transparent 51%),
+    radial-gradient(1px 1px at 8% 76%, var(--tinta) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 39% 6%, var(--oro-claro) 50%, transparent 51%);
+  background-size: 770px 770px;
+  animation-duration: 13s;
+  animation-delay: -5s;
+}
+
+@keyframes estrellas-parpadeo { from { opacity: 0.25; } to { opacity: 0.8; } }
+
+/* Respeta a quien pide menos movimiento: las estrellas quedan quietas */
+@media (prefers-reduced-motion: reduce) {
+  .estrellas-fondo { animation: none; }
+}

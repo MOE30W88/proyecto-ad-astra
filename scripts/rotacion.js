@@ -67,9 +67,9 @@ function construirGlobo(capa) {
 
   const defs = crearSvg("defs", {}, capa);
   const grad = crearSvg("radialGradient", { id: "grad-globo", cx: "42%", cy: "38%", r: "72%" }, defs);
-  crearSvg("stop", { offset: "0%", "stop-color": "#c4ebf7" }, grad);
-  crearSvg("stop", { offset: "55%", "stop-color": "#7dbddd" }, grad);
-  crearSvg("stop", { offset: "100%", "stop-color": "#2f6f9e" }, grad);
+  crearSvg("stop", { offset: "0%", style: "stop-color: var(--globo-1)" }, grad);
+  crearSvg("stop", { offset: "55%", style: "stop-color: var(--globo-2)" }, grad);
+  crearSvg("stop", { offset: "100%", style: "stop-color: var(--globo-3)" }, grad);
   const limbo = crearSvg("radialGradient", { id: "grad-limbo", cx: "50%", cy: "50%", r: "50%" }, defs);
   crearSvg("stop", { offset: "72%", "stop-color": "#04101f", "stop-opacity": "0" }, limbo);
   crearSvg("stop", { offset: "100%", "stop-color": "#04101f", "stop-opacity": "0.55" }, limbo);
@@ -87,6 +87,9 @@ function construirGlobo(capa) {
     const especial = lat === 0 ? "ecuador" : Math.abs(lat) === eps || Math.abs(lat) === 90 - eps ? "circulo-notable" : "";
     crearSvg("line", { class: `globo-paralelo ${especial}`.trim(), x1: c - medio, y1: y, x2: c + medio, y2: y }, tierra);
   });
+
+  // Eje de la Tierra dentro del globo (fuera del globo lo dibuja la capa-eje-rotacion, que va al fondo)
+  crearSvg("line", { class: "globo-eje", x1: c, y1: c - R, x2: c, y2: c + R }, tierra);
 
   // Meridianos: semielipses cuyo ancho depende del ángulo respecto al meridiano central
   for (let lon = -180; lon < 180; lon += ROTACION.pasoMeridianos) {

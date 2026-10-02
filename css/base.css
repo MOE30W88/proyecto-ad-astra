@@ -36,7 +36,7 @@ main {
   text-align: center;
   font-family: var(--fuente);
   font-size: 0.3rem;
-  color: #c9a24b;
+  color: var(--oro);
 }
 
 #ubicacion {
@@ -44,7 +44,7 @@ main {
   text-align: center;
   font-family: var(--fuente);
   font-size: 1rem;
-  color: #8fb4d9;
+  color: var(--hielo);
   letter-spacing: 0.5px; /* Separa un poco los caracteres generales */
 }
 
@@ -53,7 +53,7 @@ main {
   text-align: center;
   font-family: var(--fuente);
   font-size: 0.9rem;
-  color: #c9a24b; /* Tono dorado sutil */
+  color: var(--oro); /* Tono dorado sutil */
   opacity: 0.85;
 }
 
@@ -62,5 +62,5 @@ main {
   text-align: center;
   font-family: var(--fuente);
   font-size: 0.3rem;
-  color: #c9a24b;
+  color: var(--oro);
 }

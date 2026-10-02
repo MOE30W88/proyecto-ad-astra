@@ -23,6 +23,13 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   border-bottom: 1px solid var(--linea);
 }
 .logo { display: flex; align-items: center; gap: 0.8rem; color: var(--acento); text-decoration: none; letter-spacing: 0.45em; font-size: 0.95rem; }
+.logo-marca {
+  width: 45px;
+  height: 45px;
+  background-color: currentColor;
+  -webkit-mask: url("../svg/logo/logo.svg") center / contain no-repeat;
+  mask: url("../svg/logo/logo.svg") center / contain no-repeat;
+}
 .nav-capas { display: flex; gap: clamp(0.75rem, 3vw, 2.25rem); }
 .nav-capas button {
   padding: 0.4rem 0.1rem;
@@ -50,7 +57,29 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   transition: background 0.2s, border-color 0.2s;
 }
 .boton-tema { justify-self: end; }
-.boton-tema:hover, .tirador:hover { background: rgba(201, 162, 75, 0.12); border-color: var(--acento); }
+.cabecera-acciones { display: flex; align-items: center; gap: 0.6rem; justify-self: end; }
+.boton-idioma { font-family: var(--fuente); font-size: 0.78rem; letter-spacing: 0.08em; }
+.control-tema { display: flex; align-items: center; gap: 2px; box-sizing: border-box; height: 42px; padding: 2px; border: 1px solid var(--linea); border-radius: 999px; }
+.control-tema-opcion {
+  display: grid; place-items: center; min-width: 36px; height: 36px; padding: 0 0.55rem;
+  border: 0; border-radius: 999px; background: transparent; color: var(--texto-suave); cursor: pointer;
+  font-family: var(--fuente); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.control-tema-opcion:hover { color: var(--acento); }
+.icono-svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask: center / contain no-repeat;
+  mask: center / contain no-repeat;
+}
+.icono-dia { -webkit-mask-image: url("../svg/iconos/iconodia.svg"); mask-image: url("../svg/iconos/iconodia.svg"); }
+.icono-noche { -webkit-mask-image: url("../svg/iconos/icononoche.svg"); mask-image: url("../svg/iconos/icononoche.svg"); }
+.control-tema-opcion.activa { background: color-mix(in srgb, var(--oro) 16%, transparent); color: var(--acento); box-shadow: inset 0 0 0 1px var(--acento); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.7s; }
+.boton-tema:hover, .tirador:hover { background: color-mix(in srgb, var(--oro) 12%, transparent); border-color: var(--acento); }
  
 /* Hero */
 .hero { padding: 0.3rem 1rem 0; text-align: center; }
@@ -64,7 +93,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   margin: 0.6rem 0 0;
   font-size: clamp(1.1rem, 2.4vw, 1.75rem);
   font-weight: normal;
-  color: #c9d6ee;
+  color: var(--tinta-suave);
 }
 .hero-titular::before,
 .hero-titular::after { content: ""; flex: 0 0 3.5rem; height: 1px; background: var(--acento); opacity: 0.6; }
@@ -72,7 +101,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 /* Escenario (reloj + paneles flotantes) */
 /* El escenario ocupa todo el ancho de la ventana para que los botones queden en los costados */
 .escenario {
-  /* mismo tamaño visual del dial que antes; el lienzo (viewBox 2120 × 1990) es un 10 % mayor para el aro de constelaciones */
+  /* mismo tamaño visual del dial que antes; el lienzo (viewBox 2120 × 1990, centrado en x=600 para que el reloj quede en el centro de la página) es un 10 % mayor para el aro de constelaciones */
   --ancho-reloj: min(100%, calc((100vh - 230px) * 1.104), 1104px);
   position: relative;
   padding: 0.5rem 0 0.5rem;
@@ -94,9 +123,15 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 }
 #hora-digital { right: calc(52% + var(--ancho-reloj) * 0.4262 + 1rem); }
 #fecha-digital { left: calc(49% + var(--ancho-reloj) * 0.5283 + 1rem); }
+/* Pantallas angostas: hora y fecha bajo el reloj, y bajo cada una sus controles de velocidad (ver velocidad.css) */
 @media (max-width: 1100px) {
+  .escenario { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
+  #reloj { grid-column: 1 / -1; }
   #hora-digital,
-  #fecha-digital { position: static; display: inline-block; transform: none; margin: 0 0.9rem; }
+  #fecha-digital { position: static; transform: none; margin: 0.4rem 0 0; }
+  #hora-digital { grid-column: 1; grid-row: 2; justify-self: end; }
+  #fecha-digital { grid-column: 2; grid-row: 2; justify-self: start; }
+  .tirador { top: calc(0.5rem + var(--ancho-reloj) * 0.4717); } /* a la altura del centro del reloj, no del escenario entero */
 }
  
 .tirador { position: absolute; top: 50%; transform: translateY(-50%); z-index: 40; }
@@ -170,7 +205,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   cursor: help;
 }
 .panel-resultados .ayuda:hover,
-.panel-resultados .ayuda:focus { background: rgba(201, 162, 75, 0.15); border-color: var(--acento); color: var(--acento); outline: none; }
+.panel-resultados .ayuda:focus { background: color-mix(in srgb, var(--oro) 15%, transparent); border-color: var(--acento); color: var(--acento); outline: none; }
 .panel-resultados .tarjeta-ayuda,
 .panel-resultados .tarjeta-ayuda[hidden] {
   display: block;
@@ -186,7 +221,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   background: var(--panel);
   border: 1px solid var(--linea);
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--sombra);
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--texto);
@@ -226,19 +261,19 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 /* Aro oscuro de lectura (radio 600–730): solo al elegir "Reloj" en el menú, para contrastar minutos y números romanos */
 .aro-lectura-reloj {
   fill: none;
-  stroke: rgba(3, 7, 18, 0.6);
+  stroke: var(--aro-lectura);
   stroke-width: 130;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.45s ease;
 }
 #reloj.enfoque-reloj .aro-lectura-reloj { opacity: 1; }
- 
+
 /* Dígitos del calendario: solo visibles al elegir "Calendario" en el menú */
 .digito-calendario {
-  fill: #c9d6ee;
+  fill: var(--tinta-suave);
   font-family: var(--fuente);
-  font-size: 24px;
+  font-size: 16px;
   text-anchor: middle;
   dominant-baseline: central;
   opacity: 0;
@@ -280,4 +315,3 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   .nav-capas { grid-column: 1 / -1; grid-row: 2; justify-content: center; flex-wrap: wrap; }
   .panel-izq { left: 0.5rem; } .panel-der { right: 0.5rem; }
 }
- 

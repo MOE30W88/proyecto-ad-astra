@@ -11,7 +11,7 @@ const ENFOQUES = {
   zodiaco: ["capa-zodiaco", "capa-indicador-zodiaco", "capa-referencias-estacionales", "capa-marcador-estacional", "capa-tropicos", "capa-constelaciones"],
   calendario: ["capa-calendario", "capa-marcador-calendario", "capa-estaciones"],
   "sistema-solar": ["capa-orbita-terrestre", "capa-orbitas-planetarias", "capa-planetas", "capa-sol-central"],
-  rotacion: ["capa-rotacion", "capa-eje-rotacion", "capa-marco"],
+  rotacion: ["capa-rotacion", "capa-eje-rotacion"],
 };
  
 function aplicarEnfoque(clave) {

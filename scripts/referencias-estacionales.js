@@ -96,10 +96,10 @@ const ANILLO_ESTACIONES = {
  
 // [r, g, b] — suaves pero distintivos
 const COLORES_ESTACION = {
-  primavera: [111, 191, 115],
-  verano: [242, 193, 78],
-  otonio: [217, 120, 58],
-  invierno: [127, 183, 230],
+  primavera: [122, 168, 128],
+  verano: [214, 178, 104],
+  otonio: [190, 124, 86],
+  invierno: [128, 164, 202],
 };
  
 // Sectores eclípticos 0–90, 90–180, 180–270, 270–360 según el hemisferio
