@@ -7,8 +7,8 @@ const CAPAS_SIEMPRE_VISIBLES = ["capa-fija", "capa-fija-ejes", "capa-fondo-trasl
  
 const ENFOQUES = {
   reloj: ["capa-fondo-reloj", "capa-marco", "capa-minuto", "capa-segundo", "capa-hora", "capa-marcadores-reloj"],
-  "dia-noche": ["capa-eventos-solares", "capa-sol", "capa-luna"],
-  zodiaco: ["capa-zodiaco", "capa-indicador-zodiaco", "capa-referencias-estacionales", "capa-marcador-estacional", "capa-tropicos", "capa-constelaciones"],
+  "dia-noche": ["capa-eventos-solares", "capa-sol", "capa-luna", "capa-horizonte", "capa-marcas-eventos"],
+  zodiaco: ["capa-zodiaco", "capa-indicador-zodiaco", "capa-referencias-estacionales", "capa-marcador-estacional", "capa-tropicos", "capa-constelaciones", "capa-sol-central"],
   calendario: ["capa-calendario", "capa-marcador-calendario", "capa-estaciones"],
   "sistema-solar": ["capa-orbita-terrestre", "capa-orbitas-planetarias", "capa-planetas", "capa-sol-central"],
   rotacion: ["capa-rotacion", "capa-eje-rotacion"],

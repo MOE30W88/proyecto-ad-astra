@@ -60,6 +60,8 @@ function actualizar() {
   actualizarAnilloEstaciones(ahora, anguloCal);
   actualizarConstelaciones(ahora, anguloCal);
   actualizarRotacion(ahora);
+  actualizarHorizonte();
+  actualizarMarcasEventos(ahora);
   actualizarEtiquetasCalendario(anguloCal);
  
   let alturaSolar = null;

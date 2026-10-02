@@ -38,7 +38,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   border-bottom: 2px solid transparent;
   color: var(--texto-suave);
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
 }
@@ -105,6 +105,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   --ancho-reloj: min(100%, calc((100vh - 230px) * 1.104), 1104px);
   position: relative;
   padding: 0.5rem 0 0.5rem;
+  --separacion-lados: 2.6rem; /* distancia de hora/fecha y controles al reloj (deja libre "0° Horizonte") */
 }
 #reloj { width: var(--ancho-reloj); margin: 0 auto; }
 /* Hora (izquierda) y fecha (derecha) a los lados del reloj, a la altura del centro */
@@ -121,8 +122,8 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   letter-spacing: 0.04em;
   color: var(--acento);
 }
-#hora-digital { right: calc(52% + var(--ancho-reloj) * 0.4262 + 1rem); }
-#fecha-digital { left: calc(49% + var(--ancho-reloj) * 0.5283 + 1rem); }
+#hora-digital { right: calc(52% + var(--ancho-reloj) * 0.4262 + var(--separacion-lados)); }
+#fecha-digital { left: calc(49% + var(--ancho-reloj) * 0.5283 + var(--separacion-lados)); }
 /* Pantallas angostas: hora y fecha bajo el reloj, y bajo cada una sus controles de velocidad (ver velocidad.css) */
 @media (max-width: 1100px) {
   .escenario { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
@@ -131,7 +132,6 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   #fecha-digital { position: static; transform: none; margin: 0.4rem 0 0; }
   #hora-digital { grid-column: 1; grid-row: 2; justify-self: end; }
   #fecha-digital { grid-column: 2; grid-row: 2; justify-self: start; }
-  .tirador { top: calc(0.5rem + var(--ancho-reloj) * 0.4717); } /* a la altura del centro del reloj, no del escenario entero */
 }
  
 .tirador { position: absolute; top: 50%; transform: translateY(-50%); z-index: 40; }
@@ -303,8 +303,8 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 .panel-resultados .tarjeta.con-icono::before {
   content: "";
   justify-self: center;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background: var(--acento);
   -webkit-mask: var(--icono) center / contain no-repeat;
   mask: var(--icono) center / contain no-repeat;
@@ -315,3 +315,7 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   .nav-capas { grid-column: 1 / -1; grid-row: 2; justify-content: center; flex-wrap: wrap; }
   .panel-izq { left: 0.5rem; } .panel-der { right: 0.5rem; }
 }
+
+@media (max-width: 1100px) {
+    .tirador { top: auto; bottom: 1.75rem; transform: none; }
+  }

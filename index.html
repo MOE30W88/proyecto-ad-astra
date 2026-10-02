@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="css/secciones.css" />
     <link rel="stylesheet" href="css/fondo-estrellas.css" />
     <link rel="stylesheet" href="css/fondo-lavado.css" />
+    <link rel="stylesheet" href="css/dia-noche.css" />
+    <link rel="stylesheet" href="css/constelaciones.css" />
     <script src="scripts/hora-local.js" defer></script>
     <script src="scripts/hora.js" defer></script>
     <script src="scripts/estado-tiempo.js" defer></script>
@@ -42,6 +44,9 @@
     <script src="scripts/panel-planetas.js" defer></script>
     <script src="scripts/enfoque-capas.js" defer></script>
     <script src="scripts/constelaciones.js" defer></script>
+    <script src="scripts/iconos-svg.js" defer></script>
+    <script src="scripts/horizonte.js" defer></script>
+    <script src="scripts/marcas-eventos.js" defer></script>
     <script src="scripts/rotacion.js" defer></script>
     <script src="scripts/velocidad.js" defer></script>
     <script src="scripts/tema.js" defer></script>
@@ -185,6 +190,7 @@
           <g id="capa-estaciones"></g>
           <g id="capa-calendario"></g>
           <g id="capa-marcador-calendario"></g>
+          <g id="capa-horizonte"></g>
           <g id="capa-sol">
             <circle id="sol" cx="600" cy="600" r="43" />
           </g>
@@ -192,6 +198,7 @@
             <g id="capa-fase-lunar"></g>
           </g>
           <g id="capa-marcadores-reloj"></g>
+          <g id="capa-marcas-eventos"></g>
           <g id="capa-fija-ejes">
             <line
               class="eje-cartesiano"

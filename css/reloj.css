@@ -164,11 +164,11 @@
 .orbita-terrestre {
   fill: none;
   stroke: var(--tinta);
-  stroke-width: 1;
+  stroke-width: 0.5;
   stroke-dasharray: 4 4;
-  opacity: 0.2;
+  opacity: 0.1;
 }
-.marca-orbital { fill: var(--tinta); opacity: 0.125; }
+.marca-orbital { fill: var(--tinta); opacity: 0; }
 #tierra-orbital { fill: var(--tierra); stroke: var(--tinta); stroke-width: 0.5; }
 #sol-central { fill: var(--sol); stroke: var(--sol-contorno); stroke-width: 2.5; filter: drop-shadow(0 0 20px var(--sol-brillo)); }
 

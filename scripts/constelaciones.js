@@ -2,22 +2,38 @@
 // Aro de las 12 constelaciones del zodiaco, fuera del calendario (radios ~850–990).
 // Cada sección abarca 30° de la eclíptica y se coloca en el calendario según el día en que el Sol
 // cruza sus límites. La sección que queda bajo el marcador del calendario se marca como activa.
-// Rota junto con el calendario. Dibujos: constelaciones/<clave>.svg (si no existe, un comodín).
+// Rota junto con el calendario. Dibujos: svg/zodiaco occidental/ (constelaciones, figura, simbolo); si falta uno, un comodín.
 // Depende de: astronomia.js, planetas.js (precesión), calendario.js, marco.js, hora-local.js
  
 const ANILLO_CONSTELACIONES = {
   radioArco: 900,
-  radioGlifo: 845,
+  radioGlifo: 845,        // posición de la constelación en la vista general
   tamanoGlifo: 64,
   radioNombre: 917,
+  // Vista "Zodíaco": cada sección muestra, de dentro hacia afuera, símbolo · figura · constelación
+  radioSimbolo: 806,
+  tamanoSimbolo: 40,
+  radioFigura: 862,
+  tamanoFigura: 72,
+  radioDivisionInterno: 786,  // las 12 divisiones radiales entre secciones
+  radioDivisionExterno: 968,
 };
+// En el enfoque Zodíaco la constelación sale hacia afuera (variable --salida-constelacion en css/constelaciones.css)
+
+// Archivos de svg/zodiaco occidental/. Si el nombre del archivo difiere de la clave, se corrige en ARCHIVO_SIGNO.
+const RUTAS_ZODIACO = {
+  constelacion: (n) => `svg/zodiaco occidental/constelaciones/cons.${n}.svg`,
+  figura: (n) => `svg/zodiaco occidental/figura/fig.${n}.svg`,
+  simbolo: (n) => `svg/zodiaco occidental/simbolo/simb.${n}.svg`,
+};
+const ARCHIVO_SIGNO = { escorpio: "escorpion" };
  
 // Las 12 secciones son IGUALES: 30° de longitud eclíptica cada una, contadas desde el equinoccio de marzo
 // (zodiaco tropical, igual que el anillo del zodiaco y el panel de resultados). Así la sección activa
 // coincide con el signo solar: Libra empieza en el equinoccio de septiembre. Sin tramos cortos ni Ofiuco.
 const INICIO_SECCIONES = 0;
 const AMPLITUD_SECCION = 30;
- 
+
 const CONSTELACIONES = [
   { clave: "aries", nombre: "Aries" },
   { clave: "tauro", nombre: "Tauro" },
@@ -36,7 +52,7 @@ const CONSTELACIONES = [
   desde: normalizarGrados(INICIO_SECCIONES + i * AMPLITUD_SECCION),
   hasta: normalizarGrados(INICIO_SECCIONES + (i + 1) * AMPLITUD_SECCION),
 }));
- 
+
 // ── Cálculo de fechas ──────────────────────────────────────────
 // Longitud del Sol (equinoccio de la fecha, como el zodiaco tropical) al mediodía UTC de cada día; se "desenrolla" para que crezca sin saltos
 function longitudesSolaresDelAnio(anio) {
@@ -114,31 +130,57 @@ function crearGlifoComodin() {
   return g;
 }
  
-const glifosDisponibles = {}; // clave -> true | false (evita volver a sondear en cada redibujo)
- 
-function ponerGlifoReal(grupo, comodin, clave) {
-  const ruta = new URL(`constelaciones/${clave}.svg`, document.baseURI).href;
-  const t = ANILLO_CONSTELACIONES.tamanoGlifo;
-  const usar = () => {
-    const img = document.createElementNS(SVG_NS, "image");
-    img.setAttribute("href", ruta);
-    img.setAttribute("x", -t / 2);
-    img.setAttribute("y", -t / 2);
-    img.setAttribute("width", t);
-    img.setAttribute("height", t);
-    grupo.replaceChild(img, comodin);
-  };
-  if (glifosDisponibles[clave] === true) return usar();
-  if (glifosDisponibles[clave] === false) return;
-  const sonda = new Image();
-  sonda.onload = () => {
-    glifosDisponibles[clave] = true;
-    if (comodin.parentNode === grupo) usar();
-  };
-  sonda.onerror = () => {
-    glifosDisponibles[clave] = false;
-  };
-  sonda.src = ruta;
+// Sondea (una sola vez por archivo) si un SVG existe, para no dibujar máscaras vacías
+const sondeoIconos = {};
+function existeIcono(ruta) {
+  if (!(ruta in sondeoIconos)) {
+    sondeoIconos[ruta] = new Promise((resolver) => {
+      const sonda = new Image();
+      sonda.onload = () => resolver(true);
+      sonda.onerror = () => resolver(false);
+      sonda.src = ruta;
+    });
+  }
+  return sondeoIconos[ruta];
+}
+
+// Filtro de resplandor (desenfoque) que usan las constelaciones; se crea una vez en el <svg>
+function asegurarFiltroResplandor() {
+  const svg = document.getElementById("reloj");
+  if (svg.querySelector("#filtro-resplandor")) return;
+  const defs = document.createElementNS(SVG_NS, "defs");
+  const filtro = document.createElementNS(SVG_NS, "filter");
+  filtro.setAttribute("id", "filtro-resplandor");
+  filtro.setAttribute("x", "-60%");
+  filtro.setAttribute("y", "-60%");
+  filtro.setAttribute("width", "220%");
+  filtro.setAttribute("height", "220%");
+  const desenfoque = document.createElementNS(SVG_NS, "feGaussianBlur");
+  desenfoque.setAttribute("stdDeviation", "3.5");
+  filtro.appendChild(desenfoque);
+  defs.appendChild(filtro);
+  svg.insertBefore(defs, svg.firstChild);
+}
+
+// Pone el SVG del signo (constelación, figura o símbolo) centrado en el origen del contenedor, pintado con la paleta.
+// Si es una constelación, añade un resplandor que parpadea suave (simula el brillo de las estrellas).
+// Devuelve una promesa: true si el archivo existía.
+function agregarIconoZodiaco(contenedor, clave, tipo, tamano, clase, retardoBrillo = null) {
+  const ruta = new URL(RUTAS_ZODIACO[tipo](ARCHIVO_SIGNO[clave] || clave), document.baseURI).href;
+  return existeIcono(ruta).then((existe) => {
+    if (!existe) return false;
+    const icono = iconoEnmascarado(ruta, -tamano / 2, -tamano / 2, tamano, tamano, clase, "xMidYMid");
+    if (retardoBrillo !== null) {
+      const relleno = icono.querySelector("rect");
+      const resplandor = document.createElementNS(SVG_NS, "g"); // el filtro va en un grupo: así desenfoca la forma YA enmascarada
+      resplandor.setAttribute("class", "constelacion-resplandor");
+      resplandor.style.setProperty("--retardo", `-${retardoBrillo}s`);
+      resplandor.appendChild(relleno.cloneNode());
+      icono.insertBefore(resplandor, relleno);
+    }
+    contenedor.appendChild(icono);
+    return true;
+  });
 }
  
 function dibujarConstelaciones(anio) {
@@ -147,9 +189,10 @@ function dibujarConstelaciones(anio) {
   sectoresConstelaciones.length = 0;
   sectorActivo = -1;
   const { N, lam } = longitudesSolaresDelAnio(anio);
-  const { radioArco, radioGlifo, radioNombre } = ANILLO_CONSTELACIONES;
+  const { radioArco, radioGlifo, radioNombre, radioDivisionInterno, radioDivisionExterno } = ANILLO_CONSTELACIONES;
  
-  CONSTELACIONES.forEach((c) => {
+  asegurarFiltroResplandor();
+  CONSTELACIONES.forEach((c, indice) => {
     const dIni = diaDeCruce(lam, c.desde);
     const dFin = diaDeCruce(lam, c.hasta);
     if (dIni === null || dFin === null) return;
@@ -169,14 +212,44 @@ function dibujarConstelaciones(anio) {
     arco.setAttribute("class", "arco-constelacion");
     grupo.appendChild(arco);
  
+    // División radial en el límite inicial de la sección (solo visible en el enfoque Zodíaco)
+    const d0 = polar(radioDivisionInterno, aIni);
+    const d1 = polar(radioDivisionExterno, aIni);
+    const division = document.createElementNS(SVG_NS, "line");
+    division.setAttribute("x1", d0.x);
+    division.setAttribute("y1", d0.y);
+    division.setAttribute("x2", d1.x);
+    division.setAttribute("y2", d1.y);
+    division.setAttribute("class", "division-constelacion");
+    grupo.appendChild(division);
+
+    // Constelación: el comodín se sustituye por el SVG del signo en cuanto carga
     const p = polar(radioGlifo, medio);
     const glifo = document.createElementNS(SVG_NS, "g");
     glifo.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${medio})`);
+    const interior = document.createElementNS(SVG_NS, "g");
+    interior.setAttribute("class", "glifo-constelacion");
     const comodin = crearGlifoComodin();
-    glifo.appendChild(comodin);
+    interior.appendChild(comodin);
+    glifo.appendChild(interior);
     grupo.appendChild(glifo);
-    ponerGlifoReal(glifo, comodin, c.clave);
- 
+    agregarIconoZodiaco(interior, c.clave, "constelacion", ANILLO_CONSTELACIONES.tamanoGlifo, "icono-constelacion", (indice * 0.9) % 5).then((ok) => {
+      if (ok && comodin.parentNode === interior) interior.removeChild(comodin);
+    });
+
+    // Símbolo y figura (solo visibles en el enfoque Zodíaco), sobre la misma línea radial que la constelación
+    const adorno = document.createElementNS(SVG_NS, "g");
+    adorno.setAttribute("class", "adorno-zodiaco");
+    adorno.setAttribute("transform", `rotate(${medio} 600 600)`);
+    const simbolo = document.createElementNS(SVG_NS, "g");
+    simbolo.setAttribute("transform", `translate(600 ${600 - ANILLO_CONSTELACIONES.radioSimbolo})`);
+    const figura = document.createElementNS(SVG_NS, "g");
+    figura.setAttribute("transform", `translate(600 ${600 - ANILLO_CONSTELACIONES.radioFigura})`);
+    adorno.append(simbolo, figura);
+    grupo.appendChild(adorno);
+    agregarIconoZodiaco(simbolo, c.clave, "simbolo", ANILLO_CONSTELACIONES.tamanoSimbolo, "icono-simbolo");
+    agregarIconoZodiaco(figura, c.clave, "figura", ANILLO_CONSTELACIONES.tamanoFigura, "icono-figura");
+
     const pn = polar(radioNombre, medio);
     const nombre = document.createElementNS(SVG_NS, "text");
     nombre.setAttribute("x", pn.x);
@@ -190,7 +263,7 @@ function dibujarConstelaciones(anio) {
     sectoresConstelaciones.push({ grupo, aIni, aFin });
   });
 }
- 
+
 // Marca como activa la sección que está bajo el marcador del calendario (arriba, ángulo 0 de pantalla)
 function marcarConstelacionActiva(anguloCalendario) {
   const a = normalizarGrados(-anguloCalendario); // posición del marcador en el sistema del calendario

@@ -1,0 +1,30 @@
+/* css/constelaciones.css — aro de constelaciones y capa Zodíaco.
+   Iconos: svg/zodiaco occidental/ (constelaciones, figura, simbolo), pintados con la paleta mediante máscara.
+   Vista general: solo la constelación (con brillo). Enfoque "Zodíaco": además divisiones, símbolo y figura. */
+
+/* Pintura de los iconos (el color de cada archivo SVG se ignora; solo cuenta su forma) */
+.icono-constelacion { fill: var(--oro-claro); }
+.constelacion-resplandor { filter: url(#filtro-resplandor); opacity: 0.6; animation: brillo-estelar 5s ease-in-out infinite alternate; animation-delay: var(--retardo, 0s); }
+.constelacion-resplandor rect { fill: var(--oro-claro); }
+.icono-figura { fill: var(--acento); }
+.icono-simbolo { fill: var(--acento); }
+@keyframes brillo-estelar { from { opacity: 0.25; } to { opacity: 0.95; } }
+@media (prefers-reduced-motion: reduce) { .constelacion-resplandor { animation: none; opacity: 0.55; } }
+
+/* Elementos que solo existen en el enfoque Zodíaco (este selector gana al atenuado de capas no enfocadas) */
+.division-constelacion { stroke: var(--acento); stroke-width: 2; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+.adorno-zodiaco { opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+#reloj.enfoque-zodiaco .division-constelacion { opacity: 0.7; }
+#reloj.enfoque-zodiaco .adorno-zodiaco { opacity: 0.75; }
+#reloj.enfoque-zodiaco .constelacion.activa .adorno-zodiaco { opacity: 1; }
+
+/* En el enfoque Zodíaco la constelación sale hacia afuera para dejar sitio al símbolo y la figura,
+   y los nombres se ocultan (el símbolo y la figura ya identifican el signo) */
+.glifo-constelacion { transition: transform 0.6s ease; }
+#reloj.enfoque-zodiaco .glifo-constelacion { transform: translateY(calc(-1 * var(--salida-constelacion, 90px))); }
+.nombre-constelacion { transition: opacity 0.6s ease; }
+#reloj.enfoque-zodiaco .nombre-constelacion { opacity: 0; }
+
+/* Sección activa (la que está bajo el marcador del calendario) */
+.constelacion.activa .arco-constelacion { opacity: 1; stroke-width: 4; }
+.constelacion.activa .nombre-constelacion { opacity: 1; font-weight: bold; }
