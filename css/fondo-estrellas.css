@@ -15,6 +15,7 @@
   inset: 0;
   opacity: 0.7;
   background-repeat: repeat;
+  filter: drop-shadow(0 0 3.5px var(--oro-claro));
   animation: estrellas-parpadeo 9s ease-in-out infinite alternate;
 }
 .estrellas-a {

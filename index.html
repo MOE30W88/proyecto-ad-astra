@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="css/viajero.css" />
     <link rel="stylesheet" href="css/panel.css" />
     <link rel="stylesheet" href="css/planetas.css" />
+    <link rel="stylesheet" href="css/asteroides.css" />
+    <link rel="stylesheet" href="css/alineacion.css" />
+    <link rel="stylesheet" href="css/calendario-chino.css" />
     <link rel="stylesheet" href="css/tema.css" />
     <link rel="stylesheet" href="css/estructura.css" />
     <link rel="stylesheet" href="css/rotacion.css" />
@@ -34,6 +37,10 @@
     <script src="scripts/fase-lunar.js" defer></script>
     <script src="scripts/planetas.js" defer></script>
     <script src="scripts/traslacion.js" defer></script>
+    <script src="scripts/asteroides.js" defer></script>
+    <script src="scripts/alineacion.js" defer></script>
+    <script src="scripts/calendario-chino-calculo.js" defer></script>
+    <script src="scripts/calendario-chino.js" defer></script>
     <script src="scripts/indicador-zodiaco.js" defer></script>
     <script src="scripts/tropicos.js" defer></script>
     <script src="scripts/referencias-estacionales.js" defer></script>
@@ -52,6 +59,7 @@
     <script src="scripts/tema.js" defer></script>
     <script src="scripts/idioma.js" defer></script>
     <script src="scripts/main.js" defer></script>
+    <script src="scripts/infografias.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -60,8 +68,8 @@
       <div class="estrellas-fondo estrellas-b"></div>
     </div>
     <div id="contenedor-app">
-      <header class="cabecera">
-        <a class="logo" href="#">
+      <header id="inicio" class="cabecera">
+        <a class="logo" href="#inicio" aria-label="AD ASTRA, volver al inicio">
           <span class="logo-marca" aria-hidden="true"></span>
           <span>AD ASTRA</span>
         </a>
@@ -246,18 +254,90 @@
             <div id="grid-astro" class="grid-datos"></div>
           </details>
         </section>
-        <section id="infografia" class="seccion-pagina">
-          <h2>Infografía</h2>
-          <div class="contenido-seccion esqueleto"></div>
+        <section id="infografia" class="seccion-pagina seccion-infografias" aria-labelledby="titulo-infografias">
+          <div class="eventos-proximos">
+            <div class="eventos-cabecera">
+              <div>
+                <h2 id="titulo-infografias">Infografías del cielo</h2>
+                <p class="eventos-contexto">Fenómenos próximos según tu hora y ubicación actuales</p>
+              </div>
+              <a class="eventos-enlace" href="#eventos-proximos">Próximos eventos <span aria-hidden="true">↗</span></a>
+            </div>
+            <div id="eventos-proximos" class="eventos-carrusel" role="region" aria-label="Carrusel de próximos eventos">
+              <div id="eventos-pista" class="eventos-pista">
+                <p class="estado-eventos">Los próximos eventos aparecerán aquí cuando estén disponibles los cálculos.</p>
+              </div>
+              <button id="pausar-eventos" class="eventos-pausa" type="button" aria-label="Pausar movimiento de eventos" hidden>Pausar</button>
+            </div>
+          </div>
+
+          <div class="infografia-visor" role="region" aria-label="Visor de infografías">
+            <img id="infografia-fondo" class="infografia-fondo" alt="" hidden />
+            <div id="infografia-vacia" class="infografia-vacia">
+              <span class="infografia-vacia-simbolo" aria-hidden="true">✦</span>
+              <p>El cielo está en observación</p>
+              <span>Las fichas aparecerán aquí al añadir eventos calculados e imágenes SVG en <code>assets/</code>.</span>
+            </div>
+            <article id="infografia-datos" class="infografia-panel" aria-live="polite" hidden>
+              <p id="infografia-tema" class="infografia-tema"></p>
+              <h3 id="infografia-titulo"></h3>
+              <p id="infografia-descripcion"></p>
+              <p id="infografia-detalle" class="infografia-detalle"></p>
+            </article>
+
+            <div class="infografia-galeria" role="group" aria-label="Galería de imágenes del evento">
+              <button id="galeria-anterior" class="galeria-flecha" type="button" aria-label="Ver imagen anterior" hidden>‹</button>
+              <div id="galeria-pista" class="galeria-pista" role="list"></div>
+              <button id="galeria-siguiente" class="galeria-flecha" type="button" aria-label="Ver imagen siguiente" hidden>›</button>
+            </div>
+            <div id="galeria-puntos" class="galeria-puntos" role="group" aria-label="Seleccionar imagen"></div>
+            <p id="galeria-vacia" class="galeria-vacia">La galería se completará con imágenes relacionadas con los próximos eventos.</p>
+          </div>
+          <template id="plantilla-evento">
+            <a class="evento-ticker-item">
+              <span class="evento-icono" aria-hidden="true"><span class="evento-icono-fallback">✦</span><img alt="" hidden /></span>
+              <span class="evento-ticker-texto"><strong></strong><small></small></span>
+            </a>
+          </template>
+          <template id="plantilla-imagen-infografia">
+            <button class="galeria-tarjeta" type="button" role="listitem">
+              <img alt="" loading="lazy" />
+              <span></span>
+            </button>
+          </template>
         </section>
       </main>
       <footer id="pie" class="pie">
-        <div class="pie-columnas">
-          <div id="pie-redes" class="pie-bloque"><h3>Redes</h3></div>
-          <div id="pie-proyecto" class="pie-bloque"><h3>Proyecto</h3></div>
-          <div id="pie-legal" class="pie-bloque"><h3>Legal</h3></div>
+        <div class="pie-contenido">
+          <div class="pie-identidad">
+            <a class="pie-logo" href="#inicio" aria-label="AD ASTRA, volver al inicio">
+              <span class="logo-marca" aria-hidden="true"></span>
+              <span class="pie-nombre">AD ASTRA</span>
+            </a>
+            <p>Una exploración interactiva del cielo, el tiempo y nuestra posición en la Tierra.</p>
+          </div>
+          <nav class="pie-bloque" aria-label="Explorar AD ASTRA">
+            <h2>Explorar</h2>
+            <a href="#inicio">Inicio</a>
+            <a href="#escenario">Astrolabio</a>
+            <a href="#panel-resultados">Resultados</a>
+            <a href="#infografia">Infografías</a>
+          </nav>
+          <nav class="pie-bloque" aria-label="Eventos y observación">
+            <h2>Observación</h2>
+            <a href="#eventos-proximos">Próximos eventos</a>
+            <a href="#escenario">Cielo local</a>
+            <a href="#panel-resultados">Lectura astronómica</a>
+          </nav>
+          <div class="pie-bloque pie-acerca">
+            <h2>El proyecto</h2>
+            <p>Herramienta didáctica. Las distancias y tamaños representados en las capas pueden ser esquemáticos.</p>
+          </div>
         </div>
-        <p class="pie-copy">© 2026 AD ASTRA</p>
+        <div class="pie-final">
+          <span>© 2026 AD ASTRA</span>
+          <a href="#inicio">Volver al inicio ↑</a>
+        </div>
       </footer>
     </div>
   </body>

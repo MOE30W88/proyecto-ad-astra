@@ -46,6 +46,8 @@ function actualizar() {
   const anguloZod = anguloZodiaco(ahora);
   capaZodiaco.setAttribute("transform", `rotate(${anguloZod} 600 600)`);
   actualizarTraslacion(ahora);
+  actualizarAsteroides(ahora);
+  actualizarAlineacion(ahora);
   actualizarEtiquetasZodiaco(anguloZod);
   actualizarIndicadorZodiaco(anguloZod);
   actualizarEventoEstacional(ahora, anguloZod);
@@ -59,6 +61,7 @@ function actualizar() {
   capaCalendario.setAttribute("transform", `rotate(${anguloCal} 600 600)`);
   actualizarAnilloEstaciones(ahora, anguloCal);
   actualizarConstelaciones(ahora, anguloCal);
+  actualizarCalendarioChino(ahora);
   actualizarRotacion(ahora);
   actualizarHorizonte();
   actualizarMarcasEventos(ahora);

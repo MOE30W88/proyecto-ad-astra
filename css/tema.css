@@ -55,6 +55,12 @@
   --globo-2: #9db9d4;
   --globo-3: #46688f;
   --globo-linea: #1b2233;
+  --roca-marron: #8a6240;
+  --roca-negra: #262a33;
+  --roca-contorno: rgba(27, 34, 51, 0.45);
+  --alineacion-1: #8d95a3;
+  --alineacion-2: #c9a017;
+  --alineacion-3: #1f9fb5;
 }
 
 /* ───────── MODO NOCHE: espacio profundo. Las estrellas sutiles las pinta css/fondo-estrellas.css ───────── */
@@ -101,4 +107,10 @@
   --globo-2: #7fa3c6;
   --globo-3: #2f527a;
   --globo-linea: #0b2a4a;
+  --roca-marron: #8a6a4c;
+  --roca-negra: #14171f;
+  --roca-contorno: rgba(201, 214, 235, 0.4);
+  --alineacion-1: #c3cad6;
+  --alineacion-2: #f2d35a;
+  --alineacion-3: #4fdcf0;
 }

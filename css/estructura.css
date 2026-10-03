@@ -286,6 +286,8 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 #capa-fondo-traslacion,
 #capa-orbita-terrestre,
 #capa-orbitas-planetarias,
+#capa-asteroides,
+#capa-alineacion,
 #capa-planetas,
 #capa-sol-central {
   transform-origin: 600px 600px;
@@ -294,6 +296,8 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
 #reloj.enfoque-sistema-solar #capa-fondo-traslacion,
 #reloj.enfoque-sistema-solar #capa-orbita-terrestre,
 #reloj.enfoque-sistema-solar #capa-orbitas-planetarias,
+#reloj.enfoque-sistema-solar #capa-asteroides,
+#reloj.enfoque-sistema-solar #capa-alineacion,
 #reloj.enfoque-sistema-solar #capa-planetas,
 #reloj.enfoque-sistema-solar #capa-sol-central { transform: scale(1.875); }
 .orbita-planeta,

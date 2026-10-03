@@ -1,0 +1,4 @@
+/* css/asteroides.css — cinturón de asteroides (rocas marrón y negras). Colores: --roca-* en css/tema.css */
+.roca-asteroide { stroke: var(--roca-contorno); stroke-width: 0.6; }
+.roca-marron { fill: var(--roca-marron); }
+.roca-negra { fill: var(--roca-negra); }

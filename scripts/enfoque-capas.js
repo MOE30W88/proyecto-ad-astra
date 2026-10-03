@@ -9,8 +9,8 @@ const ENFOQUES = {
   reloj: ["capa-fondo-reloj", "capa-marco", "capa-minuto", "capa-segundo", "capa-hora", "capa-marcadores-reloj"],
   "dia-noche": ["capa-eventos-solares", "capa-sol", "capa-luna", "capa-horizonte", "capa-marcas-eventos"],
   zodiaco: ["capa-zodiaco", "capa-indicador-zodiaco", "capa-referencias-estacionales", "capa-marcador-estacional", "capa-tropicos", "capa-constelaciones", "capa-sol-central"],
-  calendario: ["capa-calendario", "capa-marcador-calendario", "capa-estaciones"],
-  "sistema-solar": ["capa-orbita-terrestre", "capa-orbitas-planetarias", "capa-planetas", "capa-sol-central"],
+  calendario: ["capa-calendario", "capa-marcador-calendario", "capa-estaciones", "capa-calendario-chino", "capa-sol-central"],
+  "sistema-solar": ["capa-orbita-terrestre", "capa-orbitas-planetarias", "capa-asteroides", "capa-alineacion", "capa-planetas", "capa-sol-central"],
   rotacion: ["capa-rotacion", "capa-eje-rotacion"],
 };
  
@@ -22,6 +22,7 @@ function aplicarEnfoque(clave) {
     .filter((c) => c.startsWith("enfoque-"))
     .forEach((c) => svg.classList.remove(c));
   svg.classList.toggle("enfocando", Boolean(ids));
+  actualizarEnfoqueConstelaciones?.(clave);
   if (!ids) return;
   svg.classList.add(`enfoque-${clave}`); // permite estilos propios por enfoque (dígitos, escala...)
   [...ids, ...CAPAS_SIEMPRE_VISIBLES].forEach((id) => {

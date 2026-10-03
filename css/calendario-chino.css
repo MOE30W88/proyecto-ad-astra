@@ -1,0 +1,29 @@
+/* css/calendario-chino.css — rueda del zodiaco chino. Solo existe visualmente en el enfoque "Calendario".
+   Colores: solo variables de css/tema.css. */
+#reloj:not(.enfoque-calendario) #capa-calendario-chino { opacity: 0; pointer-events: none; }
+#capa-calendario-chino { transition: opacity 0.6s ease; pointer-events: none; }
+
+.aro-chino { fill: none; stroke: var(--acento); stroke-width: 2; opacity: 0.8; }
+.aro-chino-tenue { fill: none; stroke: var(--tinta-tenue); stroke-width: 1; opacity: 0.45; }
+.division-china { stroke: var(--acento); stroke-width: 2; opacity: 0.7; }
+
+.icono-figura-china { fill: var(--acento); }
+.icono-simbolo-chino { fill: var(--oro-claro); }
+
+.anio-chino {
+  fill: var(--tinta-suave);
+  font-family: var(--fuente);
+  font-size: 26px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-variant-numeric: tabular-nums;
+}
+.anio-chino.anillo-1 { opacity: 0.8; }
+.anio-chino.anillo-2 { opacity: 0.6; }
+
+/* Sector activo: el que está bajo el marcador */
+.sombra-sector-chino { fill: var(--acento); opacity: 0; transition: opacity 0.6s ease; }
+.sector-chino.activo .sombra-sector-chino { opacity: 0.16; }
+.sector-chino.activo .anio-chino.anillo-0 { fill: var(--acento); font-weight: bold; }
+
+.marcador-chino { fill: var(--acento); }

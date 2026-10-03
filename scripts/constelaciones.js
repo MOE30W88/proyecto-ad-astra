@@ -8,17 +8,21 @@
 const ANILLO_CONSTELACIONES = {
   radioArco: 900,
   radioGlifo: 845,        // posición de la constelación en la vista general
-  tamanoGlifo: 64,
+  tamanoGlifo: 120,
+  radioGlifoZodiaco: 800,
+  tamanoGlifoZodiaco: 175,
   radioNombre: 917,
   // Vista "Zodíaco": cada sección muestra, de dentro hacia afuera, símbolo · figura · constelación
-  radioSimbolo: 806,
-  tamanoSimbolo: 40,
-  radioFigura: 862,
-  tamanoFigura: 72,
-  radioDivisionInterno: 786,  // las 12 divisiones radiales entre secciones
+  radioSimbolo: 545,
+  tamanoSimbolo: 100,
+  radioFigura: 655,
+  tamanoFigura: 130,
+  radioAro: 480,
+  radioDivisionInterno: 745,
+  radioDivisionInternoZodiaco: 480,
   radioDivisionExterno: 968,
 };
-// En el enfoque Zodíaco la constelación sale hacia afuera (variable --salida-constelacion en css/constelaciones.css)
+// En el enfoque Zodíaco los glifos se acercan al centro y aumentan de tamaño.
 
 // Archivos de svg/zodiaco occidental/. Si el nombre del archivo difiere de la clave, se corrige en ARCHIVO_SIGNO.
 const RUTAS_ZODIACO = {
@@ -190,8 +194,18 @@ function dibujarConstelaciones(anio) {
   sectorActivo = -1;
   const { N, lam } = longitudesSolaresDelAnio(anio);
   const { radioArco, radioGlifo, radioNombre, radioDivisionInterno, radioDivisionExterno } = ANILLO_CONSTELACIONES;
+
+  const reloj = document.getElementById("reloj");
+  reloj.style.setProperty("--desplazamiento-glifo-zodiaco", `${radioGlifo - ANILLO_CONSTELACIONES.radioGlifoZodiaco}px`);
+  reloj.style.setProperty("--escala-glifo-zodiaco", ANILLO_CONSTELACIONES.tamanoGlifoZodiaco / ANILLO_CONSTELACIONES.tamanoGlifo);
  
   asegurarFiltroResplandor();
+  const aro = document.createElementNS(SVG_NS, "circle");
+  aro.setAttribute("cx", 600);
+  aro.setAttribute("cy", 600);
+  aro.setAttribute("r", ANILLO_CONSTELACIONES.radioAro);
+  aro.setAttribute("class", "aro-zodiaco");
+  capa.appendChild(aro);
   CONSTELACIONES.forEach((c, indice) => {
     const dIni = diaDeCruce(lam, c.desde);
     const dFin = diaDeCruce(lam, c.hasta);
@@ -212,7 +226,7 @@ function dibujarConstelaciones(anio) {
     arco.setAttribute("class", "arco-constelacion");
     grupo.appendChild(arco);
  
-    // División radial en el límite inicial de la sección (solo visible en el enfoque Zodíaco)
+    // División radial en el límite inicial de la sección.
     const d0 = polar(radioDivisionInterno, aIni);
     const d1 = polar(radioDivisionExterno, aIni);
     const division = document.createElementNS(SVG_NS, "line");
@@ -221,6 +235,7 @@ function dibujarConstelaciones(anio) {
     division.setAttribute("x2", d1.x);
     division.setAttribute("y2", d1.y);
     division.setAttribute("class", "division-constelacion");
+    division.dataset.angulo = aIni;
     grupo.appendChild(division);
 
     // Constelación: el comodín se sustituye por el SVG del signo en cuanto carga
@@ -264,6 +279,18 @@ function dibujarConstelaciones(anio) {
   });
 }
 
+function actualizarEnfoqueConstelaciones(clave) {
+  const radioInterno = clave === "zodiaco"
+    ? ANILLO_CONSTELACIONES.radioDivisionInternoZodiaco
+    : ANILLO_CONSTELACIONES.radioDivisionInterno;
+
+  document.querySelectorAll(".division-constelacion").forEach((division) => {
+    const inicio = polar(radioInterno, Number(division.dataset.angulo));
+    division.setAttribute("x1", inicio.x);
+    division.setAttribute("y1", inicio.y);
+  });
+}
+
 // Marca como activa la sección que está bajo el marcador del calendario (arriba, ángulo 0 de pantalla)
 function marcarConstelacionActiva(anguloCalendario) {
   const a = normalizarGrados(-anguloCalendario); // posición del marcador en el sistema del calendario
@@ -287,4 +314,3 @@ function actualizarConstelaciones(ahora, anguloCalendario) {
   obtenerCapaConstelaciones().setAttribute("transform", `rotate(${anguloCalendario} 600 600)`);
   marcarConstelacionActiva(anguloCalendario);
 }
- 
