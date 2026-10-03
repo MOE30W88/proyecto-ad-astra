@@ -1,0 +1,185 @@
+/* css/infografias.css — sección Infografía: carrusel de próximos eventos (1) y visor con galería (2).
+   Colores: solo variables de css/tema.css. */
+
+/* el proyecto no usa un reset global: las medidas incluyen borde y relleno dentro de la sección */
+.seccion-infografias *, .seccion-infografias *::before, .seccion-infografias *::after { box-sizing: border-box; }
+
+/* ───── 1 · Carrusel de próximos eventos (se mueve hacia la izquierda) ───── */
+.eventos-proximos { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.eventos-carrusel { position: relative; overflow: hidden; contain: inline-size; border-block: 1px solid var(--linea); } /* contain: la cinta larga no ensancha la página */
+.eventos-pista {
+  display: flex;
+  width: max-content;
+  min-height: 5rem;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding: 0.7rem 4.5rem 0.7rem 0.25rem;
+}
+.eventos-pista.hay-eventos { animation: cinta-eventos 42s linear infinite; }
+.eventos-pista.hay-eventos:hover,
+.eventos-pista.hay-eventos:focus-within,
+.eventos-pista.hay-eventos.eventos-pausados { animation-play-state: paused; }
+@keyframes cinta-eventos { to { transform: translateX(-50%); } }
+
+.evento-ticker-item { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 0.75rem; color: var(--texto); text-decoration: none; }
+.evento-ticker-titulo { font-size: 1.05rem; white-space: nowrap; transition: color 0.2s; }
+.evento-ticker-item:hover .evento-ticker-titulo,
+.evento-ticker-item:focus-visible .evento-ticker-titulo { color: var(--acento); text-decoration: underline; text-underline-offset: 0.3em; }
+.evento-icono { display: grid; width: 2.6rem; height: 2.6rem; place-items: center; color: var(--acento); }
+.evento-icono-fallback { font-size: 1.8rem; line-height: 1; }
+/* icono propio: se pinta como máscara para tomar el color del tema */
+.evento-icono.con-icono .evento-icono-fallback { display: none; }
+.evento-icono.con-icono::after {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: var(--icono) center / contain no-repeat;
+  mask: var(--icono) center / contain no-repeat;
+  content: "";
+}
+.estado-eventos { width: 100%; margin: 0; color: var(--texto-suave); text-align: center; font-size: 0.9rem; }
+.eventos-pausa {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+/* ───── 2 · Visor: recuadro punteado > marco > fondo + panel glass + galería ───── */
+.infografia-visor {
+  padding: clamp(0.6rem, 1.6vw, 1.25rem);
+  border: 1px dashed var(--linea);
+  border-radius: 16px;
+}
+.infografia-marco {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 640px;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  overflow: hidden;
+  border: 1px solid var(--borde-oro);
+  border-radius: 14px;
+}
+.infografia-marco::before { /* velo que funde el fondo con la página hacia abajo */
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 25%, var(--fondo) 100%);
+  content: "";
+  pointer-events: none;
+}
+.infografia-fondo {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.24;
+  pointer-events: none;
+}
+
+/* Panel de información: tono neutro con efecto glass */
+.infografia-panel {
+  width: 100%;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 78%, transparent);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(115%);
+  backdrop-filter: blur(18px) saturate(115%);
+}
+.infografia-tema { margin: 0 0 0.7rem; color: var(--acento); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.infografia-panel h3 { max-width: 60rem; margin: 0 0 1rem; color: var(--acento); font-size: clamp(1.9rem, 5vw, 3.8rem); font-weight: 400; line-height: 1.05; text-transform: uppercase; }
+.infografia-texto p { max-width: 62rem; margin: 0.5rem 0; color: var(--texto); font-size: clamp(0.95rem, 1.4vw, 1.1rem); line-height: 1.65; }
+.infografia-texto .infografia-detalle { color: var(--texto-suave); font-size: 0.85rem; }
+
+/* Galería: tarjetas en rebanadas; la seleccionada se expande */
+.infografia-galeria { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: clamp(0.4rem, 1.5vw, 1rem); margin-top: auto; }
+.galeria-pista { display: flex; align-items: flex-start; gap: clamp(0.4rem, 1vw, 0.85rem); overflow-x: auto; scrollbar-width: none; }
+.galeria-pista::-webkit-scrollbar { display: none; }
+.galeria-item {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 72px;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: flex-grow 0.55s ease;
+}
+.galeria-item.expandida { flex-grow: 5; min-width: clamp(190px, 40vw, 440px); }
+.galeria-tarjeta {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 36vw, 440px);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  background: var(--panel);
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.galeria-tarjeta:hover { transform: translateY(-3px); }
+.galeria-tarjeta[aria-current="true"] { border-color: var(--acento); cursor: default; }
+.galeria-tarjeta:hover[aria-current="true"] { transform: none; }
+.galeria-tarjeta img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.galeria-tarjeta[aria-current="true"] img { object-fit: contain; }
+.galeria-leyenda { overflow: hidden; color: var(--texto-suave); font-size: 0.8rem; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+.galeria-item.expandida .galeria-leyenda { color: var(--acento); }
+
+.galeria-flecha {
+  display: grid;
+  width: 2.4rem;
+  height: 3rem;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--acento);
+  cursor: pointer;
+}
+.galeria-flecha[hidden] { display: none; }
+.galeria-flecha::before { width: 1.1rem; height: 1.5rem; background: currentColor; clip-path: polygon(100% 0, 0 50%, 100% 100%); content: ""; transition: transform 0.2s; }
+.galeria-flecha.siguiente::before { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.galeria-flecha:hover::before, .galeria-flecha:focus-visible::before { transform: scale(1.18); }
+
+.galeria-puntos { display: flex; min-height: 1.2rem; align-items: center; justify-content: center; gap: 0.7rem; }
+.galeria-punto { width: 0.55rem; height: 0.55rem; padding: 0; border: 0; border-radius: 50%; background: var(--acento); opacity: 0.35; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+.galeria-punto[aria-current="true"] { opacity: 1; transform: scale(1.3); }
+.galeria-vacia { margin: 0; color: var(--texto-suave); text-align: center; font-size: 0.82rem; }
+
+/* Estado sin eventos */
+.infografia-vacia { display: grid; flex: 1; place-content: center; justify-items: center; gap: 0.55rem; min-height: 210px; color: var(--texto-suave); text-align: center; }
+.infografia-vacia[hidden] { display: none; }
+.infografia-vacia-simbolo { color: var(--acento); font-size: 2rem; filter: drop-shadow(0 0 8px var(--borde-oro)); }
+.infografia-vacia p { margin: 0; color: var(--texto); font-size: 1.25rem; }
+.infografia-vacia > span:last-child { max-width: 36rem; font-size: 0.9rem; line-height: 1.6; }
+
+@media (max-width: 800px) {
+  .infografia-marco { min-height: 600px; }
+  .galeria-tarjeta { height: 300px; }
+}
+@media (max-width: 480px) {
+  .infografia-panel { padding: 1.1rem; }
+  .infografia-galeria { grid-template-columns: 1.6rem minmax(0, 1fr) 1.6rem; gap: 0.3rem; }
+  .galeria-flecha { width: 1.6rem; }
+  .galeria-flecha::before { width: 0.85rem; height: 1.2rem; }
+  .galeria-item { min-width: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eventos-pista.hay-eventos { animation: none; }
+  .galeria-item, .galeria-tarjeta, .galeria-flecha::before { transition: none; }
+}

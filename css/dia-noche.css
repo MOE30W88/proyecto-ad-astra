@@ -5,9 +5,9 @@
 #reloj:not(.enfoque-dia-noche) #capa-horizonte,
 #reloj:not(.enfoque-dia-noche) #capa-marcas-eventos { opacity: 0; }
 
-.horizonte-linea { stroke: var(--tinta); stroke-width: 5; stroke-linecap: round; }
+.horizonte-linea { stroke: var(--tinta); stroke-width: 3; stroke-linecap: round; }
 
-/* Observador: el SVG propio toma el color de la tinta; la figura provisional se dibuja con trazo */
+/* Observador: conserva la tinta en tema claro; en tema oscuro usa el oro del tema. */
 .observador-sombra { fill: var(--tinta); opacity: 0.25; }
 .observador-icono { fill: var(--tinta); }
 .observador-provisional { fill: none; stroke: var(--tinta); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
@@ -20,3 +20,11 @@
 .guia-evento { stroke: var(--tinta-tenue); stroke-width: 1.2; opacity: 0.6; }
 .texto-evento { fill: var(--tinta-suave); font-family: var(--fuente); font-size: 26px; letter-spacing: 0.04em; dominant-baseline: central; }
 .hora-evento { fill: var(--tinta); font-weight: 600; }
+
+/* En tema oscuro, el observador y las etiquetas de eventos pasan a dorado. */
+[data-tema="noche"] .observador-sombra { fill: var(--oro); }
+[data-tema="noche"] .observador-icono { fill: var(--oro); }
+[data-tema="noche"] .observador-provisional { stroke: var(--oro); }
+[data-tema="noche"] .observador-provisional circle { fill: var(--oro); stroke: none; }
+[data-tema="noche"] .texto-evento { fill: var(--oro); }
+[data-tema="noche"] .hora-evento { fill: var(--oro-claro); }

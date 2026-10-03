@@ -13,7 +13,7 @@
 .anio-chino {
   fill: var(--tinta-suave);
   font-family: var(--fuente);
-  font-size: 26px;
+  font-size: 32px;
   text-anchor: middle;
   dominant-baseline: central;
   font-variant-numeric: tabular-nums;

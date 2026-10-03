@@ -13,9 +13,9 @@ function actualizarFaseLunar(fecha) {
   capa.innerHTML = "";
 
   const RADIO_DISCO = 35;
-  const fraccion = fraccionIluminada(fecha);
-  const edad = edadLunar(fecha);
-  const esCreciente = edad < PERIODO_SINODICO / 2;
+  const fase = faseLunarPrecisa(fecha.getTime());
+  const fraccion = fase.fraccion;
+  const esCreciente = fase.creciente;
   const factorEclipse = calcularFactorEclipse(fecha);
 
   const fondo = document.createElementNS(SVG_NS, "circle");
@@ -41,10 +41,5 @@ function colorLunarPorEclipse(factor) {
 }
 
 function calcularFactorEclipse(fecha) {
-  // Cascarón: todavía no calculamos eclipses reales (necesita mucha más
-  // precisión que las fórmulas actuales — pendiente en el roadmap).
-  // Cuando se implemente esa capa, esta función debe devolver un valor
-  // continuo 0-1 según qué tan adentro de la sombra total está la Luna,
-  // para aprovechar la transición gradual que ya queda lista aquí.
-  return 0;
+  return factorEclipseLunar(fecha.getTime());
 }

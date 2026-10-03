@@ -13,8 +13,8 @@ const HORIZONTE = {
 };
 const OBSERVADOR = {
   ruta: "svg/observador/observador.svg",
-  alto: 290,      // alto máximo de la figura visible; los pies quedan sobre el horizonte
-  anchoMax: 150,  // ancho máximo: un icono ancho (varias personas) se reduce hasta caber
+  alto: 200,      // alto máximo de la figura visible; los pies quedan sobre el horizonte
+  anchoMax: 60,  // ancho máximo: un icono ancho (varias personas) se reduce hasta caber
 };
 
 let horizonteConstruido = false;

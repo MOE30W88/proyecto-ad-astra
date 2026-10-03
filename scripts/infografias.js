@@ -1,43 +1,29 @@
 // scripts/infografias.js
-// Contenido editable de la sección: agrega próximos eventos y sus imágenes SVG aquí.
-// Las fichas de la galería se generan solo a partir de las imágenes del listado de eventos.
-const EVENTOS_PROXIMOS_INFOGRAFIAS = [
-  /* Ejemplo para copiar cuando exista el cálculo del evento y sus imágenes:
-  {
-    id: "eclipse-solar-2028",
-    titulo: "Eclipse solar parcial",
-    fecha: "12 ago 2028 · hora local",
-    alcance: "Visible desde tu ubicación",
-    icono: "assets/iconos/eclipse-solar.svg",
-    destino: "#eventos-proximos",
-    imagenes: [
-      {
-        ruta: "assets/infografias/eclipse-solar-vista.svg",
-        titulo: "Vista desde el horizonte",
-        tema: "Eclipse solar · observación local",
-        descripcion: "Describe aquí qué verá el observador y cómo evoluciona el fenómeno.",
-        detalle: "Añade la hora local, la magnitud o cualquier dato calculado.",
-        alt: "Representación del eclipse solar visto desde el horizonte local"
-      }
-    ]
-  },
-  */
-];
+// Dibuja la sección Infografía a partir de obtenerEventosProximos() (scripts/datos-infografias.js):
+//   1 · carrusel de eventos (icono + título con enlace) que se mueve hacia la izquierda
+//   2 · visor: imagen de fondo con opacidad, panel glass con la información y galería de tarjetas
+//       (la seleccionada se expande; flechas y puntos dependen de las imágenes cargadas)
+// Depende de: datos-infografias.js (cargar antes)
+
+function colocarIconoEvento(contenedor, ruta) {
+  if (!ruta) return;
+  const url = new URL(ruta, document.baseURI).href;
+  const sonda = new Image(); // solo se pinta si el archivo existe; si no, queda el ✦
+  sonda.onload = () => {
+    contenedor.style.setProperty("--icono", `url("${url}")`);
+    contenedor.classList.add("con-icono");
+  };
+  sonda.src = url;
+}
 
 function crearEventoTicker(evento, plantilla) {
   const nodo = plantilla.content.firstElementChild.cloneNode(true);
+  const detalle = [evento.titulo, evento.fecha, evento.alcance].filter(Boolean).join(" · ");
   nodo.href = evento.destino || "#eventos-proximos";
-  nodo.setAttribute("aria-label", `${evento.titulo}${evento.fecha ? `, ${evento.fecha}` : ""}`);
-  nodo.querySelector(".evento-ticker-texto strong").textContent = evento.titulo;
-  nodo.querySelector(".evento-ticker-texto small").textContent = [evento.fecha, evento.alcance].filter(Boolean).join(" · ");
-  if (evento.icono) {
-    const imagen = nodo.querySelector(".evento-icono img");
-    imagen.src = evento.icono;
-    imagen.alt = "";
-    imagen.hidden = false;
-    imagen.addEventListener("error", () => { imagen.hidden = true; }, { once: true });
-    nodo.querySelector(".evento-icono-fallback").hidden = true;
-  }
+  nodo.title = detalle;
+  nodo.setAttribute("aria-label", detalle);
+  nodo.querySelector(".evento-ticker-titulo").textContent = evento.titulo;
+  colocarIconoEvento(nodo.querySelector(".evento-icono"), evento.icono);
   return nodo;
 }
 
@@ -46,6 +32,7 @@ function renderizarEventosProximos(eventos) {
   const plantilla = document.getElementById("plantilla-evento");
   const botonPausa = document.getElementById("pausar-eventos");
   pista.replaceChildren();
+  pista.classList.remove("hay-eventos");
 
   if (!eventos.length) {
     const estado = document.createElement("p");
@@ -57,20 +44,33 @@ function renderizarEventosProximos(eventos) {
   }
 
   eventos.forEach((evento) => pista.appendChild(crearEventoTicker(evento, plantilla)));
-  if (eventos.length > 1) {
-    const repeticion = document.createDocumentFragment();
-    eventos.forEach((evento) => repeticion.appendChild(crearEventoTicker(evento, plantilla)));
+  if (eventos.length > 1) { // copia del recorrido para que la cinta no tenga saltos
     const duplicado = document.createElement("div");
     duplicado.className = "eventos-pista-clon";
     duplicado.setAttribute("aria-hidden", "true");
     duplicado.inert = true;
     duplicado.style.display = "contents";
-    duplicado.appendChild(repeticion);
+    eventos.forEach((evento) => duplicado.appendChild(crearEventoTicker(evento, plantilla)));
     pista.appendChild(duplicado);
     pista.classList.add("hay-eventos");
-    botonPausa.hidden = false;
-  } else {
-    botonPausa.hidden = true;
+  }
+  botonPausa.hidden = eventos.length < 2;
+}
+
+function escribirTextoPanel(descripcion, detalle) {
+  const caja = document.getElementById("infografia-texto");
+  caja.replaceChildren();
+  const parrafos = Array.isArray(descripcion) ? descripcion : descripcion ? [descripcion] : [];
+  parrafos.forEach((texto) => {
+    const p = document.createElement("p");
+    p.textContent = texto;
+    caja.appendChild(p);
+  });
+  if (detalle) {
+    const p = document.createElement("p");
+    p.className = "infografia-detalle";
+    p.textContent = detalle;
+    caja.appendChild(p);
   }
 }
 
@@ -81,6 +81,7 @@ function renderizarGaleria(eventos) {
   const fondo = document.getElementById("infografia-fondo");
   const vacia = document.getElementById("infografia-vacia");
   const datos = document.getElementById("infografia-datos");
+  const galeria = document.querySelector(".infografia-galeria");
   const galeriaVacia = document.getElementById("galeria-vacia");
   const anterior = document.getElementById("galeria-anterior");
   const siguiente = document.getElementById("galeria-siguiente");
@@ -89,71 +90,76 @@ function renderizarGaleria(eventos) {
 
   pista.replaceChildren();
   puntos.replaceChildren();
-  if (!imagenes.length) {
-    fondo.hidden = true;
-    vacia.hidden = false;
-    datos.hidden = true;
-    galeriaVacia.hidden = false;
-    anterior.hidden = true;
-    siguiente.hidden = true;
-    return;
-  }
-
-  vacia.hidden = true;
-  datos.hidden = false;
-  galeriaVacia.hidden = true;
-  anterior.hidden = false;
-  siguiente.hidden = false;
+  const hayImagenes = imagenes.length > 0;
+  fondo.hidden = true;
+  vacia.hidden = hayImagenes;
+  datos.hidden = !hayImagenes;
+  galeria.hidden = !hayImagenes;
+  galeriaVacia.hidden = hayImagenes;
+  anterior.hidden = siguiente.hidden = imagenes.length < 2;
+  if (!hayImagenes) return;
 
   function seleccionar(indice) {
     seleccion = (indice + imagenes.length) % imagenes.length;
     const imagen = imagenes[seleccion];
+    fondo.onerror = () => { fondo.hidden = true; };
     fondo.src = imagen.ruta;
     fondo.hidden = false;
-    fondo.onerror = () => { fondo.hidden = true; };
     document.getElementById("infografia-tema").textContent = imagen.tema || imagen.evento;
     document.getElementById("infografia-titulo").textContent = imagen.titulo || imagen.evento;
-    document.getElementById("infografia-descripcion").textContent = imagen.descripcion || "";
-    document.getElementById("infografia-detalle").textContent = imagen.detalle || "";
+    escribirTextoPanel(imagen.descripcion, imagen.detalle);
 
-    [...pista.children].forEach((tarjeta, i) => {
-      tarjeta.setAttribute("aria-current", String(i === seleccion));
+    [...pista.children].forEach((item, i) => {
+      item.classList.toggle("expandida", i === seleccion);
+      item.querySelector(".galeria-tarjeta").setAttribute("aria-current", String(i === seleccion));
     });
-    [...puntos.children].forEach((punto, i) => {
-      punto.setAttribute("aria-current", String(i === seleccion));
-    });
-    const movimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-    pista.children[seleccion].scrollIntoView({ behavior: movimiento, block: "nearest", inline: "center" });
+    [...puntos.children].forEach((punto, i) => punto.setAttribute("aria-current", String(i === seleccion)));
+
+    // Si hay más tarjetas de las que caben, centra la elegida dentro de la pista (sin mover la página)
+    const item = pista.children[seleccion];
+    const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(() => pista.scrollTo({
+      left: item.offsetLeft - (pista.clientWidth - item.offsetWidth) / 2,
+      behavior: reducido ? "auto" : "smooth",
+    }), 560);
   }
 
   imagenes.forEach((imagen, indice) => {
-    const tarjeta = plantilla.content.firstElementChild.cloneNode(true);
+    const item = plantilla.content.firstElementChild.cloneNode(true);
+    const tarjeta = item.querySelector(".galeria-tarjeta");
     const foto = tarjeta.querySelector("img");
+    const titulo = imagen.titulo || imagen.evento;
     foto.src = imagen.ruta;
-    foto.alt = "";
+    foto.alt = imagen.alt || "";
     foto.addEventListener("error", () => { foto.hidden = true; }, { once: true });
-    tarjeta.querySelector("span").textContent = imagen.titulo || imagen.evento;
-    tarjeta.setAttribute("aria-label", `Mostrar ${imagen.titulo || imagen.evento}`);
+    item.querySelector(".galeria-leyenda").textContent = titulo;
+    tarjeta.setAttribute("aria-label", `Mostrar ${titulo}`);
     tarjeta.addEventListener("click", () => seleccionar(indice));
-    pista.appendChild(tarjeta);
+    pista.appendChild(item);
 
     const punto = document.createElement("button");
     punto.type = "button";
     punto.className = "galeria-punto";
-    punto.setAttribute("aria-label", `Mostrar imagen ${indice + 1}: ${imagen.titulo || imagen.evento}`);
+    punto.setAttribute("aria-label", `Mostrar imagen ${indice + 1}: ${titulo}`);
     punto.setAttribute("aria-current", "false");
     punto.addEventListener("click", () => seleccionar(indice));
     puntos.appendChild(punto);
   });
 
-  anterior.addEventListener("click", () => seleccionar(seleccion - 1));
-  siguiente.addEventListener("click", () => seleccionar(seleccion + 1));
+  anterior.onclick = () => seleccionar(seleccion - 1);
+  siguiente.onclick = () => seleccionar(seleccion + 1);
+  pista.onkeydown = (e) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    seleccionar(seleccion + (e.key === "ArrowRight" ? 1 : -1));
+    pista.children[seleccion].querySelector(".galeria-tarjeta").focus({ preventScroll: true });
+  };
   seleccionar(0);
 }
 
 function inicializarInfografias() {
-  renderizarEventosProximos(EVENTOS_PROXIMOS_INFOGRAFIAS);
-  renderizarGaleria(EVENTOS_PROXIMOS_INFOGRAFIAS);
+  const eventos = obtenerEventosProximos();
+  renderizarEventosProximos(eventos);
+  renderizarGaleria(eventos);
   const pista = document.getElementById("eventos-pista");
   const botonPausa = document.getElementById("pausar-eventos");
   botonPausa.addEventListener("click", () => {

@@ -1,0 +1,43 @@
+/* css/pie.css — pie de página (3): logo, columnas de enlaces y contacto. Colores: variables de css/tema.css. */
+.pie, .pie *, .pie *::before, .pie *::after { box-sizing: border-box; }
+.pie { margin-top: 0; padding: 3.5rem clamp(1.5rem, 7vw, 7rem) 1.5rem; border-top: 1px solid var(--linea); background: color-mix(in srgb, var(--panel) 44%, transparent); }
+.pie-contenido {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.5fr) repeat(3, minmax(150px, 1fr));
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  width: min(100%, 1500px);
+  margin: 0 auto;
+}
+.pie-logo { display: inline-flex; align-items: center; align-self: center; gap: 1.1rem; color: var(--acento); text-decoration: none; }
+.pie-logo .logo-marca { width: 110px; height: 110px; }
+.pie-nombre { font-size: clamp(1.6rem, 2.4vw, 2.2rem); letter-spacing: 0.16em; white-space: nowrap; }
+
+.pie-bloque { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+.pie-bloque h2 { margin: 0 0 0.5rem; color: var(--acento); font-size: clamp(1.25rem, 1.8vw, 1.6rem); font-weight: 400; letter-spacing: 0.06em; }
+.pie-bloque a, .pie-final a { color: var(--texto-suave); font-size: 0.95rem; text-decoration: none; transition: color 0.2s; }
+.pie-bloque a:hover, .pie-bloque a:focus-visible, .pie-final a:hover, .pie-final a:focus-visible { color: var(--acento); text-decoration: underline; text-underline-offset: 0.25em; }
+
+/* Redes: iconos propios en svg/redes/, pintados como máscara. Para añadir una red: copia su SVG a svg/redes/ y una línea .pie-red.<nombre> abajo */
+.pie-redes { display: flex; width: 100%; max-width: 22rem; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.4rem; padding: 0.6rem 0.75rem; border: 1px solid var(--linea); border-radius: 8px; }
+.pie-red { display: block; width: 1.9rem; height: 1.9rem; background: var(--texto-suave); -webkit-mask: var(--icono) center / contain no-repeat; mask: var(--icono) center / contain no-repeat; transition: background-color 0.2s, transform 0.2s; }
+.pie-red:hover, .pie-red:focus-visible { background: var(--acento); transform: translateY(-2px); }
+.pie-red.instagram { --icono: url("../svg/redes/instagram.svg"); }
+.pie-red.youtube { --icono: url("../svg/redes/youtube.svg"); }
+.pie-red.x { --icono: url("../svg/redes/x.svg"); }
+
+.pie-final { display: grid; justify-items: center; gap: 0.7rem; width: min(100%, 1500px); margin: 3rem auto 0; color: var(--texto-suave); font-size: 0.78rem; letter-spacing: 0.08em; text-align: center; }
+.pie-final::before { width: min(100%, 36rem); border-top: 1px solid var(--borde-oro); content: ""; }
+
+@media (max-width: 900px) {
+  .pie-contenido { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pie-logo { grid-column: 1 / -1; justify-self: center; }
+}
+@media (max-width: 560px) {
+  .pie { padding-inline: 1rem; }
+  .pie-contenido { grid-template-columns: 1fr 1fr; gap: 1.75rem 1rem; }
+  .pie-bloque:last-of-type { grid-column: 1 / -1; }
+  .pie-logo .logo-marca { width: 76px; height: 76px; }
+  .pie-nombre { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .pie-red, .pie-bloque a, .pie-final a { transition: none; } }
