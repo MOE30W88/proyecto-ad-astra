@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="css/fondo-lavado.css" />
     <link rel="stylesheet" href="css/dia-noche.css" />
     <link rel="stylesheet" href="css/constelaciones.css" />
+    <link rel="stylesheet" href="css/vista-sistema-solar.css" />
+    <link rel="stylesheet" href="css/ayudas-contextuales.css" />
+    <link rel="stylesheet" href="css/eclipse.css" />
     <script src="scripts/hora-local.js" defer></script>
     <script src="scripts/hora.js" defer></script>
     <script src="scripts/estado-tiempo.js" defer></script>
@@ -41,9 +44,13 @@
     <script src="scripts/traslacion.js" defer></script>
     <script src="scripts/asteroides.js" defer></script>
     <script src="scripts/alineacion.js" defer></script>
+    <script src="scripts/vista-sistema-solar.js" defer></script>
+    <script src="scripts/ayudas-contextuales.js" defer></script>
     <script src="scripts/calendario-chino-calculo.js" defer></script>
     <script src="scripts/efemerides-precisas.js" defer></script>
     <script src="scripts/eclipses.js" defer></script>
+    <script src="scripts/eclipse-vista.js" defer></script>
+    <script src="scripts/eclipse-lupa.js" defer></script>
     <script src="scripts/calendario-chino.js" defer></script>
     <script src="scripts/indicador-zodiaco.js" defer></script>
     <script src="scripts/tropicos.js" defer></script>
@@ -108,6 +115,9 @@
           <button type="button" id="boton-planetas" class="tirador tirador-der" title="Sistema solar" aria-label="Sistema solar">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="8"/><circle cx="18" cy="7" r="1.6" fill="currentColor"/></svg>
           </button>
+          <button type="button" id="boton-vista-solar" class="boton-vista-solar" data-vista="xy" aria-label="Cambiar a vista XZ" title="Vista XY · cambiar a XZ" aria-pressed="false" hidden>
+            <span class="icono-vista-solar" aria-hidden="true"></span>
+          </button>
           <aside id="cajon-viajero" class="panel-flotante panel-izq">
             <section class="seccion-viajero">
               <h3>Reloj</h3>
@@ -133,12 +143,12 @@
           <aside id="cajon-planetas" class="panel-flotante panel-der">
             <section class="seccion-planetas">
               <h3>Sistema solar</h3>
-              <p class="nota-planetas">Posiciones heliocéntricas reales. Las distancias del dial usan una escala comprimida.</p>
+              <p class="nota-planetas">Posiciones heliocéntricas aproximadas con elementos keplerianos (1800–2050). El dial comprime las distancias.</p>
               <table class="tabla-planetas">
                 <thead><tr><th>Planeta</th><th>UA</th><th>Long.</th><th>Período</th></tr></thead>
                 <tbody id="tabla-planetas-cuerpo"></tbody>
               </table>
-              <p class="arco-planetas">Arco que abarcan los 8 planetas: <strong id="arco-planetas">—</strong><br />(menor = más alineados)</p>
+              <p class="arco-planetas">Centros sobre el eje 3D Sol–Tierra (desviación ≤ 0,1°): <strong id="planetas-alineados">—</strong><br />El valor entre paréntesis indica el ángulo y la distancia al eje.</p>
             </section>
           </aside>
           <svg
@@ -230,8 +240,9 @@
             ></text>
           </g>
           <g id="capa-sol-central">
-            <circle id="sol-central" cx="600" cy="600" r="35" />
+            <circle id="sol-central" cx="600" cy="600" r="35" data-tooltip="Sol" aria-label="Sol" role="img" tabindex="0" />
           </g>
+          <g id="capa-planetas-frente"></g>
           <g id="capa-rotacion"></g>
         </svg>
           <p id="hora-digital"></p>

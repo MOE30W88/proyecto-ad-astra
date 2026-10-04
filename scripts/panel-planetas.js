@@ -1,5 +1,5 @@
 // scripts/panel-planetas.js
-// Cajón derecho "Sistema solar": tabla con los datos reales de cada planeta.
+// Cajón derecho "Sistema solar": tabla con posiciones planetarias y alineación actual.
 // Se construye al cargar y se actualiza ~2 veces por segundo mientras está abierto.
  
 const filasPlanetas = {}; // nombre -> { distancia, longitud }
@@ -24,16 +24,6 @@ function construirTablaPlanetas() {
   });
 }
  
-// Arco mínimo (°) que contiene a todas las longitudes: menor = más alineados
-function arcoQueAbarcan(longitudes) {
-  const orden = [...longitudes].sort((a, b) => a - b);
-  let mayorHueco = 360 - orden[orden.length - 1] + orden[0];
-  for (let i = 1; i < orden.length; i++) {
-    mayorHueco = Math.max(mayorHueco, orden[i] - orden[i - 1]);
-  }
-  return 360 - mayorHueco;
-}
- 
 function actualizarPanelPlanetas(ahora) {
   const cajon = document.getElementById("cajon-planetas");
   if (!cajon || !cajon.classList.contains("abierto")) return;
@@ -41,16 +31,20 @@ function actualizarPanelPlanetas(ahora) {
   if (t - ultimoRefrescoPlanetas < 500) return;
   ultimoRefrescoPlanetas = t;
  
-  const longitudes = [];
   PLANETAS.forEach((p) => {
     const pos = posicionHeliocentrica(p, ahora);
-    longitudes.push(pos.longitud);
     const fila = filasPlanetas[p.nombre];
     fila.distancia.textContent = pos.distancia.toFixed(3).replace(".", ",");
     fila.longitud.textContent = `${pos.longitud.toFixed(1).replace(".", ",")}°`;
   });
-  document.getElementById("arco-planetas").textContent =
-    `${arcoQueAbarcan(longitudes).toFixed(0)}°`;
+
+  const evaluaciones = evaluarAlineaciones(ahora);
+  const alineados = evaluaciones.filter((p) => p.alineado);
+  const formatoDesvio = (p) =>
+    `${p.nombre} (${p.desviacionGrados.toFixed(2).replace(".", ",")}°; ${p.distanciaEjeUA.toFixed(3).replace(".", ",")} UA)`;
+  document.getElementById("planetas-alineados").textContent = alineados.length
+    ? alineados.map(formatoDesvio).join(" · ")
+    : `Ninguno; menor desviación: ${formatoDesvio(evaluaciones[0])}`;
 }
  
 function inicializarCajonPlanetas() {

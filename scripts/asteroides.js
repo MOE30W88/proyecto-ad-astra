@@ -36,6 +36,10 @@ function obtenerCapaAsteroides() {
     const planetas = document.getElementById("capa-planetas");
     planetas.parentNode.insertBefore(capaAsteroides, planetas); // bajo los planetas
   }
+  capaAsteroides.setAttribute("data-tooltip", "Cinturón de asteroides");
+  capaAsteroides.setAttribute("aria-label", "Cinturón de asteroides");
+  capaAsteroides.setAttribute("role", "img");
+  capaAsteroides.setAttribute("tabindex", "0");
   return capaAsteroides;
 }
 
@@ -62,16 +66,22 @@ function dibujarAsteroides() {
     const ua = CINTURON.uaInterna + u * (CINTURON.uaExterna - CINTURON.uaInterna);
     const tamano = CINTURON.tamanoMin + Math.pow(azar(), 2) * (CINTURON.tamanoMax - CINTURON.tamanoMin);
     const grupo = document.createElementNS(SVG_NS, "g");
+    const areaActiva = document.createElementNS(SVG_NS, "circle");
+    areaActiva.setAttribute("r", 6);
+    areaActiva.setAttribute("fill", "transparent");
+    areaActiva.setAttribute("pointer-events", "all");
     const roca = document.createElementNS(SVG_NS, "polygon");
     roca.setAttribute("points", poligonoRoca(azar, tamano));
     roca.setAttribute("class", azar() < 0.5 ? "roca-asteroide roca-marron" : "roca-asteroide roca-negra");
-    grupo.appendChild(roca);
+    grupo.append(areaActiva, roca);
     capa.appendChild(grupo);
     rocasAsteroides.push({
       grupo,
-      radio: radioDelDial(ua),
+      ua,
       periodo: Math.pow(ua, 1.5),
       anguloInicial: azar() * 360,
+      nodo: azar() * 360 * GRAD,
+      inclinacion: azar() * 15 * GRAD,
       faseGiro: azar() * 360,
       sentidoGiro: azar() < 0.5 ? -1 : 1,
       velocidadGiro: 0.4 + azar() * 1.2,
@@ -84,8 +94,16 @@ function actualizarAsteroides(fecha) {
   if (!capaAsteroides || !rocasAsteroides.length) dibujarAsteroides();
   const anios = siglosDesdeJ2000(fecha) * 100;
   rocasAsteroides.forEach((r) => {
-    const angulo = anguloDelDial(r.anguloInicial + (360 * anios) / r.periodo);
-    const p = polar(r.radio, angulo);
+    const anomalia = (r.anguloInicial + (360 * anios) / r.periodo) * GRAD;
+    const cosN = Math.cos(r.nodo), sinN = Math.sin(r.nodo);
+    const cosA = Math.cos(anomalia), sinA = Math.sin(anomalia);
+    const cosI = Math.cos(r.inclinacion), sinI = Math.sin(r.inclinacion);
+    const posicion = {
+      x: r.ua * (cosN * cosA - sinN * sinA * cosI),
+      y: r.ua * (sinN * cosA + cosN * sinA * cosI),
+      z: r.ua * sinA * sinI,
+    };
+    const p = posicionEnVistaSistemaSolar(posicion);
     const giro = r.faseGiro + r.sentidoGiro * r.velocidadGiro * CINTURON.vueltasPorAnio * 360 * anios;
     r.grupo.setAttribute("transform", `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${(giro % 360).toFixed(1)})`);
   });

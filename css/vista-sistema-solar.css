@@ -1,0 +1,72 @@
+/* Control de proyección del sistema solar. */
+.boton-vista-solar {
+  position: absolute;
+  top: clamp(2.5rem, 6vw, 4rem);
+  right: max(1rem, calc((100% - var(--ancho-reloj)) / 2 - 4rem));
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--borde-sutil);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.boton-vista-solar[hidden] { display: none; }
+.boton-vista-solar:disabled { cursor: wait; }
+
+.boton-vista-solar:hover,
+.boton-vista-solar:focus-visible {
+  border-color: var(--acento);
+  background: color-mix(in srgb, var(--oro) 12%, transparent);
+  color: var(--acento);
+}
+
+.icono-vista-solar {
+  width: 32px;
+  height: 32px;
+  background: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 48px 36px;
+  mask-size: 48px 36px;
+}
+
+.boton-vista-solar[data-vista="xy"] .icono-vista-solar {
+  -webkit-mask-image: url("../svg/panel%20control/vistaXY.svg");
+  mask-image: url("../svg/panel%20control/vistaXY.svg");
+}
+
+.boton-vista-solar[data-vista="xz"] .icono-vista-solar {
+  -webkit-mask-image: url("../svg/panel%20control/vistaXZ.svg");
+  mask-image: url("../svg/panel%20control/vistaXZ.svg");
+}
+
+#reloj.cambiando-vista-solar #capa-orbita-terrestre,
+#reloj.cambiando-vista-solar #capa-orbitas-planetarias,
+#reloj.cambiando-vista-solar #capa-asteroides,
+#reloj.cambiando-vista-solar #capa-alineacion,
+#reloj.cambiando-vista-solar #capa-planetas,
+#reloj.cambiando-vista-solar #capa-planetas-frente,
+#reloj.cambiando-vista-solar #capa-sol-central {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reloj.cambiando-vista-solar #capa-orbita-terrestre,
+  #reloj.cambiando-vista-solar #capa-orbitas-planetarias,
+  #reloj.cambiando-vista-solar #capa-asteroides,
+  #reloj.cambiando-vista-solar #capa-alineacion,
+  #reloj.cambiando-vista-solar #capa-planetas,
+  #reloj.cambiando-vista-solar #capa-planetas-frente,
+  #reloj.cambiando-vista-solar #capa-sol-central { transition: none; }
+}

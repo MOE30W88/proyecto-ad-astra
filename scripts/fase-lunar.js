@@ -12,6 +12,12 @@ function actualizarFaseLunar(fecha) {
   const capa = document.getElementById("capa-fase-lunar");
   capa.innerHTML = "";
 
+  if (estadoEclipseActual && estadoEclipseActual.tipo === "solar") {
+    capa.style.opacity = 0;
+    capa.style.filter = "none";
+    return;
+  }
+
   const RADIO_DISCO = 35;
   const fase = faseLunarPrecisa(fecha.getTime());
   const fraccion = fase.fraccion;
@@ -30,6 +36,10 @@ function actualizarFaseLunar(fecha) {
     lit.setAttribute("d", construirPathFaseLunar(RADIO_DISCO, fraccion, esCreciente));
     lit.style.fill = colorLunarPorEclipse(factorEclipse);
     capa.appendChild(lit);
+  }
+
+  if (estadoEclipseActual && estadoEclipseActual.tipo === "lunar") {
+    dibujarSombraLunar(capa, estadoEclipseActual.vista, RADIO_DISCO);
   }
 }
 

@@ -1,27 +1,9 @@
 // scripts/traslacion.js
 // Órbita de la Tierra y de los demás planetas alrededor del Sol central.
-// La Tierra sigue la longitud solar del dial; los demás salen de planetas.js.
 // Depende de: planetas.js (radioDelDial, PLANETAS, posicionHeliocentrica...)
  
-const EXCENTRICIDAD_TERRESTRE = 0.0167; // real
-const LONGITUD_PERIHELIO = 283; // longitud solar aparente del perihelio (~3 de enero)
- 
 const planetasEnDial = {}; // nombre -> <circle>
- 
-function posicionOrbital(longitudEcliptica) {
-  const e = EXCENTRICIDAD_TERRESTRE;
-  const nu = ((longitudEcliptica - LONGITUD_PERIHELIO) * Math.PI) / 180;
-  const distanciaUA = (1 - e * e) / (1 + e * Math.cos(nu));
-  return polar(radioDelDial(distanciaUA), longitudEcliptica);
-}
- 
-function construirOrbitaPath() {
-  const puntos = [];
-  for (let grado = 0; grado <= 360; grado += 2) {
-    puntos.push(posicionOrbital(grado));
-  }
-  return trazoDesdePuntos(puntos);
-}
+const PLANETA_TIERRA = PLANETAS.find((p) => p.esTierra);
  
 function trazoDesdePuntos(puntos) {
   const [inicio, ...resto] = puntos;
@@ -54,13 +36,14 @@ function dibujarOrbitaTerrestre() {
     console.error("Falta <g id='capa-orbita-terrestre'></g> en index.html");
     return;
   }
+  const puntosTierra = puntosDeOrbita(PLANETA_TIERRA, obtenerFechaActual());
   const orbita = document.createElementNS(SVG_NS, "path");
-  orbita.setAttribute("d", construirOrbitaPath());
+  orbita.setAttribute("d", trazoDesdePuntos(puntosTierra));
   orbita.setAttribute("class", "orbita-terrestre");
   capa.appendChild(orbita);
  
-  [0, 90, 180, 270].forEach((longitud) => {
-    const p = posicionOrbital(longitud);
+  [0, 45, 90, 135].forEach((indice) => {
+    const p = puntosTierra[indice];
     const marca = document.createElementNS(SVG_NS, "circle");
     marca.setAttribute("cx", p.x);
     marca.setAttribute("cy", p.y);
@@ -71,7 +54,11 @@ function dibujarOrbitaTerrestre() {
  
   const tierra = document.createElementNS(SVG_NS, "circle");
   tierra.setAttribute("id", "tierra-orbital");
-  tierra.setAttribute("r", 9);
+  tierra.setAttribute("r", 3.16);
+  tierra.setAttribute("data-tooltip", "Tierra");
+  tierra.setAttribute("aria-label", "Tierra");
+  tierra.setAttribute("role", "img");
+  tierra.setAttribute("tabindex", "0");
   capa.appendChild(tierra);
  
   dibujarOrbitasPlanetarias();
@@ -97,9 +84,10 @@ function dibujarOrbitasPlanetarias() {
     punto.setAttribute("r", planeta.radioDibujo);
     punto.setAttribute("fill", planeta.color);
     punto.setAttribute("class", "planeta");
-    const titulo = document.createElementNS(SVG_NS, "title");
-    titulo.textContent = planeta.nombre;
-    punto.appendChild(titulo);
+    punto.setAttribute("data-tooltip", planeta.nombre);
+    punto.setAttribute("aria-label", planeta.nombre);
+    punto.setAttribute("role", "img");
+    punto.setAttribute("tabindex", "0");
     capaPlanetas.appendChild(punto);
     planetasEnDial[planeta.nombre] = punto;
   });
@@ -107,18 +95,32 @@ function dibujarOrbitasPlanetarias() {
  
 function actualizarTraslacion(fecha) {
   const tierra = document.getElementById("tierra-orbital");
-  if (!tierra) return;
-  const { longitudEcliptica } = posicionSolar(fecha);
-  const p = posicionOrbital(longitudEcliptica);
-  tierra.setAttribute("cx", p.x);
-  tierra.setAttribute("cy", p.y);
+  if (tierra) {
+    const posicionTierra = posicionHeliocentrica(PLANETA_TIERRA, fecha);
+    const p = posicionEnVistaSistemaSolar(posicionTierra);
+    tierra.setAttribute("cx", p.x);
+    tierra.setAttribute("cy", p.y);
+    actualizarProfundidadMarcador(tierra, posicionTierra);
+  }
  
   PLANETAS.forEach((planeta) => {
     const punto = planetasEnDial[planeta.nombre];
     if (!punto) return;
-    const pos = posicionHeliocentrica(planeta, fecha);
-    const xy = polar(radioDelDial(pos.rho), anguloDelDial(pos.longitud));
+    const posicion = posicionHeliocentrica(planeta, fecha);
+    const xy = posicionEnVistaSistemaSolar(posicion);
     punto.setAttribute("cx", xy.x);
     punto.setAttribute("cy", xy.y);
+    actualizarProfundidadMarcador(punto, posicion);
   });
+}
+
+// En la vista XZ, Y es la profundidad: los cuerpos del lado del observador se dibujan sobre el Sol.
+function actualizarProfundidadMarcador(marcador, posicion) {
+  const delante = vistaSistemaSolar === "xz" && posicion.y > 0;
+  const capaDelante = document.getElementById("capa-planetas-frente");
+  const capaBase = marcador.id === "tierra-orbital"
+    ? document.getElementById("capa-orbita-terrestre")
+    : document.getElementById("capa-planetas");
+  const destino = delante ? capaDelante : capaBase;
+  if (destino && marcador.parentElement !== destino) destino.appendChild(marcador);
 }
