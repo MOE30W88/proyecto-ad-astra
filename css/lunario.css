@@ -1,0 +1,47 @@
+/* css/lunario.css — capa Lunario: Tierra, Luna en su órbita real y nodos. Solo se ve con el enfoque "Lunario".
+   Colores: variables de css/tema.css (--tierra-*, --luna-*, --sol, --nodo*, --acento). */
+#reloj:not(.enfoque-lunario) #capa-lunario { opacity: 0; pointer-events: none; }
+#capa-lunario { transition: opacity 0.6s ease; pointer-events: none; }
+
+/* Guías y órbita */
+.lun-guia { fill: none; stroke: var(--nodo); stroke-width: 1.5; stroke-dasharray: 3 9; stroke-linecap: round; opacity: 0.45; }
+.lun-linea-nodos { opacity: 0.6; }
+.lun-orbita { fill: none; stroke: var(--acento); stroke-width: 2.5; stroke-linecap: round; opacity: 0.85; }
+.lun-orbita-atras { opacity: 0.4; }
+
+/* Tierra */
+.lun-firme { fill: var(--tierra-firme); }
+.lun-desierto { fill: var(--tierra-desierto); opacity: 0.85; }
+.lun-hielo { fill: var(--tierra-hielo); }
+.lun-noche { fill: var(--tierra-noche); opacity: 0.62; }
+.lun-atmosfera { fill: none; stroke: var(--tierra-atmosfera); stroke-width: 7; opacity: 0.4; }
+.lun-atmosfera-externa { stroke-width: 22; opacity: 0.14; }
+.lun-eje { stroke: var(--acento); stroke-width: 2; stroke-dasharray: 8 8; opacity: 0.65; }
+.lun-lugar { fill: var(--acento); stroke: #fff; stroke-width: 2; }
+.lun-lugar-halo { fill: none; stroke: var(--acento); stroke-width: 2; opacity: 0.6; }
+
+/* Mareas: capa de agua que se abulta hacia la Luna y el Sol (muy exagerada) e indicador de fuerza */
+.lun-agua { fill: var(--tierra-oceano); opacity: 0.6; stroke: var(--tierra-atmosfera); stroke-width: 2; }
+.lun-gauge-pista { stroke: var(--nodo); stroke-width: 5; stroke-linecap: round; opacity: 0.55; }
+.lun-gauge-marca { fill: var(--acento); }
+.lun-gauge-etq { fill: var(--texto-suave); font-family: var(--fuente); font-size: 18px; letter-spacing: 0.06em; }
+
+/* Luna y Sol */
+.lun-luna-sombra { fill: var(--luna-sombra); }
+.lun-luna-luz { fill: var(--luna-luz); }
+.lun-mares ellipse { fill: var(--luna-sombra); opacity: 0.32; }
+.lun-luna-umbra { fill: #7a2a20; }
+.lun-luna-borde { fill: none; stroke: var(--luna-contorno); stroke-width: 1.5; }
+.lun-sol-halo { fill: var(--sol); opacity: 0.18; }
+.lun-etiqueta-sol { fill: var(--acento); font-family: var(--fuente); font-size: 24px; letter-spacing: 0.06em; }
+
+/* Nodos: solo el más cercano a la Luna */
+.lun-nodo { opacity: 0; filter: drop-shadow(0 0 5px var(--nodo-brillo)); transition: opacity 0.5s ease, filter 0.5s ease; }
+.lun-nodo.activo { opacity: 1; }
+#capa-lunario.temporada-eclipses .lun-nodo.activo { filter: drop-shadow(0 0 5px var(--nodo-brillo)) drop-shadow(0 0 14px var(--nodo-brillo)); }
+.lun-icono-nodo { fill: var(--nodo); }
+.lun-glifo-nodo { fill: var(--nodo); font-size: 56px; }
+.lun-etiqueta-nodo { fill: var(--nodo); font-family: var(--fuente); font-size: 24px; letter-spacing: 0.06em; }
+
+.lun-texto { fill: var(--acento); font-family: var(--fuente); font-size: 28px; letter-spacing: 0.04em; }
+.lun-texto-fase { fill: var(--texto-suave); font-size: 24px; }

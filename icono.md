@@ -1,8 +1,6 @@
-# Catálogo de archivos SVG
+# Iconos SVG
 
-Rutas relativas a la raíz del proyecto. Archivos encontrados: 104.
-
-## eclipses
+Rutas relativas desde la raíz del proyecto:
 
 - `svg/eclipses/eclipselunarparcial.svg`
 - `svg/eclipses/eclipselunarpenumbra.svg`
@@ -12,9 +10,6 @@ Rutas relativas a la raíz del proyecto. Archivos encontrados: 104.
 - `svg/eclipses/eclipsesolartotal.svg`
 - `svg/eclipses/nodonorte.svg`
 - `svg/eclipses/nodosur.svg`
-
-## iconos
-
 - `svg/iconos/albaAstro.svg`
 - `svg/iconos/albaCivil.svg`
 - `svg/iconos/albaNautico.svg`
@@ -44,28 +39,13 @@ Rutas relativas a la raíz del proyecto. Archivos encontrados: 104.
 - `svg/iconos/salida.svg`
 - `svg/iconos/signo.svg`
 - `svg/iconos/verano.svg`
-
-## logo
-
 - `svg/logo/logo.svg`
-
-## observador
-
 - `svg/observador/observador.svg`
-
-## panel control
-
 - `svg/panel control/vistaXY.svg`
 - `svg/panel control/vistaXZ.svg`
-
-## redes
-
 - `svg/redes/instagram.svg`
 - `svg/redes/x.svg`
 - `svg/redes/youtube.svg`
-
-## zodiaco chino
-
 - `svg/zodiaco chino/figuras/fig.buey.svg`
 - `svg/zodiaco chino/figuras/fig.caballo.svg`
 - `svg/zodiaco chino/figuras/fig.cabra.svg`
@@ -90,9 +70,6 @@ Rutas relativas a la raíz del proyecto. Archivos encontrados: 104.
 - `svg/zodiaco chino/simbolos/simb.rata.svg`
 - `svg/zodiaco chino/simbolos/simb.serpiente.svg`
 - `svg/zodiaco chino/simbolos/simb.tigre.svg`
-
-## zodiaco occidental
-
 - `svg/zodiaco occidental/constelaciones/cons.acuario.svg`
 - `svg/zodiaco occidental/constelaciones/cons.aries.svg`
 - `svg/zodiaco occidental/constelaciones/cons.cancer.svg`
@@ -129,4 +106,3 @@ Rutas relativas a la raíz del proyecto. Archivos encontrados: 104.
 - `svg/zodiaco occidental/simbolo/simb.sagitario.svg`
 - `svg/zodiaco occidental/simbolo/simb.tauro.svg`
 - `svg/zodiaco occidental/simbolo/simb.virgo.svg`
-

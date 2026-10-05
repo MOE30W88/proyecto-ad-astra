@@ -45,6 +45,8 @@
   --luna-luz: #ece8dc;
   --luna-sombra: #394156;
   --luna-contorno: #394156;
+  --nodo: #596375;
+  --nodo-brillo: rgba(255, 255, 255, 0.9);
   --tierra: #2f6aa6;
   --estacion-opacidad: 0.8;   /* el anillo de estaciones necesita más cuerpo sobre fondo claro */
   /* trópicos */
@@ -61,6 +63,13 @@
   --alineacion-1: #8d95a3;
   --alineacion-2: #c9a017;
   --alineacion-3: #1f9fb5;
+  --tierra-oceano: #3b86c8;
+  --tierra-oceano-profundo: #14468a;
+  --tierra-firme: #5d8f4c;
+  --tierra-desierto: #a58253;
+  --tierra-hielo: #eaf4fb;
+  --tierra-atmosfera: #8fd0f5;
+  --tierra-noche: #040919;
 }
 
 /* ───────── MODO NOCHE: espacio profundo. Las estrellas sutiles las pinta css/fondo-estrellas.css ───────── */
@@ -97,6 +106,8 @@
   --luna-luz: #cfd8e3;
   --luna-sombra: #2a2f3a;
   --luna-contorno: transparent;
+  --nodo: #98a2b5;
+  --nodo-brillo: rgba(168, 182, 210, 0.6);
   --tierra: #5b93d1;
   --estacion-opacidad: 0.4;
 
@@ -113,4 +124,11 @@
   --alineacion-1: #c3cad6;
   --alineacion-2: #f2d35a;
   --alineacion-3: #4fdcf0;
+  --tierra-oceano: #3b86c8;
+  --tierra-oceano-profundo: #14468a;
+  --tierra-firme: #5d8f4c;
+  --tierra-desierto: #a58253;
+  --tierra-hielo: #eaf4fb;
+  --tierra-atmosfera: #8fd0f5;
+  --tierra-noche: #040919;
 }

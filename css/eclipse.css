@@ -19,7 +19,7 @@
 
 .etiqueta-eclipse {
   position: absolute;
-  right: calc((100% - var(--ancho-reloj)) / 2 + 0.5rem);
+  right: 0.75rem;
   bottom: 0.9rem;
   z-index: 25;
   display: flex;
