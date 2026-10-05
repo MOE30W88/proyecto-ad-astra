@@ -19,8 +19,11 @@ const NS_SVG = "http://www.w3.org/2000/svg";
 let rotacionConstruida = false;
 let meridianosGlobo = [];      // { linea, longitud }
 let puntoUbicacionGlobo = null;
+let etiquetaUbicacionGlobo = null;
 let textoVelocidadRotacion = null;
 let ultimaLatitudEtiqueta = undefined;
+let ultimaLatitudUbicacion = undefined;
+let ultimaLongitudUbicacion = undefined;
 
 function crearSvg(nombre, atributos = {}, padre = null) {
   const el = document.createElementNS(NS_SVG, nombre);
@@ -81,14 +84,26 @@ function construirGlobo(capa) {
 
   // Paralelos: con el eje en el plano de la pantalla se proyectan como rectas perpendiculares al eje
   const lats = [...ROTACION.paralelos, eps, -eps, 90 - eps, -(90 - eps)];
+  const referenciasGlobo = [];
   lats.forEach((lat) => {
     const y = c - R * Math.sin((lat * Math.PI) / 180);
     const medio = R * Math.cos((lat * Math.PI) / 180);
-    const especial = lat === 0 ? "ecuador" : Math.abs(lat) === eps || Math.abs(lat) === 90 - eps ? "circulo-notable" : "";
+    let especial = "";
+    let etiqueta = "";
+    if (lat === 0) { especial = "ecuador"; etiqueta = "Ecuador"; }
+    else if (lat === eps) { especial = "circulo-notable tropico-cancer"; etiqueta = "Trópico de Cáncer"; }
+    else if (lat === -eps) { especial = "circulo-notable tropico-capricornio"; etiqueta = "Trópico de Capricornio"; }
+    else if (lat === 90 - eps) { especial = "circulo-notable circulo-polar"; etiqueta = "Círculo polar ártico"; }
+    else if (lat === -(90 - eps)) { especial = "circulo-notable circulo-polar"; etiqueta = "Círculo polar antártico"; }
     crearSvg("line", { class: `globo-paralelo ${especial}`.trim(), x1: c - medio, y1: y, x2: c + medio, y2: y }, tierra);
+    if (etiqueta) {
+      const ladoDerecho = lat > 0;
+      const xEtiqueta = ladoDerecho ? c + medio + 25 : c - medio - 75;
+      referenciasGlobo.push({ etiqueta, especial, x: xEtiqueta, y: y - 20, ladoDerecho });
+    }
   });
 
-  // Eje de la Tierra dentro del globo (fuera del globo lo dibuja la capa-eje-rotacion, que va al fondo)
+  // Eje de la Tierra dentro del globo (fuera lo dibuja capa-eje-rotacion).
   crearSvg("line", { class: "globo-eje", x1: c, y1: c - R, x2: c, y2: c + R }, tierra);
 
   // Meridianos: semielipses cuyo ancho depende del ángulo respecto al meridiano central
@@ -97,7 +112,26 @@ function construirGlobo(capa) {
     meridianosGlobo.push({ linea, longitud: lon });
   }
 
-  puntoUbicacionGlobo = crearSvg("circle", { class: "globo-ubicacion", cx: c, cy: c, r: 12, visibility: "hidden" }, tierra);
+  // Las etiquetas van sobre la retícula y fuera del borde para no tapar el globo.
+  const etiquetasReferencia = crearSvg("g", { class: "globo-etiquetas-referencia" }, tierra);
+  referenciasGlobo.forEach(({ etiqueta, especial, x, y, ladoDerecho }) => {
+    const texto = crearSvg("text", {
+      class: `globo-etiqueta-paralelo ${especial}`,
+      x,
+      y,
+      transform: `rotate(${-eps} ${x} ${y})`,
+      "text-anchor": ladoDerecho ? "start" : "end",
+    }, etiquetasReferencia);
+    texto.textContent = etiqueta;
+  });
+
+  const poloNorte = crearSvg("text", { class: "globo-etiqueta-polo", x: c + 20, y: c - R - 25, transform: `rotate(${-eps} ${c + 18} ${c - R - 18})`, "text-anchor": "start" }, etiquetasReferencia);
+  poloNorte.textContent = "Polo norte";
+  const poloSur = crearSvg("text", { class: "globo-etiqueta-polo", x: c + 20, y: c + R + 65, transform: `rotate(${-eps} ${c + 18} ${c + R + 28})`, "text-anchor": "start" }, etiquetasReferencia);
+  poloSur.textContent = "Polo sur";
+
+  puntoUbicacionGlobo = crearSvg("circle", { class: "globo-ubicacion", cx: c, cy: c, r: 6, visibility: "hidden" }, tierra);
+  etiquetaUbicacionGlobo = crearSvg("text", { class: "globo-etiqueta-ubicacion", visibility: "hidden" }, tierra);
 
   crearSvg("circle", { class: "globo-limbo", cx: c, cy: c, r: R }, capa);
   crearSvg("circle", { class: "globo-borde", cx: c, cy: c, r: R }, capa);
@@ -147,6 +181,7 @@ function actualizarRotacion(ahora) {
 
   if (ubicacion.latitud === null) {
     puntoUbicacionGlobo.setAttribute("visibility", "hidden");
+    etiquetaUbicacionGlobo.setAttribute("visibility", "hidden");
     return;
   }
   const lat = (ubicacion.latitud * Math.PI) / 180;
@@ -154,8 +189,20 @@ function actualizarRotacion(ahora) {
   t = (((((t + 180) % 360) + 360) % 360) - 180) * (Math.PI / 180);
   const visible = Math.cos(lat) * Math.cos(t) > 0;
   puntoUbicacionGlobo.setAttribute("visibility", visible ? "visible" : "hidden");
+  etiquetaUbicacionGlobo.setAttribute("visibility", visible ? "visible" : "hidden");
   if (visible) {
-    puntoUbicacionGlobo.setAttribute("cx", c + R * Math.cos(lat) * Math.sin(t));
-    puntoUbicacionGlobo.setAttribute("cy", c - R * Math.sin(lat));
+    const x = c + R * Math.cos(lat) * Math.sin(t);
+    const y = c - R * Math.sin(lat);
+    puntoUbicacionGlobo.setAttribute("cx", x);
+    puntoUbicacionGlobo.setAttribute("cy", y);
+    etiquetaUbicacionGlobo.setAttribute("x", x + (x < c ? 12 : -12));
+    etiquetaUbicacionGlobo.setAttribute("y", y - 12);
+    etiquetaUbicacionGlobo.setAttribute("transform", `rotate(${-ROTACION.inclinacion} ${x + (x < c ? 12 : -12)} ${y - 12})`);
+    etiquetaUbicacionGlobo.setAttribute("text-anchor", x < c ? "start" : "end");
+    if (ubicacion.latitud !== ultimaLatitudUbicacion || ubicacion.longitud !== ultimaLongitudUbicacion) {
+      etiquetaUbicacionGlobo.textContent = `Lat ${formatoGrados(ubicacion.latitud)} · Lon ${formatoGrados(ubicacion.longitud)}`;
+      ultimaLatitudUbicacion = ubicacion.latitud;
+      ultimaLongitudUbicacion = ubicacion.longitud;
+    }
   }
 }

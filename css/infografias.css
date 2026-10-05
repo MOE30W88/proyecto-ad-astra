@@ -2,10 +2,12 @@
    Colores: solo variables de css/tema.css. */
 
 /* el proyecto no usa un reset global: las medidas incluyen borde y relleno dentro de la sección */
-.seccion-infografias *, .seccion-infografias *::before, .seccion-infografias *::after { box-sizing: border-box; }
+.seccion-infografias *, .seccion-infografias *::before, .seccion-infografias *::after,
+.seccion-eventos *, .seccion-eventos *::before, .seccion-eventos *::after { box-sizing: border-box; }
 
 /* ───── 1 · Carrusel de próximos eventos (se mueve hacia la izquierda) ───── */
 .eventos-proximos { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.seccion-eventos .eventos-proximos { margin-bottom: 0; }
 .eventos-carrusel { position: relative; overflow: hidden; contain: inline-size; border-block: 1px solid var(--linea); } /* contain: la cinta larga no ensancha la página */
 .eventos-pista {
   display: flex;

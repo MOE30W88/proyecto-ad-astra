@@ -51,6 +51,7 @@ function pedirUbicacion(alExito, alError) {
     async (posicion) => {
       ubicacion.latitud = posicion.coords.latitude;
       ubicacion.longitud = posicion.coords.longitude;
+      if (typeof refrescarEventosProximos === "function") refrescarEventosProximos();
       ubicacion.esManual = false;
       
       await obtenerPaisYCiudad(ubicacion.latitud, ubicacion.longitud);
@@ -68,6 +69,7 @@ function establecerUbicacionManual(lat, lon) {
   ubicacion.esManual = true;
   ubicacion.latitud = lat;
   ubicacion.longitud = lon;
+  if (typeof refrescarEventosProximos === "function") refrescarEventosProximos();
   ubicacion.ciudad = "";
   ubicacion.pais = "";
 

@@ -47,15 +47,4 @@ function actualizarPanelPlanetas(ahora) {
     : `Ninguno; menor desviación: ${formatoDesvio(evaluaciones[0])}`;
 }
  
-function inicializarCajonPlanetas() {
-  const boton = document.getElementById("boton-planetas");
-  const cajon = document.getElementById("cajon-planetas");
-  if (!boton || !cajon) return;
-  boton.addEventListener("click", () => {
-    cajon.classList.toggle("abierto");
-    ultimoRefrescoPlanetas = 0; // refresca de inmediato al abrir
-  });
-}
- 
 construirTablaPlanetas();
-inicializarCajonPlanetas();

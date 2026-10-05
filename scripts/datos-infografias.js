@@ -45,5 +45,6 @@ const EVENTOS_PROXIMOS_INFOGRAFIAS = [
 // Punto único de entrada: hoy devuelve la lista de arriba; cuando existan los cálculos de eclipses
 // y astrales, esta función los combinará con este contenido y solo devolverá los próximos.
 function obtenerEventosProximos() {
-  return EVENTOS_PROXIMOS_INFOGRAFIAS;
+  const calculados = typeof eventosParaCarrusel === "function" ? eventosParaCarrusel() : [];
+  return [...calculados, ...EVENTOS_PROXIMOS_INFOGRAFIAS];
 }

@@ -1,6 +1,8 @@
 /* css/pie.css — pie de página (3): logo, columnas de enlaces y contacto. Colores: variables de css/tema.css. */
 .pie, .pie *, .pie *::before, .pie *::after { box-sizing: border-box; }
 .pie { margin-top: 0; padding: 3.5rem clamp(1.5rem, 7vw, 7rem) 1.5rem; border-top: 1px solid var(--linea); background: color-mix(in srgb, var(--panel) 44%, transparent); }
+.pie-minimo { padding-top: 1.5rem; border-top: 0; background: transparent; }
+.pie-minimo .pie-final { margin-top: 0; }
 .pie-contenido {
   display: grid;
   grid-template-columns: minmax(320px, 1.5fr) repeat(3, minmax(150px, 1fr));

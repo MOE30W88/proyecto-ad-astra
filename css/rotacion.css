@@ -16,7 +16,25 @@
 .globo-paralelo { stroke: var(--globo-linea); stroke-width: 1.4; opacity: 0.35; }
 .globo-paralelo.ecuador { stroke-width: 3; opacity: 0.7; }
 .globo-paralelo.circulo-notable { stroke-dasharray: 8 8; opacity: 0.5; }
+.globo-paralelo.tropico-cancer { stroke: var(--tropico-cancer); stroke-width: 2.5; opacity: 0.9; }
+.globo-paralelo.tropico-capricornio { stroke: var(--tropico-capricornio); stroke-width: 2.5; opacity: 0.9; }
+.globo-paralelo.circulo-polar { stroke: var(--hielo); stroke-width: 2; opacity: 0.8; }
+.globo-etiqueta-paralelo, .globo-etiqueta-polo, .globo-etiqueta-ubicacion {
+  fill: var(--tinta);
+  font-family: var(--fuente);
+  font-size: 25px;
+  letter-spacing: 0.09em;
+  paint-order: stroke;
+  stroke: var(--globo-2);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.globo-etiqueta-paralelo.tropico-cancer { fill: var(--tropico-cancer); }
+.globo-etiqueta-paralelo.tropico-capricornio { fill: var(--tropico-capricornio); }
+.globo-etiqueta-paralelo.circulo-polar { fill: var(--hielo); }
+.globo-etiqueta-polo { font-size: 30px; font-weight: 600; }
+.globo-etiqueta-ubicacion { fill: #0b2a4a; font-size: 18px; font-weight: 600; }
 .globo-meridiano { fill: none; stroke: var(--globo-linea); stroke-width: 1.4; opacity: 0.4; }
 .globo-meridiano.meridiano-cero { stroke: var(--oro-claro); stroke-width: 3; opacity: 0.9; }
 .globo-eje { stroke: var(--tinta); stroke-width: 2; stroke-dasharray: 10 12; opacity: 0.9; }
-.globo-ubicacion { fill: var(--sol); stroke: var(--superficie); stroke-width: 3; }
+.globo-ubicacion { fill: var(--sol); stroke: var(--superficie); stroke-width: 2; }

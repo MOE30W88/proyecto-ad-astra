@@ -6,7 +6,7 @@
 const CAPAS_SIEMPRE_VISIBLES = ["capa-fija", "capa-fija-ejes", "capa-fondo-traslacion"];
  
 const ENFOQUES = {
-  reloj: ["capa-fondo-reloj", "capa-marco", "capa-minuto", "capa-segundo", "capa-hora", "capa-marcadores-reloj"],
+  reloj: ["capa-fondo-reloj", "capa-marco", "capa-minuto", "capa-segundo", "capa-hora", "capa-marcadores-reloj", "capa-analema"],
   "dia-noche": ["capa-eventos-solares", "capa-sol", "capa-luna", "capa-eclipse", "capa-horizonte", "capa-marcas-eventos"],
   lunario: ["capa-lunario"],
   zodiaco: ["capa-zodiaco", "capa-indicador-zodiaco", "capa-referencias-estacionales", "capa-marcador-estacional", "capa-tropicos", "capa-constelaciones", "capa-sol-central"],
@@ -18,6 +18,7 @@ const ENFOQUES = {
 function aplicarEnfoque(clave) {
   const svg = document.getElementById("reloj");
   const botonVistaSolar = document.getElementById("boton-vista-solar");
+  actualizarPanelPorEnfoque(clave);
   if (botonVistaSolar) botonVistaSolar.hidden = clave !== "sistema-solar";
   const ids = ENFOQUES[clave];
   svg.querySelectorAll(":scope > g").forEach((g) => g.classList.remove("capa-enfocada"));
@@ -25,6 +26,10 @@ function aplicarEnfoque(clave) {
     .filter((c) => c.startsWith("enfoque-"))
     .forEach((c) => svg.classList.remove(c));
   svg.classList.toggle("enfocando", Boolean(ids));
+  const alcanceAgujas = clave === "reloj" ? 0 : 120;
+  ["aguja-hora", "aguja-minuto", "aguja-segundo"].forEach((id) => {
+    document.getElementById(id)?.setAttribute("y2", alcanceAgujas);
+  });
   if (clave !== "sistema-solar" && typeof cerrarAyudaContextual === "function") cerrarAyudaContextual();
   actualizarEnfoqueConstelaciones?.(clave);
   if (!ids) return;

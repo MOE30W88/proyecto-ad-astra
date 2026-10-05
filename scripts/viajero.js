@@ -1,15 +1,6 @@
 // scripts/viajero.js
 
 function inicializarViajero() {
-  const boton = document.getElementById("boton-viajar");
-  const cajon = document.getElementById("cajon-viajero");
-  const contenedor = document.getElementById("contenedor-app");
-
-  boton.addEventListener("click", () => {
-    cajon.classList.toggle("abierto");
-    contenedor.classList.toggle("desplazado");
-  });
-
   const inputFechaHora = document.getElementById("input-fecha-hora");
   const botonIrFecha = document.getElementById("boton-ir-fecha");
   const botonAhora = document.getElementById("boton-ahora");

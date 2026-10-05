@@ -63,6 +63,8 @@ function actualizar() {
   actualizarConstelaciones(ahora, anguloCal);
   actualizarCalendarioChino(ahora);
   actualizarRotacion(ahora);
+  actualizarAnalema(ahora);
+  actualizarPanelDatosDinamicos(ahora);
   actualizarHorizonte();
   actualizarMarcasEventos(ahora);
   actualizarEtiquetasCalendario(anguloCal);

@@ -56,6 +56,7 @@
     <script src="scripts/lunario-datos.js" defer></script>
     <script src="scripts/lunario-geometria.js" defer></script>
     <script src="scripts/lunario.js" defer></script>
+    <script src="scripts/eventos-lunares.js" defer></script>
     <script src="scripts/calendario-chino.js" defer></script>
     <script src="scripts/indicador-zodiaco.js" defer></script>
     <script src="scripts/tropicos.js" defer></script>
@@ -63,8 +64,10 @@
     <script src="scripts/eventos-solares.js" defer></script>
     <script src="scripts/zodiaco.js" defer></script>
     <script src="scripts/efemerides-solares.js" defer></script>
+    <script src="scripts/analema.js" defer></script>
     <script src="scripts/panel-resultados.js" defer></script>
     <script src="scripts/panel-planetas.js" defer></script>
+    <script src="scripts/panel-informacion-capas.js" defer></script>
     <script src="scripts/enfoque-capas.js" defer></script>
     <script src="scripts/constelaciones.js" defer></script>
     <script src="scripts/iconos-svg.js" defer></script>
@@ -75,6 +78,8 @@
     <script src="scripts/tema.js" defer></script>
     <script src="scripts/idioma.js" defer></script>
     <script src="scripts/main.js" defer></script>
+    <script src="scripts/nav-scroll.js" defer></script>
+    <script src="scripts/paneles-laterales.js" defer></script>
     <script src="scripts/datos-infografias.js" defer></script>
     <script src="scripts/infografias.js" defer></script>
   </head>
@@ -100,6 +105,14 @@
           <button type="button" data-enfoque="sistema-solar">Sistema solar</button>
           <button type="button" data-enfoque="rotacion">Rotación</button>
         </nav>
+        <nav class="nav-secciones" aria-label="Navegación del sitio">
+          <a href="#inicio">Astrolabio</a>
+          <span>Alcance</span>
+          <span>Matemáticas</span>
+          <span>Próximos eventos</span>
+          <span>Infografía</span>
+          <span>Acerca de</span>
+        </nav>
       <div class="cabecera-acciones">
         <button type="button" id="boton-idioma" class="boton-tema boton-idioma" title="Cambiar idioma" aria-label="Cambiar idioma">ES</button>
         <div class="control-tema" role="group" aria-label="Modo de color">
@@ -115,16 +128,22 @@
           <h1 class="hero-titular">El cielo, el tiempo y la posición del Sol en una sola esfera.</h1>
         </section>
         <section id="escenario" class="escenario">
-          <button type="button" id="boton-viajar" class="tirador tirador-izq" title="Viajar en el tiempo y el lugar" aria-label="Viajar en el tiempo y el lugar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+          <button type="button" id="boton-viajar" class="tirador tirador-izq" title="Fecha y hora" aria-label="Abrir panel de fecha y hora" aria-controls="cajon-viajero" aria-expanded="false">
+            <span class="icono-svg icono-panel-fecha" aria-hidden="true"></span>
           </button>
-          <button type="button" id="boton-planetas" class="tirador tirador-der" title="Sistema solar" aria-label="Sistema solar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="8"/><circle cx="18" cy="7" r="1.6" fill="currentColor"/></svg>
+          <button type="button" id="boton-geolocalizacion" class="tirador tirador-izq tirador-secundario" title="Geolocalización" aria-label="Abrir panel de geolocalización" aria-controls="panel-geolocalizacion" aria-expanded="false">
+            <span class="icono-svg icono-panel-geolocalizacion" aria-hidden="true"></span>
           </button>
+          <button type="button" id="boton-planetas" class="tirador tirador-der" title="Sistema solar" aria-label="Sistema solar" aria-controls="cajon-planetas" aria-expanded="false">
+            <span class="icono-svg icono-panel-pregunta" aria-hidden="true"></span>
+          </button>
+          <a id="boton-masinfo" class="tirador tirador-der tirador-secundario" href="paginas.html" title="Infografía" aria-label="Ir a Infografía">
+            <span class="icono-svg icono-panel-masinfo" aria-hidden="true"></span>
+          </a>
           <button type="button" id="boton-vista-solar" class="boton-vista-solar" data-vista="xy" aria-label="Cambiar a vista XZ" title="Vista XY · cambiar a XZ" aria-pressed="false" hidden>
             <span class="icono-vista-solar" aria-hidden="true"></span>
           </button>
-          <aside id="cajon-viajero" class="panel-flotante panel-izq">
+          <aside id="cajon-viajero" class="panel-flotante panel-izq" aria-label="Panel de fecha y hora" aria-hidden="true" inert>
             <section class="seccion-viajero">
               <h3>Reloj</h3>
               <label for="input-fecha-hora">Fecha y hora</label>
@@ -134,6 +153,91 @@
                 <button id="boton-ahora">⟲ Ahora</button>
               </div>
             </section>
+          </aside>
+          <aside id="cajon-planetas" class="panel-flotante panel-der" aria-label="Panel del sistema solar" aria-hidden="true" inert>
+            <section id="contenido-panel-sistema-solar" class="seccion-planetas">
+              <h3>Sistema solar</h3>
+              <p class="nota-planetas">Posiciones heliocéntricas aproximadas con elementos keplerianos (1800–2050). El dial comprime las distancias.</p>
+              <table class="tabla-planetas">
+                <thead><tr><th>Planeta</th><th>UA</th><th>Long.</th><th>Período</th></tr></thead>
+                <tbody id="tabla-planetas-cuerpo"></tbody>
+              </table>
+              <p class="arco-planetas">Centros sobre el eje 3D Sol–Tierra (desviación ≤ 0,1°): <strong id="planetas-alineados">—</strong><br />El valor entre paréntesis indica el ángulo y la distancia al eje.</p>
+            </section>
+            <section id="contenido-panel-capa" class="seccion-planetas" hidden>
+              <h3 id="titulo-panel-capa"></h3>
+              <div id="contenido-panel-astrolabio" hidden>
+                <p>El astrolabio reúne en una sola representación los ciclos del cielo y su relación con la Tierra. Su nombre viene del griego <em>astrólabon</em>, “el que toma los astros”.</p>
+                <p>Durante siglos, el astrolabio fue un instrumento para reconocer estrellas, estimar la hora y orientarse. Este reloj astronómico retoma esa idea: convierte la fecha, la hora y la ubicación en una representación visual del movimiento del Sol, la Luna y otros cuerpos celestes.</p>
+                <p><strong>Cómo explorarlo</strong><br />Usa las capas del menú para cambiar la perspectiva. El reloj se actualiza con el paso del tiempo; los controles laterales permiten ajustar la fecha y la ubicación.</p>
+              </div>
+              <div id="contenido-panel-reloj" class="lecturas-capa" hidden>
+                <div>
+                  <h4>Lectura del tiempo</h4>
+                  <dl>
+                    <div><dt>Reloj principal · 24 h</dt><dd id="dato-hora-24">—</dd></div>
+                    <div><dt>Hora solar</dt><dd id="dato-hora-solar">—</dd></div>
+                    <div><dt>Hora civil</dt><dd id="dato-hora-civil">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">La hora solar sigue el movimiento aparente del Sol y marca las 12:00 cuando cruza el meridiano local. La hora civil es la oficial del huso horario; por eso ambas pueden diferir.</p>
+                </div>
+                <div>
+                  <h4>Posición del Sol en el analema</h4>
+                  <dl>
+                    <div><dt>Ecuación del tiempo</dt><dd id="dato-ecuacion-tiempo">—</dd></div>
+                    <div><dt>Declinación solar</dt><dd id="dato-declinacion-solar">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">El analema muestra cómo cambia la posición del Sol durante el año. La ecuación del tiempo sitúa el punto horizontalmente y la declinación, verticalmente. Su figura refleja la inclinación del eje terrestre y la órbita elíptica.</p>
+                </div>
+              </div>
+              <div id="contenido-panel-dia-noche" class="lecturas-capa" hidden>
+                <div>
+                  <h4>Precisión y variación</h4>
+                  <dl>
+                    <div><dt>Incertidumbre estimada</dt><dd>±1–2 min</dd></div>
+                    <div><dt>Equivalente sobre 24 h</dt><dd>±0,07–0,14 %</dd></div>
+                  </dl>
+                  <p class="nota-planetas">Los horarios cambian con la fecha y el lugar. La latitud afecta la duración del día; la longitud y el huso horario determinan cómo se expresa la hora local.</p>
+                </div>
+                <div class="lecturas-ciclo-solar">
+                  <h4>Ciclo solar del día</h4>
+                  <dl>
+                    <div><dt>Alba astronómica</dt><dd id="dato-alba-astronomica">—</dd></div>
+                    <div><dt>Alba náutica</dt><dd id="dato-alba-nautica">—</dd></div>
+                    <div><dt>Alba civil</dt><dd id="dato-alba-civil">—</dd></div>
+                    <div><dt>Alba · salida del Sol</dt><dd id="dato-alba-dia-noche">—</dd></div>
+                    <div><dt>Punto máximo · mediodía solar</dt><dd id="dato-maximo-dia-noche">—</dd></div>
+                    <div><dt>Ocaso · puesta del Sol</dt><dd id="dato-ocaso-dia-noche">—</dd></div>
+                    <div><dt>Ocaso civil</dt><dd id="dato-ocaso-civil">—</dd></div>
+                    <div><dt>Ocaso náutico</dt><dd id="dato-ocaso-nautico">—</dd></div>
+                    <div><dt>Ocaso astronómico</dt><dd id="dato-ocaso-astronomico">—</dd></div>
+                  </dl>
+                </div>
+                <div>
+                  <h4>Visibilidad respecto al horizonte</h4>
+                  <dl>
+                    <div><dt>Sol</dt><dd id="dato-visibilidad-sol">—</dd></div>
+                    <div><dt>Luna</dt><dd id="dato-visibilidad-luna">—</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div id="contenido-panel-zodiaco" class="lecturas-capa" hidden>
+                <figure class="figura-activa-zodiaco">
+                  <span id="figura-signo-zodiaco" class="figura-activa-zodiaco-icono" aria-hidden="true"></span>
+                  <figcaption><span id="simbolo-signo-zodiaco" class="simbolo-zodiacal"></span> <strong id="nombre-signo-zodiaco">—</strong></figcaption>
+                </figure>
+                <dl>
+                  <div><dt>Longitud eclíptica del Sol</dt><dd id="dato-longitud-zodiaco">—</dd></div>
+                  <div><dt>Avance en el signo</dt><dd id="dato-avance-zodiaco">—</dd></div>
+                  <div><dt>Declinación solar</dt><dd id="dato-declinacion-zodiaco">—</dd></div>
+                  <div><dt>Próximo cambio de signo</dt><dd id="dato-cambio-zodiaco">—</dd></div>
+                </dl>
+                <p class="nota-planetas">El zodíaco tropical divide la eclíptica en doce sectores iguales de 30°, contados desde el equinoccio de marzo. La figura identifica el sector activo; las constelaciones reales tienen límites y tamaños distintos.</p>
+              </div>
+              <div id="datos-panel-capa"></div>
+            </section>
+          </aside>
+          <aside id="panel-geolocalizacion" class="panel-flotante panel-izq panel-lateral-nuevo" aria-label="Panel de geolocalización" aria-hidden="true" inert>
             <section class="seccion-viajero">
               <h3>Mapa</h3>
               <label for="input-latitud">Latitud</label>
@@ -144,17 +248,6 @@
                 <button id="boton-ir-ubicacion">Ir a esta ubicación</button>
                 <button id="boton-ubicacion-real">⟲ Mi ubicación</button>
               </div>
-            </section>
-          </aside>
-          <aside id="cajon-planetas" class="panel-flotante panel-der">
-            <section class="seccion-planetas">
-              <h3>Sistema solar</h3>
-              <p class="nota-planetas">Posiciones heliocéntricas aproximadas con elementos keplerianos (1800–2050). El dial comprime las distancias.</p>
-              <table class="tabla-planetas">
-                <thead><tr><th>Planeta</th><th>UA</th><th>Long.</th><th>Período</th></tr></thead>
-                <tbody id="tabla-planetas-cuerpo"></tbody>
-              </table>
-              <p class="arco-planetas">Centros sobre el eje 3D Sol–Tierra (desviación ≤ 0,1°): <strong id="planetas-alineados">—</strong><br />El valor entre paréntesis indica el ángulo y la distancia al eje.</p>
             </section>
           </aside>
           <svg
@@ -227,6 +320,7 @@
             <g id="capa-fase-lunar"></g>
           </g>
           <g id="capa-marcadores-reloj"></g>
+          <g id="capa-analema"></g>
           <g id="capa-marcas-eventos"></g>
           <g id="capa-fija-ejes">
             <line
@@ -276,9 +370,8 @@
             <div id="grid-astro" class="grid-datos"></div>
           </details>
         </section>
-        <section id="infografia" class="seccion-pagina seccion-infografias" aria-labelledby="titulo-eventos">
-          <!-- 1 · Próximos eventos: carrusel hacia la izquierda (icono + título con enlace interno) -->
-          <div id="eventos-proximos" class="eventos-proximos">
+        <section id="eventos-proximos" class="seccion-pagina seccion-eventos" aria-labelledby="titulo-eventos">
+          <div class="eventos-proximos">
             <h2 id="titulo-eventos" class="titulo-seccion">Próximos eventos</h2>
             <div class="eventos-carrusel" role="region" aria-label="Carrusel de próximos eventos">
               <div id="eventos-pista" class="eventos-pista">
@@ -287,46 +380,13 @@
               <button id="pausar-eventos" class="eventos-pausa" type="button" aria-label="Pausar movimiento de eventos" hidden>Pausar</button>
             </div>
           </div>
-
-          <!-- 2 · Infografía: recuadro punteado > marco > fondo con opacidad + panel glass + galería -->
-          <h2 id="titulo-infografia" class="titulo-seccion">Infografía</h2>
-          <div class="infografia-visor" role="region" aria-label="Visor de infografías">
-            <div class="infografia-marco">
-              <img id="infografia-fondo" class="infografia-fondo" alt="" hidden />
-              <div id="infografia-vacia" class="infografia-vacia">
-                <span class="infografia-vacia-simbolo" aria-hidden="true">✦</span>
-                <p>El cielo está en observación</p>
-                <span>Las fichas aparecerán aquí al añadir eventos en <code>scripts/datos-infografias.js</code> e imágenes SVG en <code>assets/</code>.</span>
-              </div>
-              <article id="infografia-datos" class="infografia-panel" aria-live="polite" hidden>
-                <p id="infografia-tema" class="infografia-tema"></p>
-                <h3 id="infografia-titulo"></h3>
-                <div id="infografia-texto" class="infografia-texto"></div>
-              </article>
-
-              <div class="infografia-galeria" role="group" aria-label="Galería de imágenes del evento" hidden>
-                <button id="galeria-anterior" class="galeria-flecha anterior" type="button" aria-label="Ver imagen anterior" hidden></button>
-                <div id="galeria-pista" class="galeria-pista" role="list"></div>
-                <button id="galeria-siguiente" class="galeria-flecha siguiente" type="button" aria-label="Ver imagen siguiente" hidden></button>
-              </div>
-              <div id="galeria-puntos" class="galeria-puntos" role="group" aria-label="Seleccionar imagen"></div>
-              <p id="galeria-vacia" class="galeria-vacia">La galería se completará con imágenes relacionadas con los próximos eventos.</p>
-            </div>
-          </div>
-
-          <template id="plantilla-evento">
-            <a class="evento-ticker-item">
-              <span class="evento-icono" aria-hidden="true"><span class="evento-icono-fallback">✦</span></span>
-              <span class="evento-ticker-titulo"></span>
-            </a>
-          </template>
-          <template id="plantilla-imagen-infografia">
-            <div class="galeria-item" role="listitem">
-              <button class="galeria-tarjeta" type="button"><img alt="" loading="lazy" /></button>
-              <span class="galeria-leyenda"></span>
-            </div>
-          </template>
         </section>
+        <template id="plantilla-evento">
+          <a class="evento-ticker-item">
+            <span class="evento-icono" aria-hidden="true"><span class="evento-icono-fallback">✦</span></span>
+            <span class="evento-ticker-titulo"></span>
+          </a>
+        </template>
       </main>
       <footer id="pie" class="pie">
         <div class="pie-contenido">
@@ -341,7 +401,7 @@
             <a href="#alcance">Alcance</a>
             <a href="#matematicas">Matemáticas</a>
             <a href="#eventos-proximos">Próximos eventos</a>
-            <a href="#infografia">Infografía</a>
+            <a href="paginas.html">Infografía</a>
             <a href="#acerca-de-mi">Acerca de mí</a>
           </nav>
           <nav class="pie-bloque" aria-labelledby="pie-titulo-soporte">

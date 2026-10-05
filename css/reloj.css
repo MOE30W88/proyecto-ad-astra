@@ -115,6 +115,32 @@
   stroke: var(--tropico-capricornio);
 }
 
+#reloj:not(.enfoque-reloj) #capa-analema { display: none; }
+.analema-curva {
+  fill: none;
+  stroke: var(--hielo);
+  stroke-width: 3;
+  stroke-dasharray: 2 7;
+  opacity: 1;
+}
+.analema-estacion { fill: var(--oro-claro); stroke: var(--fondo); stroke-width: 2; }
+.analema-sol { fill: var(--sol); stroke: var(--sol-contorno); stroke-width: 2; filter: drop-shadow(0 0 7px var(--sol-brillo)); }
+.analema-etiqueta, .reloj-auxiliar-etiqueta {
+  fill: var(--tinta);
+  font-family: var(--fuente);
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.analema-etiqueta-evento { font-size: 30px; }
+.reloj-auxiliar-cara { fill: var(--marino); fill-opacity: 0.7; stroke: var(--oro-claro); stroke-width: 2; }
+.reloj-auxiliar-numero { fill: var(--tinta); font-family: var(--fuente); font-size: 30px; }
+.reloj-auxiliar-marca { stroke: var(--tinta); stroke-width: 2; }
+.reloj-auxiliar-aguja { stroke-linecap: round; }
+.reloj-auxiliar-aguja.hora { stroke: var(--tinta); stroke-width: 5; }
+.reloj-auxiliar-aguja.minuto { stroke: var(--hielo); stroke-width: 3; }
+.reloj-auxiliar-centro { fill: var(--sol); }
+.reloj-auxiliar-solar .reloj-auxiliar-cara { stroke: var(--sol); }
+
 .eje-lectura-estacional {
   stroke: var(--hielo);
   stroke-width: 1.5;

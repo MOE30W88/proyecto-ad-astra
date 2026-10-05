@@ -9,8 +9,8 @@
   align-items: center;
   gap: 0.3rem;
 }
-.controles-tiempo-izq { right: calc(52% + var(--ancho-reloj) * 0.4262 + var(--separacion-lados)); }
-.controles-tiempo-der { left: calc(49% + var(--ancho-reloj) * 0.5283 + var(--separacion-lados)); }
+.controles-tiempo-izq { right: calc(50% + var(--ancho-reloj) * 0.4262 + var(--separacion-lados)); }
+.controles-tiempo-der { left: calc(50% + var(--ancho-reloj) * 0.4262 + var(--separacion-lados)); }
 .controles-tiempo-botones { display: flex; gap: 0.45rem; }
 
 .control-tiempo-boton {

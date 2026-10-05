@@ -75,6 +75,7 @@ function escribirTextoPanel(descripcion, detalle) {
 }
 
 function renderizarGaleria(eventos) {
+  if (!document.getElementById("galeria-pista")) return;
   const imagenes = eventos.flatMap((evento) => (evento.imagenes || []).map((imagen) => ({ ...imagen, evento: evento.titulo })));
   const pista = document.getElementById("galeria-pista");
   const puntos = document.getElementById("galeria-puntos");
