@@ -79,6 +79,7 @@ function actualizar() {
   }
   actualizarEclipse(ahora, alturaSolar);
   actualizarVinetaEventoLunar(ahora);
+  actualizarVinetaMapaEclipse(ahora);
   actualizarLunario(ahora);
   actualizarSol(ahora, alturaSolar);
   actualizarLuna(ahora, alturaSolar);
