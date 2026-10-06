@@ -14,18 +14,18 @@ La implementación funcional está en `index.html`, `css/` y `scripts/`. `respal
 
 La esfera SVG comparte un centro y un eje de lectura. Cada capa traduce una escala de tiempo o una magnitud astronómica a una posición o un anillo; no todas las distancias visuales están a escala física.
 
-| Capa | Qué muestra |
-| --- | --- |
-| **Marco y reloj** | Agujas de hora, minuto y segundo, lectura digital, marcas y escalas de referencia. La hora se presenta para la ubicación activa. |
-| **Día y noche** | Un anillo coloreado según la altura calculada del Sol a lo largo del día local, con transiciones de alba, luz diurna, ocaso y noche. |
-| **Sol y Luna** | Su posición aparente se coloca alrededor del anillo según la hora del día. La opacidad depende de la altura sobre el horizonte; la Luna muestra la fase y la fracción iluminada. |
-| **Zodiaco tropical** | Doce sectores iguales de 30° vinculados a la longitud eclíptica del Sol y al equinoccio de marzo. Incluye el signo activo y referencias de equinoccios y solsticios. |
-| **Trópicos** | Círculos derivados de la latitud activa y de la declinación solar de ±23,44°. |
-| **Calendario** | Los doce meses ocupan sectores proporcionales a sus días reales; febrero y los años bisiestos se contemplan. Un marcador señala el día del año. |
-| **Estaciones** | Banda anual coloreada según la longitud eclíptica del Sol y el hemisferio. La duración de cada estación no se fuerza a cuatro partes iguales. |
-| **Constelaciones zodiacales** | Doce sectores tropicales con ilustraciones, fechas de cruce solar aproximadas y un sector activo. Aquí “constelaciones” nombra una capa didáctica de sectores e imágenes: no es un mapa estelar con límites astronómicos oficiales ni posiciones observadas de estrellas. |
-| **Sistema solar** | La Tierra y los otros siete planetas recorren órbitas heliocéntricas calculadas con elementos orbitales aproximados. El botón de vista alterna la proyección XY superior con la XZ lateral; el panel muestra longitud, distancia en UA, período y qué planetas quedan cerca del eje 3D Sol–Tierra. |
-| **Rotación terrestre** | Globo con inclinación axial de 23,44°, paralelos, meridianos y ubicación activa. El meridiano central corresponde al punto subsolar; también se indica una velocidad superficial estimada para la latitud seleccionada. |
+| Capa                          | Qué muestra                                                                                                                                                                                                                                                                                        |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Marco y reloj**             | Agujas de hora, minuto y segundo, lectura digital, marcas y escalas de referencia. La hora se presenta para la ubicación activa.                                                                                                                                                                   |
+| **Día y noche**               | Un anillo coloreado según la altura calculada del Sol a lo largo del día local, con transiciones de alba, luz diurna, ocaso y noche.                                                                                                                                                               |
+| **Sol y Luna**                | Su posición aparente se coloca alrededor del anillo según la hora del día. La opacidad depende de la altura sobre el horizonte; la Luna muestra la fase y la fracción iluminada.                                                                                                                   |
+| **Zodiaco tropical**          | Doce sectores iguales de 30° vinculados a la longitud eclíptica del Sol y al equinoccio de marzo. Incluye el signo activo y referencias de equinoccios y solsticios.                                                                                                                               |
+| **Trópicos**                  | Círculos derivados de la latitud activa y de la declinación solar de ±23,44°.                                                                                                                                                                                                                      |
+| **Calendario**                | Los doce meses ocupan sectores proporcionales a sus días reales; febrero y los años bisiestos se contemplan. Un marcador señala el día del año.                                                                                                                                                    |
+| **Estaciones**                | Banda anual coloreada según la longitud eclíptica del Sol y el hemisferio. La duración de cada estación no se fuerza a cuatro partes iguales.                                                                                                                                                      |
+| **Constelaciones zodiacales** | Doce sectores tropicales con ilustraciones, fechas de cruce solar aproximadas y un sector activo. Aquí “constelaciones” nombra una capa didáctica de sectores e imágenes: no es un mapa estelar con límites astronómicos oficiales ni posiciones observadas de estrellas.                          |
+| **Sistema solar**             | La Tierra y los otros siete planetas recorren órbitas heliocéntricas calculadas con elementos orbitales aproximados. El botón de vista alterna la proyección XY superior con la XZ lateral; el panel muestra longitud, distancia en UA, período y qué planetas quedan cerca del eje 3D Sol–Tierra. |
+| **Rotación terrestre**        | Globo con inclinación axial de 23,44°, paralelos, meridianos y ubicación activa. El meridiano central corresponde al punto subsolar; también se indica una velocidad superficial estimada para la latitud seleccionada.                                                                            |
 
 El menú superior **Astrolabio**, **Reloj**, **Día y noche**, **Zodíaco**, **Calendario**, **Sistema solar** y **Rotación** atenúa las capas ajenas al enfoque elegido. Los ejes de referencia permanecen visibles para facilitar la lectura.
 
@@ -50,57 +50,103 @@ La aplicación no requiere un paso de compilación. Si cambias archivos mientras
 ## Estructura del proyecto
 
 ```text
-index.html                 estructura, paneles y capas SVG
-README.md                  guía del proyecto
-respaldo.md                copia concatenada anterior; no es la fuente actual
-rutas-iconos-svg.md        inventario de rutas de iconos y gráficos
+index.html                        estructura, paneles y capas SVG
+paginas.html                      página de infografía
+README.md                         guía del proyecto
+respaldo.md                       copia concatenada anterior; no es la fuente actual
+rutas-iconos-svg.md               inventario de rutas de iconos y gráficos
 css/
-  base.css                 estilos globales básicos
-  estructura.css           disposición de la página y controles comunes
-  reloj.css                apariencia de la esfera y sus elementos
-  viajero.css              panel de fecha y ubicación
-  panel.css                tarjetas de resultados
-  planetas.css             tabla y panel del sistema solar
-  rotacion.css             globo y eje terrestre
-  velocidad.css            controles de avance y retroceso
-  tema.css                 temas y paletas
-  fondo-estrellas.css      fondo estrellado
-  fondo-lavado.css         fondo claro
-  secciones.css            secciones inferiores de la página
+  base.css                        estilos globales básicos
+  reloj.css                       apariencia de la esfera y sus elementos
+  viajero.css                     panel de fecha y ubicación
+  panel.css                       tarjetas de resultados
+  planetas.css                    tabla y panel del sistema solar
+  asteroides.css                  cinturón de asteroides (rocas)
+  alineacion.css                  línea punteada de alineación planetaria
+  calendario-chino.css            rueda del zodiaco chino
+  tema.css                        temas y paletas
+  estructura.css                  disposición de la página y controles comunes
+  rotacion.css                    globo y eje terrestre
+  velocidad.css                   controles de avance y retroceso
+  secciones.css                   secciones inferiores de la página
+  infografias.css                 sección Infografía: carrusel y galería de eventos
+  pie.css                         pie de página
+  fondo-estrellas.css             fondo estrellado
+  fondo-lavado.css                fondo claro
+  dia-noche.css                   capa Día y noche: horizonte, observador y marcas
+  constelaciones.css              aro de constelaciones y capa Zodíaco
+  vista-sistema-solar.css         control de proyección XY/XZ del sistema solar
+  ayudas-contextuales.css         tooltips sobre cuerpos celestes
+  eclipse.css                     etiqueta con lupa del eclipse y halo sobre el astro
+  vineta-eventos.css              animaciones de las viñetas de eventos lunares
+  lunario.css                     capa Lunario: Tierra, Luna en órbita real y nodos
 scripts/
-  hora-local.js            conversión entre instante, hora de pared y huso
-  estado-tiempo.js         reloj en vivo y fecha simulada
-  viajero.js               controles de fecha y coordenadas
-  velocidad.js             controles de velocidad y sentido
-  ubicacion.js             geolocalización, búsqueda inversa y huso estimado
-  astronomia.js            posiciones del Sol y la Luna, altura y fase
-  efemerides-solares.js    salidas, puestas, crepúsculos y hora solar
-  eventos-solares.js       anillo diario de luz y oscuridad
-  hora.js                  agujas y marcas temporales
-  marco.js                 escalas y geometría de referencia
-  calendario.js            meses, días y marcador anual
-  referencias-estacionales.js equinoccios, solsticios y banda estacional
-  zodiaco.js               sectores y etiquetas del zodiaco
-  indicador-zodiaco.js     signo activo
-  tropicos.js              círculos de los trópicos
-  constelaciones.js        sectores e ilustraciones zodiacales
-  planetas.js              elementos y posiciones planetarias
-  traslacion.js            órbitas y posiciones del sistema solar
-  rotacion.js              globo, meridianos y punto subsolar
-  panel-resultados.js      lecturas civiles y astronómicas
-  panel-planetas.js        tabla de posiciones planetarias
-  enfoque-capas.js         filtros de visualización
-  tema.js                  modos Auto, día y noche
-  idioma.js                estado del selector ES/EN
-  main.js                  inicialización y actualización de la esfera
+  hora-local.js                   conversión entre instante, hora de pared y huso
+  hora.js                         agujas y marcas temporales
+  estado-tiempo.js                reloj en vivo y fecha simulada
+  viajero.js                      controles de fecha y coordenadas
+  marco.js                        escalas y geometría de referencia
+  calendario.js                   meses, días y marcador anual
+  ubicacion.js                    geolocalización, búsqueda inversa y huso estimado
+  astronomia.js                   posiciones del Sol y la Luna, altura y fase
+  fase-lunar.js                   construcción del path SVG de la fase lunar
+  planetas.js                     elementos y posiciones planetarias
+  traslacion.js                   órbitas y posiciones del sistema solar
+  asteroides.js                   cinturón de asteroides con órbitas kepler simples
+  alineacion.js                   línea de alineación planetaria sobre el eje Sol–Tierra
+  vista-sistema-solar.js          alternancia de proyección XY/XZ del sistema solar
+  ayudas-contextuales.js          tooltips sobre Sol, planetas y cinturón
+  calendario-chino-calculo.js     fecha del Año Nuevo lunar y fracción del año chino
+  efemerides-precisas.js          posiciones de alta precisión del Sol y la Luna (Meeus)
+  eclipses.js                     motor de eclipses solares y lunares
+  eclipse-vista.js                geometría del eclipse en curso vista desde la ubicación
+  eclipse-lupa.js                 etiqueta con lupa, halo y sombra del eclipse en el dial
+  nodos-lunares.js                nodos de la órbita lunar y posición orbital
+  lunario-datos.js                contornos simplificados de continentes y maria lunares
+  lunario-geometria.js            cámara oblicua y proyección de la capa Lunario
+  lunario.js                      capa Lunario: Tierra, Luna, órbita y nodos
+  eventos-lunares.js              motor de eventos lunares y alimentador del carrusel
+  vineta-eventos-lunares.js       viñeta con mini animación para eventos lunares en curso
+  calendario-chino.js             rueda del zodiaco chino (visible en enfoque Calendario)
+  indicador-zodiaco.js            signo activo del zodiaco
+  tropicos.js                     círculos de los trópicos
+  referencias-estacionales.js     equinoccios, solsticios y banda estacional
+  eventos-solares.js              anillo diario de luz y oscuridad
+  zodiaco.js                      sectores y etiquetas del zodiaco
+  efemerides-solares.js           salidas, puestas, crepúsculos y hora solar
+  analema.js                      analema y relojes auxiliares (ecuación del tiempo)
+  panel-resultados.js             lecturas civiles y astronómicas
+  panel-planetas.js               tabla de posiciones planetarias
+  panel-informacion-capas.js      información de la capa activa en el panel lateral
+  enfoque-capas.js                filtros de visualización por capa
+  constelaciones.js               sectores e ilustraciones zodiacales
+  iconos-svg.js                   iconos SVG propios dentro del reloj con paleta dinámica
+  horizonte.js                    horizonte fijo y observador de la capa Día y noche
+  marcas-eventos.js               marcas horarias de eventos solares sobre el dial
+  rotacion.js                     globo, meridianos y punto subsolar
+  velocidad.js                    controles de velocidad y sentido
+  tema.js                         modos Auto, día y noche
+  idioma.js                       estado del selector ES/EN
+  main.js                         inicialización y actualización de la esfera
+  nav-scroll.js                   comportamiento del scroll en la cabecera de navegación
+  paneles-laterales.js            apertura y cierre de los paneles flotantes laterales
+  datos-infografias.js            contenido del carrusel e imágenes de la sección Infografía
+  infografias.js                  dibuja la sección Infografía a partir de datos-infografias.js
+assets/                           recursos estáticos (imágenes y media)
 svg/
-  iconos/                  iconos del panel y del tema
-  logo/                    marca gráfica
-  zodiaco occidental/      figuras, símbolos y constelaciones zodiacales
-  zodiaco chino/           figuras y símbolos disponibles para uso futuro
+  eclipses/                       gráficos de eclipses
+  eventos/                        iconos de eventos astronómicos
+  iconos/                         iconos del panel y del tema
+  logo/                           marca gráfica
+  observador/                     figura del observador (capa Día y noche)
+  otros/                          recursos SVG de uso general
+  panel control/                  iconos de los controles del panel
+  redes/                          iconos de redes sociales
+  zodiaco chino/                  figuras y símbolos del zodiaco chino
+  zodiaco occidental/             figuras, símbolos y constelaciones zodiacales
 ```
 
-Los scripts se cargan desde `index.html` en orden porque comparten funciones y estado global. La carpeta de recursos incluye gráficos que todavía no forman parte de la vista principal.
+Los scripts se cargan desde `index.html` en el orden listado porque comparten funciones y estado global. El orden importa: cada módulo asume que los que depende ya están definidos.
 
 ## Precisión y aproximaciones
 
@@ -122,7 +168,6 @@ AD ASTRA sirve para visualizar ciclos y relaciones astronómicas; no es un instr
 - Completar la sección **Infografía**, que por ahora es un espacio de contenido pendiente.
 - Añadir un panel de próximos eventos con fechas calculadas de equinoccios, solsticios y fases lunares.
 - Desarrollar una selección geográfica más sencilla, como mapa o búsqueda de lugar, y mejorar la selección de fecha para viajar.
-- Calcular nodos lunares y eclipses con un modelo de precisión apropiada antes de presentar predicciones.
 - Ampliar los objetos celestes observables: lluvias de meteoros, cometas y visibilidad planetaria local.
 - Preparar la página pública y el despliegue en GitHub Pages.
 

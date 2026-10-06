@@ -1,0 +1,19 @@
+/* css/vineta-eventos.css — animaciones de las viñetas de eventos lunares (la tarjeta reutiliza css/eclipse.css) */
+.vineta-latido { transform-box: fill-box; transform-origin: center; animation: vineta-latido 3.4s ease-in-out infinite; }
+@keyframes vineta-latido { 0%, 100% { transform: scale(var(--v-min, 1)); } 50% { transform: scale(var(--v-max, 1.1)); } }
+
+.vineta-latido-suave { transform-box: view-box; transform-origin: 0 0; animation: vineta-latido-suave 3.4s ease-in-out infinite; }
+@keyframes vineta-latido-suave { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.8; } }
+
+.vineta-pulso { transform-box: fill-box; transform-origin: center; animation: vineta-pulso 2.2s ease-in-out infinite; }
+@keyframes vineta-pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.vineta-sube { animation: vineta-sube 3.6s ease-out infinite; animation-delay: var(--v-retardo, 0s); }
+@keyframes vineta-sube { 0% { transform: translateY(1.5px); opacity: 0; } 30%, 80% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+
+.vineta-gira { transform-box: view-box; transform-origin: 0 0; animation: vineta-gira 7s linear infinite; }
+@keyframes vineta-gira { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .vineta-latido, .vineta-latido-suave, .vineta-pulso, .vineta-sube, .vineta-gira { animation: none; }
+}
