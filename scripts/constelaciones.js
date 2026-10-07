@@ -2,7 +2,7 @@
 // Aro de las 12 constelaciones del zodiaco, fuera del calendario (radios ~850–990).
 // Cada sección abarca 30° de la eclíptica y se coloca en el calendario según el día en que el Sol
 // cruza sus límites. La sección que queda bajo el marcador del calendario se marca como activa.
-// Rota junto con el calendario. Dibujos: svg/zodiaco occidental/ (constelaciones, figura, simbolo); si falta uno, un comodín.
+// Rota junto con el calendario. Dibujos: svg/zodiaco-occidental/ (constelaciones, figura, simbolo); si falta uno, un comodín.
 // Depende de: astronomia.js, planetas.js (precesión), calendario.js, marco.js, hora-local.js
  
 const ANILLO_CONSTELACIONES = {
@@ -24,11 +24,11 @@ const ANILLO_CONSTELACIONES = {
 };
 // En el enfoque Zodíaco los glifos se acercan al centro y aumentan de tamaño.
 
-// Archivos de svg/zodiaco occidental/. Si el nombre del archivo difiere de la clave, se corrige en ARCHIVO_SIGNO.
+// Archivos de svg/zodiaco-occidental/. Si el nombre del archivo difiere de la clave, se corrige en ARCHIVO_SIGNO.
 const RUTAS_ZODIACO = {
-  constelacion: (n) => `svg/zodiaco occidental/constelaciones/cons.${n}.svg`,
-  figura: (n) => `svg/zodiaco occidental/figura/fig.${n}.svg`,
-  simbolo: (n) => `svg/zodiaco occidental/simbolo/simb.${n}.svg`,
+  constelacion: (n) => `svg/zodiaco-occidental/constelaciones/cons.${n}.svg`,
+  figura: (n) => `svg/zodiaco-occidental/figura/fig.${n}.svg`,
+  simbolo: (n) => `svg/zodiaco-occidental/simbolo/simb.${n}.svg`,
 };
 const ARCHIVO_SIGNO = { escorpio: "escorpion" };
  

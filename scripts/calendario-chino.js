@@ -19,7 +19,7 @@ const CALENDARIO_CHINO = {
   radioMarcador: 478,          // punta del marcador fijo (arriba, dentro del aro de 480, apuntando hacia afuera)
 };
 
-// Orden tradicional; "archivo" es el nombre usado en svg/zodiaco chino/
+// Orden tradicional; "archivo" es el nombre usado en svg/zodiaco-chino/
 const ANIMALES_CHINOS = [
   { archivo: "rata", nombre: "Rata" }, { archivo: "buey", nombre: "Buey" }, { archivo: "tigre", nombre: "Tigre" },
   { archivo: "conejo", nombre: "Conejo" }, { archivo: "dragon", nombre: "Dragón" }, { archivo: "serpiente", nombre: "Serpiente" },
@@ -27,8 +27,8 @@ const ANIMALES_CHINOS = [
   { archivo: "gallo", nombre: "Gallo" }, { archivo: "perro", nombre: "Perro" }, { archivo: "cerdo", nombre: "Cerdo" },
 ];
 const RUTAS_ZODIACO_CHINO = {
-  figura: (n) => `svg/zodiaco chino/figuras/fig.${n}.svg`,
-  simbolo: (n) => `svg/zodiaco chino/simbolos/simb.${n}.svg`,
+  figura: (n) => `svg/zodiaco-chino/figuras/fig.${n}.svg`,
+  simbolo: (n) => `svg/zodiaco-chino/simbolos/simb.${n}.svg`,
 };
 const ANIO_RATA_BASE = 4; // 4 d. C. fue año de Rata: (año − 4) mod 12 = índice del animal
 

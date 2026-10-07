@@ -83,6 +83,7 @@ function actualizar() {
   actualizarLunario(ahora);
   actualizarSol(ahora, alturaSolar);
   actualizarLuna(ahora, alturaSolar);
+  actualizarPlanetasHorizonte(ahora);
  
   const horaActual = textoDeLaHora(ahora);
   if (texto.textContent !== horaActual) {
@@ -160,7 +161,7 @@ function actualizarLuna(fecha, alturaSolar) {
     ubicacion.latitud,
     ubicacion.longitud,
   );
-  const angulo = anguloDeLaHora(fecha);
+  const angulo = typeof anguloDialDeLaLuna === "function" ? (anguloDialDeLaLuna(fecha) ?? anguloDeLaHora(fecha)) : anguloDeLaHora(fecha);
   const p = polar(RADIO_ORBITA_LUNA, angulo);
  
   const intensidad = intensidadLunar(altura, alturaSolar, 1);

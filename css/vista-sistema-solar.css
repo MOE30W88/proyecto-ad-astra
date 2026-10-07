@@ -40,13 +40,13 @@
 }
 
 .boton-vista-solar[data-vista="xy"] .icono-vista-solar {
-  -webkit-mask-image: url("../svg/panel%20control/vistaXY.svg");
-  mask-image: url("../svg/panel%20control/vistaXY.svg");
+  -webkit-mask-image: url("../svg/panel-control/vistaXY.svg");
+  mask-image: url("../svg/panel-control/vistaXY.svg");
 }
 
 .boton-vista-solar[data-vista="xz"] .icono-vista-solar {
-  -webkit-mask-image: url("../svg/panel%20control/vistaXZ.svg");
-  mask-image: url("../svg/panel%20control/vistaXZ.svg");
+  -webkit-mask-image: url("../svg/panel-control/vistaXZ.svg");
+  mask-image: url("../svg/panel-control/vistaXZ.svg");
 }
 
 #reloj.cambiando-vista-solar #capa-orbita-terrestre,

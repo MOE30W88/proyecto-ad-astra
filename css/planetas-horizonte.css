@@ -1,0 +1,7 @@
+/* css/planetas-horizonte.css — planetas visibles en el dial de Día y noche (los colores de cada planeta salen de planetas.js) */
+#capa-planetas-horizonte { pointer-events: none; }
+.planeta-horizonte { display: none; transition: opacity 0.4s ease; }
+.planeta-horizonte.visible { display: inline; }
+.planeta-halo { opacity: 0.22; }
+.planeta-punto { filter: drop-shadow(0 0 4px #fff); stroke: rgba(255, 255, 255, 0.7); stroke-width: 0.8; }
+.planeta-etiqueta { fill: var(--oro); font-family: var(--fuente); font-size: 22px; letter-spacing: 0.04em; }
