@@ -44,6 +44,7 @@ function renderizarEventosProximos(eventos) {
   }
 
   eventos.forEach((evento) => pista.appendChild(crearEventoTicker(evento, plantilla)));
+  pista.style.animationDuration = `\${Math.max(30, eventos.length * 9)}s`; // 9 s por evento (sube/baja el 9 para ajustar)
   if (eventos.length > 1) { // copia del recorrido para que la cinta no tenga saltos
     const duplicado = document.createElement("div");
     duplicado.className = "eventos-pista-clon";

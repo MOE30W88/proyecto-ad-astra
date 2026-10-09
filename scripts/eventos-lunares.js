@@ -142,7 +142,7 @@ const evlClave = (e) => (e.eclipse ? `${e.tipo}-${e.clase}` : e.tipo);
 
 // Formato del carrusel de datos-infografias.js (se calcula una vez por día y ubicación; cuesta ~0,25 s)
 const evlCache = { clave: null, lista: null };
-function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 24) {
+function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 40) {
   const u = typeof ubicacion !== "undefined" && typeof ubicacion.latitud === "number" ? `${ubicacion.latitud.toFixed(1)},${ubicacion.longitud.toFixed(1)}` : "sin-lugar";
   const clave = `${Math.floor(desdeMs / EVL.DIA_MS)}|${meses}|${maximo}|${u}`;
   if (evlCache.clave === clave) return evlCache.lista;

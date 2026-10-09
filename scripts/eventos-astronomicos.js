@@ -57,5 +57,13 @@ function eventosAstronomicos(desdeMs, hastaMs) {
       });
     }
   }
+  // Módulos opcionales (cada uno en su archivo)
+  if (typeof eventosLluvias === "function") eventos.push(...eventosLluvias(desdeMs, hastaMs));
+  if (typeof eventosObservacion === "function") eventos.push(...eventosObservacion(desdeMs, hastaMs));
+  if (typeof eventosCometas === "function") eventos.push(...eventosCometas(desdeMs, hastaMs));
+  if (typeof eventosAlineacion === "function") eventos.push(...eventosAlineacion(desdeMs, hastaMs));
+  // Nuevas líneas de eventos de observación adicionales
+  if (typeof eventosAuroras === "function") eventos.push(...eventosAuroras(desdeMs, hastaMs));
+  if (typeof eventosTransitos === "function") eventos.push(...eventosTransitos(desdeMs, hastaMs));
   return eventos.sort((a, b) => a.maximo - b.maximo);
 }
