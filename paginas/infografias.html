@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AD ASTRA — Páginas internas</title>
+    <title>AD ASTRA — Infografías</title>
     <script>try{var p=localStorage.getItem("tema-preferencia")||"auto",h=new Date().getHours();document.documentElement.dataset.tema=p==="auto"?(h>=6&&h<18?"dia":"noche"):p}catch(e){}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/tema.css" />
-    <link rel="stylesheet" href="css/estructura.css" />
-    <link rel="stylesheet" href="css/pie.css" />
-    <link rel="stylesheet" href="css/fondo-estrellas.css" />
-    <link rel="stylesheet" href="css/fondo-lavado.css" />
-    <script src="scripts/astronomia.js" defer></script>
-    <script src="scripts/ubicacion.js" defer></script>
-    <script src="scripts/tema.js" defer></script>
-    <script src="scripts/idioma.js" defer></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/tema.css" />
+    <link rel="stylesheet" href="../css/estructura.css" />
+    <link rel="stylesheet" href="../css/pie.css" />
+    <link rel="stylesheet" href="../css/fondo-estrellas.css" />
+    <link rel="stylesheet" href="../css/fondo-lavado.css" />
+    <script src="../scripts/astronomia.js" defer></script>
+    <script src="../scripts/ubicacion.js" defer></script>
+    <script src="../scripts/tema.js" defer></script>
+    <script src="../scripts/idioma.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -28,16 +28,17 @@
     </div>
     <div id="contenedor-app">
       <header class="cabecera menu-secciones">
-        <a class="logo" href="index.html" aria-label="AD ASTRA, ir al Astrolabio">
+        <a class="logo" href="../index.html" aria-label="AD ASTRA, ir al Astrolabio">
           <span class="logo-marca" aria-hidden="true"></span>
           <span>AD ASTRA</span>
         </a>
         <nav class="nav-secciones" aria-label="Navegación del sitio">
-          <a href="index.html">Astrolabio</a>
-          <span>Alcance</span>
-          <span>Matemáticas</span>
-          <span>Infografía</span>
-          <span>Acerca de</span>
+          <a href="../index.html">Astrolabio</a>
+          <a href="alcance.html">Alcance</a>
+          <a href="matematicas.html">Matemáticas</a>
+          <a href="infografias.html" class="activa" aria-current="page">Infografías</a>
+          <a href="acerca-de.html">Acerca de mí</a>
+          <a href="soporte.html">Soporte</a>
         </nav>
         <div class="cabecera-acciones">
           <button type="button" id="boton-idioma" class="boton-tema boton-idioma" title="Cambiar idioma" aria-label="Cambiar idioma">ES</button>
@@ -48,7 +49,13 @@
           </div>
         </div>
       </header>
-      <main class="contenido-pagina" aria-label="Espacio reservado para el contenido"></main>
+      <main>
+        <section class="hero">
+          <p class="hero-etiqueta">Reloj astronómico</p>
+          <h1 class="hero-titular">El cielo, el tiempo y la posición del Sol en una sola esfera.</h1>
+        </section>
+        <div class="contenido-pagina" aria-label="Espacio reservado para el contenido"></div>
+      </main>
       <footer id="pie" class="pie pie-minimo">
         <div class="pie-final">
           <span>© 2026 Moisés Soriano · AD ASTRA · Todos los derechos reservados</span>

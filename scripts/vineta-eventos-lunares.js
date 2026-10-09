@@ -175,7 +175,7 @@ function asegurarVineta() {
   t.setAttribute("role", "status");
   t.innerHTML = `<svg class="lupa-eclipse" viewBox="-2.4 -2.4 4.8 4.8" aria-hidden="true"><clipPath id="clip-lupa-vineta"><circle r="2.4"/></clipPath><circle r="2.4" fill="${VCOL.cielo}"/><g class="vineta-contenido" clip-path="url(#clip-lupa-vineta)"></g></svg>
     <div class="etiqueta-eclipse-texto"><p class="etiqueta-eclipse-titulo"></p><p class="etiqueta-eclipse-dato"></p><p class="etiqueta-eclipse-dato etiqueta-eclipse-maximo"></p><p class="etiqueta-eclipse-aviso" hidden></p></div>`;
-  document.getElementById("escenario").appendChild(t);
+  colocarVineta(t, "der");
   document.addEventListener("cambio-idioma", () => { vinetaFirma = ""; });
   vineta = { t, contenido: t.querySelector(".vineta-contenido"), titulo: t.querySelector(".etiqueta-eclipse-titulo"), datos: t.querySelectorAll(".etiqueta-eclipse-dato"), aviso: t.querySelector(".etiqueta-eclipse-aviso") };
   return vineta;
@@ -186,11 +186,6 @@ function actualizarVinetaEventoLunar(fecha) {
   const v = asegurarVineta(), ms = fecha.getTime(), e = eventoLunarEnCurso(ms);
   if (!e) { if (!v.t.hidden) { v.t.hidden = true; v.contenido.innerHTML = ""; vinetaFirma = ""; } return; }
   v.t.hidden = false;
-
-  // Si la tarjeta del eclipse también está visible, esta se apila encima
-  const eclipse = document.getElementById("etiqueta-eclipse");
-  const apilar = eclipse && !eclipse.hidden && getComputedStyle(v.t).position === "absolute";
-  v.t.style.bottom = apilar ? `calc(0.9rem + ${eclipse.offsetHeight}px + 0.6rem)` : "";
 
   const lente = e.tipo === "superluna" || e.tipo === "microluna" ? lenteTamano(ms, e) : e.tipo === "luna-azul" || e.tipo === "luna-negra" ? lenteMes(ms, e)
     : e.tipo === "luna-cosecha" ? lenteCosecha(ms, e) : lenteMareas(ms, e);

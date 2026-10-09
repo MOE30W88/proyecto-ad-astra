@@ -81,7 +81,7 @@ function asegurarElementosEclipse() {
   tarjeta.setAttribute("role", "status");
   tarjeta.innerHTML = `<svg class="lupa-eclipse" viewBox="-2.4 -2.4 4.8 4.8" aria-hidden="true"><g class="lupa-contenido"></g></svg>
     <div class="etiqueta-eclipse-texto"><p class="etiqueta-eclipse-titulo"></p><p class="etiqueta-eclipse-dato"></p><p class="etiqueta-eclipse-dato etiqueta-eclipse-maximo"></p><p class="etiqueta-eclipse-aviso" hidden></p></div>`;
-  document.getElementById("escenario").appendChild(tarjeta);
+  colocarVineta(tarjeta, "der");
   document.addEventListener("cambio-idioma", () => { firmaLupa = ""; });
 
   elementosEclipse = {

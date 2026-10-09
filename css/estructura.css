@@ -10,12 +10,15 @@ body {
   font-family: var(--fuente);
 }
  
-#contenedor-app { display: block; }
+#contenedor-app { display: block; width: 100%; }
  
 main { display: block; width: 100%; margin: 0; padding: 0; }
 
 .contenido-pagina {
   width: min(calc(100% - 2rem), 1120px);
+  margin: clamp(1.5rem, 4vh, 3rem) auto clamp(3rem, 8vh, 6rem);
+}
+.contenido-pagina:empty {
   min-height: min(58vh, 560px);
   margin: clamp(3rem, 8vh, 6rem) auto;
   border: 1px dashed var(--linea);
@@ -54,16 +57,23 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
 }
-.nav-capas button:hover { color: var(--texto); }
-.nav-capas button.activa { color: var(--texto); border-bottom-color: var(--acento); }
+.nav-capas button.activa,
+.nav-secciones > .activa,
+.nav-secciones > [aria-current="page"] {
+  color: var(--texto);
+  border-bottom-color: var(--acento);
+}
 .nav-secciones { display: none; gap: clamp(0.75rem, 3vw, 2.25rem); white-space: nowrap; }
 .nav-secciones > * {
   padding: 0.4rem 0.1rem;
+  background: none;
+  border: 0;
   border-bottom: 2px solid transparent;
   color: var(--texto-suave);
   font: inherit;
   font-size: 1rem;
   text-decoration: none;
+  cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
 }
 .nav-secciones > *:hover { color: var(--texto); }
@@ -354,9 +364,9 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   .panel-izq { left: 0.5rem; } .panel-der { right: 0.5rem; }
 }
 
-@media (min-width: 801px) and (max-width: 1100px) {
-  .cabecera.menu-secciones { grid-template-columns: 1fr auto; row-gap: 0.6rem; }
-  .cabecera.menu-secciones .nav-secciones { grid-column: 1 / -1; grid-row: 2; justify-content: center; flex-wrap: wrap; white-space: normal; }
+@media (min-width: 801px) and (max-width: 1250px) {
+  .cabecera { grid-template-columns: 1fr auto; row-gap: 0.6rem; }
+  .nav-capas, .nav-secciones { grid-column: 1 / -1; grid-row: 2; justify-content: center; flex-wrap: wrap; white-space: normal; }
 }
 
 @media (max-width: 1100px) {
@@ -405,6 +415,8 @@ main { display: block; width: 100%; margin: 0; padding: 0; }
   #cajon-planetas.abierto { transform: translateX(-50%); }
   #cajon-viajero,
   #panel-geolocalizacion {
+    right: auto;
+    width: min(26rem, calc(100% - 1rem)); /* paneles de formulario: no estirarlos a todo el ancho */
     background: color-mix(in srgb, var(--superficie) 78%, transparent);
     border: 1px solid var(--borde-oro);
     border-radius: 20px;

@@ -1,0 +1,32 @@
+/* css/vinetas-eventos.css — contenedor de las viñetas emergentes (eclipse, evento lunar, mapa del eclipse).
+   Lo crea scripts/vinetas-eventos.js justo debajo de #escenario. Dos modos:
+   .modo-debajo   (por defecto)  fila centrada bajo el reloj.
+   .modo-rincones (solo si hay hueco) columnas izquierda/derecha sobre el escenario: el contenedor mide 0 de alto y su borde es el fondo del escenario. */
+#vinetas-eventos { position: relative; z-index: 25; width: 100%; box-sizing: border-box; }
+.vinetas-col { display: flex; flex-direction: column; gap: 0.6rem; }
+.vinetas-col:not(:has(> :not([hidden]))) { display: none; }
+
+/* Debajo: el mapa a la izquierda y las tarjetas del eclipse/evento apiladas a su derecha; si no caben, la segunda columna baja */
+.modo-debajo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.6rem 0.75rem;
+  padding: 0.75rem 0.75rem 0;
+}
+.modo-debajo:not(:has(> .vinetas-col > :not([hidden]))) { display: none; }
+.modo-debajo .vinetas-col { max-width: 100%; align-items: stretch; }
+.modo-debajo .vinetas-col > * { max-width: min(21rem, 100%); }
+
+.modo-rincones { height: 0; pointer-events: none; }
+.modo-rincones .vinetas-col {
+  position: absolute;
+  bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.modo-rincones .vinetas-izq { left: 0.75rem; align-items: flex-start; }
+.modo-rincones .vinetas-der { right: 0.75rem; align-items: flex-end; }
+.modo-rincones .vinetas-col > * { pointer-events: auto; }

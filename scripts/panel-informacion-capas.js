@@ -8,6 +8,7 @@ const NOMBRES_CAPAS_PANEL = {
   calendario: "Calendario",
   rotacion: "Rotación",
 };
+const CONTENIDOS_PANEL_CAPA = { todas: "astrolabio", reloj: "reloj", "dia-noche": "dia-noche", lunario: "lunario", zodiaco: "zodiaco", calendario: "calendario", rotacion: "rotacion" };
 let enfoquePanelActivo = "todas";
 let ultimoRefrescoPanelDinamico = 0;
 let proximoCambioZodiaco = null;
@@ -15,24 +16,16 @@ let proximoCambioZodiaco = null;
 function actualizarPanelPorEnfoque(clave) {
   const contenidoSolar = document.getElementById("contenido-panel-sistema-solar");
   const contenidoCapa = document.getElementById("contenido-panel-capa");
-  const contenidoAstrolabio = document.getElementById("contenido-panel-astrolabio");
-  const contenidoReloj = document.getElementById("contenido-panel-reloj");
-  const contenidoDiaNoche = document.getElementById("contenido-panel-dia-noche");
-  const contenidoZodiaco = document.getElementById("contenido-panel-zodiaco");
-  if (!contenidoSolar || !contenidoCapa || !contenidoAstrolabio || !contenidoReloj || !contenidoDiaNoche || !contenidoZodiaco) return;
+  if (!contenidoSolar || !contenidoCapa) return;
 
   enfoquePanelActivo = clave;
   const esSistemaSolar = clave === "sistema-solar";
-  const esAstrolabio = clave === "todas";
-  const esReloj = clave === "reloj";
-  const esDiaNoche = clave === "dia-noche";
-  const esZodiaco = clave === "zodiaco";
   contenidoSolar.hidden = !esSistemaSolar;
   contenidoCapa.hidden = esSistemaSolar;
-  contenidoAstrolabio.hidden = !esAstrolabio;
-  contenidoReloj.hidden = !esReloj;
-  contenidoDiaNoche.hidden = !esDiaNoche;
-  contenidoZodiaco.hidden = !esZodiaco;
+  for (const [enfoque, id] of Object.entries(CONTENIDOS_PANEL_CAPA)) {
+    const contenido = document.getElementById(`contenido-panel-${id}`);
+    if (contenido) contenido.hidden = enfoque !== clave;
+  }
   if (esSistemaSolar) return;
 
   document.getElementById("titulo-panel-capa").textContent = NOMBRES_CAPAS_PANEL[clave] ?? "Astrolabio";
@@ -42,10 +35,12 @@ function actualizarPanelPorEnfoque(clave) {
 
 function actualizarPanelDatosDinamicos(ahora) {
   const panel = document.getElementById("cajon-planetas");
-  if (!(["reloj", "dia-noche", "zodiaco"].includes(enfoquePanelActivo)) || !panel?.classList.contains("abierto")) return;
+  if (!(["reloj", "dia-noche", "zodiaco", "lunario", "calendario", "rotacion"].includes(enfoquePanelActivo)) || !panel?.classList.contains("abierto")) return;
   const t = performance.now();
   if (t - ultimoRefrescoPanelDinamico < 500) return;
   ultimoRefrescoPanelDinamico = t;
+
+  if (LECTORES_PANEL[enfoquePanelActivo]) { LECTORES_PANEL[enfoquePanelActivo](ahora); return; }
 
   if (enfoquePanelActivo === "zodiaco") {
     const solar = posicionSolar(ahora);

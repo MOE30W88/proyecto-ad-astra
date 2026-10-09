@@ -45,7 +45,7 @@ function asegurarMapaEclipse() {
     <svg class="vineta-mapa-svg" viewBox="-100 -50 200 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g class="vm-escena"></g></svg>
     <p class="vineta-mapa-dato"></p><p class="vineta-mapa-dato vineta-mapa-secundario"></p>
     <p class="vineta-mapa-leyenda"><span class="vm-clave vm-clave-ahora"></span><span class="vm-ahora"></span><span class="vm-clave vm-clave-tu"></span><span class="vm-tu"></span></p>`;
-  document.getElementById("escenario").appendChild(t);
+  colocarVineta(t, "izq");
   document.addEventListener("cambio-idioma", () => { vmapaFirma = ""; });
   vmapa = { t, titulo: t.querySelector(".vineta-mapa-titulo"), svg: t.querySelector(".vineta-mapa-svg"), escena: t.querySelector(".vm-escena"),
     datos: t.querySelectorAll(".vineta-mapa-dato"), ahora: t.querySelector(".vm-ahora"), tu: t.querySelector(".vm-tu"), marcador: null, tr: null, lon0: 0, ancho: 0 };

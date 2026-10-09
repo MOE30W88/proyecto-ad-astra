@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="css/ayudas-contextuales.css" />
     <link rel="stylesheet" href="css/eclipse.css" />
     <link rel="stylesheet" href="css/planetas-horizonte.css" />
+    <link rel="stylesheet" href="css/vinetas-eventos.css" />
     <link rel="stylesheet" href="css/vineta-eventos.css" />
     <link rel="stylesheet" href="css/vineta-mapa.css" />
     <link rel="stylesheet" href="css/lunario.css" />
@@ -54,6 +55,7 @@
     <script src="scripts/efemerides-precisas.js" defer></script>
     <script src="scripts/eclipses.js" defer></script>
     <script src="scripts/eclipse-vista.js" defer></script>
+    <script src="scripts/vinetas-eventos.js" defer></script>
     <script src="scripts/eclipse-lupa.js" defer></script>
     <script src="scripts/cuerpos-horizonte.js" defer></script>
     <script src="scripts/planetas-horizonte.js" defer></script>
@@ -62,6 +64,7 @@
     <script src="scripts/lunario-geometria.js" defer></script>
     <script src="scripts/lunario.js" defer></script>
     <script src="scripts/eventos-lunares.js" defer></script>
+    <script src="scripts/eventos-astronomicos.js" defer></script>
     <script src="scripts/vineta-eventos-lunares.js" defer></script>
     <script src="scripts/mapa-datos.js" defer></script>
     <script src="scripts/eclipse-trayecto.js" defer></script>
@@ -76,6 +79,7 @@
     <script src="scripts/analema.js" defer></script>
     <script src="scripts/panel-resultados.js" defer></script>
     <script src="scripts/panel-planetas.js" defer></script>
+    <script src="scripts/panel-lecturas-capas.js" defer></script>
     <script src="scripts/panel-informacion-capas.js" defer></script>
     <script src="scripts/enfoque-capas.js" defer></script>
     <script src="scripts/constelaciones.js" defer></script>
@@ -115,11 +119,12 @@
           <button type="button" data-enfoque="rotacion">Rotación</button>
         </nav>
         <nav class="nav-secciones" aria-label="Navegación del sitio">
-          <a href="index.html">Astrolabio</a>
-          <span>Alcance</span>
-          <span>Matemáticas</span>
-          <a href="paginas.html">Infografías</a>
-          <span>Acerca de</span>
+          <a href="index.html" class="activa" aria-current="page">Astrolabio</a>
+          <a href="paginas/alcance.html">Alcance</a>
+          <a href="paginas/matematicas.html">Matemáticas</a>
+          <a href="paginas/infografias.html">Infografías</a>
+          <a href="paginas/acerca-de.html">Acerca de mí</a>
+          <a href="paginas/soporte.html">Soporte</a>
         </nav>
       <div class="cabecera-acciones">
         <button type="button" id="boton-idioma" class="boton-tema boton-idioma" title="Cambiar idioma" aria-label="Cambiar idioma">ES</button>
@@ -145,7 +150,7 @@
           <button type="button" id="boton-planetas" class="tirador tirador-der" title="Sistema solar" aria-label="Sistema solar" aria-controls="cajon-planetas" aria-expanded="false">
             <span class="icono-svg icono-panel-pregunta" aria-hidden="true"></span>
           </button>
-          <a id="boton-masinfo" class="tirador tirador-der tirador-secundario" href="paginas.html" title="Infografía" aria-label="Ir a Infografía">
+          <a id="boton-masinfo" class="tirador tirador-der tirador-secundario" href="paginas/infografias.html" title="Infografía" aria-label="Ir a Infografía">
             <span class="icono-svg icono-panel-masinfo" aria-hidden="true"></span>
           </a>
           <button type="button" id="boton-vista-solar" class="boton-vista-solar" data-vista="xy" aria-label="Cambiar a vista XZ" title="Vista XY · cambiar a XZ" aria-pressed="false" hidden>
@@ -241,6 +246,72 @@
                   <div><dt>Próximo cambio de signo</dt><dd id="dato-cambio-zodiaco">—</dd></div>
                 </dl>
                 <p class="nota-planetas">El zodíaco tropical divide la eclíptica en doce sectores iguales de 30°, contados desde el equinoccio de marzo. La figura identifica el sector activo; las constelaciones reales tienen límites y tamaños distintos.</p>
+              </div>
+              <div id="contenido-panel-lunario" class="lecturas-capa" hidden>
+                <div>
+                  <h4>Estado de la Luna</h4>
+                  <dl>
+                    <div><dt>Fase</dt><dd id="dato-lunario-fase">—</dd></div>
+                    <div><dt>Iluminación</dt><dd id="dato-lunario-iluminacion">—</dd></div>
+                    <div><dt>Edad lunar</dt><dd id="dato-lunario-edad">—</dd></div>
+                    <div><dt>Distancia</dt><dd id="dato-lunario-distancia">—</dd></div>
+                    <div><dt>Mareas</dt><dd id="dato-lunario-mareas">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">La edad cuenta los días desde la última luna nueva; un ciclo completo dura unos 29,5 días. La Luna es más grande y brillante cerca del perigeo, y las mareas son vivas cuando Sol, Tierra y Luna se alinean.</p>
+                </div>
+                <div>
+                  <h4>Próximas fases y eclipses</h4>
+                  <dl>
+                    <div><dt>Próxima luna nueva</dt><dd id="dato-lunario-proxima-nueva">—</dd></div>
+                    <div><dt>Próxima luna llena</dt><dd id="dato-lunario-proxima-llena">—</dd></div>
+                    <div><dt>Temporada de eclipses</dt><dd id="dato-lunario-eclipses">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">Los eclipses solo ocurren en luna nueva o llena cuando la Luna está cerca de uno de los nodos, los puntos donde su órbita cruza la eclíptica.</p>
+                </div>
+              </div>
+              <div id="contenido-panel-calendario" class="lecturas-capa" hidden>
+                <div>
+                  <h4>Calendario gregoriano</h4>
+                  <dl>
+                    <div><dt>Fecha</dt><dd id="dato-calendario-fecha">—</dd></div>
+                    <div><dt>Día del año</dt><dd id="dato-calendario-dia-anio">—</dd></div>
+                    <div><dt>Año bisiesto</dt><dd id="dato-calendario-bisiesto">—</dd></div>
+                    <div><dt>Estación</dt><dd id="dato-calendario-estacion">—</dd></div>
+                    <div><dt id="dato-calendario-hito">Próximo hito</dt><dd id="dato-calendario-hito-fecha">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">Las estaciones astronómicas empiezan en los equinoccios y solsticios, cuando el Sol alcanza longitudes eclípticas de 0°, 90°, 180° y 270°. En el hemisferio sur los nombres se invierten.</p>
+                </div>
+                <div>
+                  <h4>Calendario chino</h4>
+                  <dl>
+                    <div><dt>Año lunar</dt><dd id="dato-calendario-chino">—</dd></div>
+                    <div><dt>Avance del año</dt><dd id="dato-calendario-chino-avance">—</dd></div>
+                    <div><dt>Próximo Año Nuevo</dt><dd id="dato-calendario-chino-nuevo">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">El año chino empieza con la segunda luna nueva tras el solsticio de diciembre (fecha de Pekín). Cada año combina uno de los 12 animales con uno de los 5 elementos, en un ciclo de 60 años.</p>
+                </div>
+              </div>
+              <div id="contenido-panel-rotacion" class="lecturas-capa" hidden>
+                <div>
+                  <h4>Rotación en este instante</h4>
+                  <dl>
+                    <div><dt>Punto subsolar</dt><dd id="dato-rotacion-subsolar">—</dd></div>
+                    <div><dt>Velocidad en tu latitud</dt><dd id="dato-rotacion-velocidad">—</dd></div>
+                    <div><dt>Hora sideral</dt><dd id="dato-rotacion-sideral">—</dd></div>
+                  </dl>
+                  <p class="nota-planetas">El punto subsolar es donde el Sol está en el cenit: se desplaza hacia el oeste unos 15° cada hora. La velocidad lineal es máxima en el ecuador y cae con el coseno de la latitud.</p>
+                </div>
+                <div>
+                  <h4>Datos fijos</h4>
+                  <dl>
+                    <div><dt>Día sideral</dt><dd>23 h 56 min 4 s</dd></div>
+                    <div><dt>Día solar medio</dt><dd>24 h</dd></div>
+                    <div><dt>Velocidad angular</dt><dd>15,04 °/h</dd></div>
+                    <div><dt>Velocidad en el ecuador</dt><dd>465,1 m/s</dd></div>
+                    <div><dt>Inclinación del eje</dt><dd>23,44°</dd></div>
+                  </dl>
+                  <p class="nota-planetas">El día sideral mide una vuelta respecto a las estrellas; el solar necesita unos 4 minutos más, porque la Tierra también avanza en su órbita.</p>
+                </div>
               </div>
               <div id="datos-panel-capa"></div>
             </section>
@@ -405,10 +476,11 @@
           <nav class="pie-bloque" aria-labelledby="pie-titulo-links">
             <h2 id="pie-titulo-links">Navegación</h2>
             <a href="index.html">Astrolabio</a>
-            <a href="#alcance">Alcance</a>
-            <a href="#matematicas">Matemáticas</a>
-            <a href="paginas.html">Infografía</a>
-            <a href="#acerca-de-mi">Acerca de mí</a>
+            <a href="paginas/alcance.html">Alcance</a>
+            <a href="paginas/matematicas.html">Matemáticas</a>
+            <a href="paginas/infografias.html">Infografías</a>
+            <a href="paginas/acerca-de.html">Acerca de mí</a>
+            <a href="paginas/soporte.html">Soporte</a>
           </nav>
           <nav class="pie-bloque" aria-labelledby="pie-titulo-soporte">
             <h2 id="pie-titulo-soporte">Soporte</h2>

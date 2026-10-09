@@ -142,27 +142,28 @@ const evlClave = (e) => (e.eclipse ? `${e.tipo}-${e.clase}` : e.tipo);
 
 // Formato del carrusel de datos-infografias.js (se calcula una vez por día y ubicación; cuesta ~0,25 s)
 const evlCache = { clave: null, lista: null };
-function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 14) {
+function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 24) {
   const u = typeof ubicacion !== "undefined" && typeof ubicacion.latitud === "number" ? `${ubicacion.latitud.toFixed(1)},${ubicacion.longitud.toFixed(1)}` : "sin-lugar";
   const clave = `${Math.floor(desdeMs / EVL.DIA_MS)}|${meses}|${maximo}|${u}`;
   if (evlCache.clave === clave) return evlCache.lista;
   const fmt = new Intl.DateTimeFormat("es", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" });
-  const todos = eventosLunares(desdeMs, desdeMs + meses * 30.44 * EVL.DIA_MS);
+  const hasta = desdeMs + meses * 30.44 * EVL.DIA_MS;
+  const todos = [...eventosLunares(desdeMs, hasta), ...(typeof eventosAstronomicos === "function" ? eventosAstronomicos(desdeMs, hasta) : [])].sort((a, b) => a.maximo - b.maximo);
   const cerca = (e, o) => o !== e && Math.abs(o.maximo - e.maximo) < 3 * 3600000;
   // Las mareas vivas extremas que coinciden con otro evento (casi siempre una superluna) se funden con él
   const lista = todos.filter((e) => !(e.tipo === "mareas-vivas" && todos.some((o) => o.tipo !== "mareas-vivas" && cerca(e, o)))).slice(0, maximo).map((e) => {
     const clave2 = evlClave(e), km = e.distancia ? Math.round(e.distancia / 10) * 10 : 0;
     const mareas = todos.find((o) => o.tipo === "mareas-vivas" && cerca(e, o));
-    const alcance = e.eclipse ? evlAlcanceEclipse(e.eclipse)
+    const alcance = e.alcance ?? (e.eclipse ? evlAlcanceEclipse(e.eclipse)
       : e.tipo === "luna-azul" ? textoEventoLunar("azul") : e.tipo === "luna-negra" ? textoEventoLunar("negra")
       : e.tipo === "luna-cosecha" ? textoEventoLunar("cosecha") : e.tipo === "mareas-vivas" ? textoEventoLunar("mareas", Math.round(e.indice))
-      : textoEventoLunar("distancia", km.toLocaleString("es-ES")) + (mareas ? ` · ${textoEventoLunar("mareas", Math.round(mareas.indice))}` : "");
+      : textoEventoLunar("distancia", km.toLocaleString("es-ES")) + (mareas ? ` · ${textoEventoLunar("mareas", Math.round(mareas.indice))}` : ""));
     return {
       id: `${clave2}-${Math.round(e.maximo / 60000)}`,
-      titulo: textoEventoLunar(clave2),
+      titulo: e.titulo ?? textoEventoLunar(clave2),
       fecha: fmt.format(new Date(e.maximo + evlHuso(e.maximo) * 3600000)),
       alcance,
-      icono: ICONOS_EVENTOS_LUNARES[clave2],
+      icono: e.icono ?? ICONOS_EVENTOS_LUNARES[clave2],
       destino: "#eventos-proximos",
       imagenes: [],
       _evento: e,

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AD ASTRA — Alcance</title>
+    <script>try{var p=localStorage.getItem("tema-preferencia")||"auto",h=new Date().getHours();document.documentElement.dataset.tema=p==="auto"?(h>=6&&h<18?"dia":"noche"):p}catch(e){}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/tema.css" />
+    <link rel="stylesheet" href="../css/estructura.css" />
+    <link rel="stylesheet" href="../css/alcance.css" />
+    <link rel="stylesheet" href="../css/pie.css" />
+    <link rel="stylesheet" href="../css/fondo-estrellas.css" />
+    <link rel="stylesheet" href="../css/fondo-lavado.css" />
+    <script src="../scripts/astronomia.js" defer></script>
+    <script src="../scripts/ubicacion.js" defer></script>
+    <script src="../scripts/tema.js" defer></script>
+    <script src="../scripts/idioma.js" defer></script>
+  </head>
+  <body>
+    <div id="fondo-lavado" aria-hidden="true"></div>
+    <div id="fondo-estrellas" aria-hidden="true">
+      <div class="estrellas-fondo estrellas-a"></div>
+      <div class="estrellas-fondo estrellas-b"></div>
+    </div>
+    <div id="contenedor-app">
+      <header class="cabecera menu-secciones">
+        <a class="logo" href="../index.html" aria-label="AD ASTRA, ir al Astrolabio">
+          <span class="logo-marca" aria-hidden="true"></span>
+          <span>AD ASTRA</span>
+        </a>
+        <nav class="nav-secciones" aria-label="Navegación del sitio">
+          <a href="../index.html">Astrolabio</a>
+          <a href="alcance.html" class="activa" aria-current="page">Alcance</a>
+          <a href="matematicas.html">Matemáticas</a>
+          <a href="infografias.html">Infografías</a>
+          <a href="acerca-de.html">Acerca de mí</a>
+          <a href="soporte.html">Soporte</a>
+        </nav>
+        <div class="cabecera-acciones">
+          <button type="button" id="boton-idioma" class="boton-tema boton-idioma" title="Cambiar idioma" aria-label="Cambiar idioma">ES</button>
+          <div class="control-tema" role="group" aria-label="Modo de color">
+            <button type="button" class="control-tema-opcion" data-tema-pref="auto">Auto</button>
+            <button type="button" class="control-tema-opcion" data-tema-pref="dia"><span class="icono-svg icono-dia" aria-hidden="true"></span></button>
+            <button type="button" class="control-tema-opcion" data-tema-pref="noche"><span class="icono-svg icono-noche" aria-hidden="true"></span></button>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="hero">
+          <p class="hero-etiqueta">Los límites de la precisión</p>
+          <h1 class="hero-titular">
+            Modelos, incertidumbre y alcance de los cálculos astronómicos.
+          </h1>
+        </section>
+
+        <div class="contenido-pagina">
+
+          <!-- Introducción -->
+          <section class="alcance-introduccion" aria-labelledby="titulo-introduccion">
+            <h2 id="titulo-introduccion">El alcance de nuestros cálculos</h2>
+
+            <p>
+              AD ASTRA combina modelos matemáticos y astronómicos para representar
+              el movimiento de los astros y calcular distintos fenómenos celestes.
+              La fiabilidad de cada resultado depende del método utilizado,
+              los datos disponibles y las aproximaciones inherentes al cálculo.
+            </p>
+
+            <p>
+              En esta sección se documentan los modelos empleados, la precisión
+              conocida, las fuentes de incertidumbre y los límites de cada proceso.
+              El objetivo es ofrecer una visión transparente de las capacidades
+              del proyecto y proporcionar el contexto necesario para interpretar
+              sus resultados.
+            </p>
+
+            <p class="alcance-destacado">
+              Conocer las limitaciones de un modelo es parte fundamental
+              de comprender sus resultados.
+            </p>
+          </section>
+
+          <!-- Navegación interna -->
+          <nav class="alcance-nav" aria-label="Contenido de Alcance">
+            <p class="alcance-nav-etiqueta">Contenido</p>
+
+            <ol>
+              <li>
+                <a href="#precision">
+                  <span>01</span>
+                  Precisión e incertidumbre
+                </a>
+              </li>
+              <li>
+                <a href="#modelos">
+                  <span>02</span>
+                  Modelos de cálculo
+                </a>
+              </li>
+              <li>
+                <a href="#fenomenos">
+                  <span>03</span>
+                  Precisión por fenómeno
+                </a>
+              </li>
+              <li>
+                <a href="#condiciones">
+                  <span>04</span>
+                  Límites temporales y geográficos
+                </a>
+              </li>
+              <li>
+                <a href="#validacion">
+                  <span>05</span>
+                  Validación y limitaciones conocidas
+                </a>
+              </li>
+              <li>
+                <a href="#referencias">
+                  <span>06</span>
+                  Fuentes y referencias
+                </a>
+              </li>
+            </ol>
+          </nav>
+
+          <!-- 01. Precisión e incertidumbre -->
+          <section id="precision" class="alcance-seccion">
+            <p class="seccion-etiqueta">01 — Fundamentos</p>
+            <h2>Precisión, error e incertidumbre</h2>
+
+            <p>
+              Para interpretar correctamente un resultado astronómico es necesario
+              distinguir entre la diferencia respecto a un valor de referencia,
+              la incertidumbre asociada al resultado y el nivel de detalle con
+              el que se representa.
+            </p>
+
+            <div class="alcance-conceptos">
+              <article class="alcance-concepto">
+                <h3>Error</h3>
+                <p>
+                  Diferencia entre un resultado calculado y un valor de referencia,
+                  expresada en una unidad apropiada.
+                </p>
+              </article>
+
+              <article class="alcance-concepto">
+                <h3>Incertidumbre</h3>
+                <p>
+                  Estimación de la duda asociada a un resultado, considerando
+                  los datos, los modelos y las aproximaciones utilizados.
+                </p>
+              </article>
+
+              <article class="alcance-concepto">
+                <h3>Resolución</h3>
+                <p>
+                  Nivel de detalle con el que el sistema expresa o representa
+                  un resultado.
+                </p>
+              </article>
+            </div>
+
+            <aside class="alcance-nota">
+              <h3>Una distinción fundamental</h3>
+              <p>
+                Mostrar más decimales no garantiza que un resultado sea
+                más preciso.
+              </p>
+            </aside>
+          </section>
+
+          <!-- 02. Modelos de cálculo -->
+          <section id="modelos" class="alcance-seccion">
+            <p class="seccion-etiqueta">02 — Metodología</p>
+            <h2>Modelos de cálculo</h2>
+
+            <p>
+              Los fenómenos astronómicos pueden requerir métodos de cálculo
+              diferentes según el objetivo y el nivel de precisión necesario.
+              En este apartado se documentarán los modelos utilizados por
+              AD ASTRA y su aplicación dentro del proyecto.
+            </p>
+
+            <div class="alcance-placeholder">
+              <h3>Modelos utilizados</h3>
+              <p>
+                Documentación pendiente: modelo, fuente, aplicación,
+                intervalo de validez y precisión documentada.
+              </p>
+            </div>
+          </section>
+
+          <!-- 03. Precisión por fenómeno -->
+          <section id="fenomenos" class="alcance-seccion">
+            <p class="seccion-etiqueta">03 — Evaluación</p>
+            <h2>Precisión por fenómeno</h2>
+
+            <p>
+              Cada cálculo tiene características y fuentes de incertidumbre
+              propias. Por ello, la precisión debe documentarse por separado
+              y no atribuirse de forma general a todo el proyecto.
+            </p>
+
+            <div class="alcance-fenomenos">
+
+              <article class="alcance-fenomeno">
+                <h3>El Sol</h3>
+                <p>
+                  Posición solar, declinación, altura y eventos solares.
+                </p>
+                <a href="#referencias">Consultar modelo y referencias</a>
+              </article>
+
+              <article class="alcance-fenomeno">
+                <h3>La Luna</h3>
+                <p>
+                  Posición lunar y aproximaciones utilizadas en los cálculos.
+                </p>
+                <a href="#referencias">Consultar modelo y referencias</a>
+              </article>
+
+              <article class="alcance-fenomeno">
+                <h3>Eclipses</h3>
+                <p>
+                  Modelos geométricos, condiciones de cálculo y limitaciones
+                  de las predicciones.
+                </p>
+                <a href="#referencias">Consultar modelo y referencias</a>
+              </article>
+
+              <article class="alcance-fenomeno">
+                <h3>Reloj astronómico</h3>
+                <p>
+                  Hora solar, ecuación del tiempo y representación de los ciclos.
+                </p>
+                <a href="#referencias">Consultar modelo y referencias</a>
+              </article>
+
+              <article class="alcance-fenomeno">
+                <h3>Analema</h3>
+                <p>
+                  Representación de la declinación solar y la ecuación del tiempo.
+                </p>
+                <a href="#referencias">Consultar modelo y referencias</a>
+              </article>
+            </div>
+
+            <p class="alcance-aclaracion">
+              Los valores cuantitativos de precisión se incorporarán cuando
+              estén documentados o se hayan contrastado con referencias
+              independientes.
+            </p>
+          </section>
+
+          <!-- 04. Límites temporales y geográficos -->
+          <section id="condiciones" class="alcance-seccion">
+            <p class="seccion-etiqueta">04 — Condiciones de cálculo</p>
+            <h2>Límites temporales y geográficos</h2>
+
+            <p>
+              Los resultados pueden depender del intervalo temporal cubierto
+              por el modelo, de la fecha y hora seleccionadas, de las coordenadas
+              geográficas y del tratamiento de las escalas de tiempo.
+            </p>
+
+            <div class="alcance-placeholder">
+              <h3>Intervalos y condiciones de validez</h3>
+              <p>
+                Aquí se indicarán los intervalos admitidos, las condiciones
+                de uso y los comportamientos que requieren precaución.
+              </p>
+            </div>
+          </section>
+
+          <!-- 05. Validación -->
+          <section id="validacion" class="alcance-seccion">
+            <p class="seccion-etiqueta">05 — Verificación</p>
+            <h2>Validación y limitaciones conocidas</h2>
+
+            <p>
+              La validación permite evaluar el comportamiento de los cálculos
+              mediante su comparación con referencias independientes y pruebas
+              reproducibles.
+            </p>
+
+            <div class="alcance-placeholder">
+              <h3>Pruebas y resultados</h3>
+              <p>
+                Se documentarán las referencias utilizadas, las diferencias
+                observadas, las pruebas realizadas y las limitaciones pendientes
+                de verificar.
+              </p>
+            </div>
+          </section>
+
+          <!-- 06. Fuentes -->
+          <section id="referencias" class="alcance-seccion">
+            <p class="seccion-etiqueta">06 — Documentación</p>
+            <h2>Fuentes y referencias</h2>
+
+            <p>
+              Las fuentes permiten identificar los modelos, métodos y datos
+              utilizados para fundamentar los cálculos de AD ASTRA.
+            </p>
+
+            <ul class="alcance-referencias">
+              <li>
+                <span>01</span>
+                <div>
+                  <h3>Modelos y métodos astronómicos</h3>
+                  <p>Referencias técnicas de los algoritmos utilizados.</p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <h3>Fuentes de datos</h3>
+                  <p>Efemérides, catálogos y referencias de comparación.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <h3>Documentación del proyecto</h3>
+                  <p>Implementación, criterios de validación y limitaciones.</p>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Cierre -->
+          <footer class="alcance-cierre">
+            <p class="seccion-etiqueta">AD ASTRA</p>
+            <h2>Comprender también significa reconocer los límites.</h2>
+            <p>
+              La interpretación responsable de un resultado comienza por
+              conocer el modelo que lo produce, sus condiciones de validez
+              y la incertidumbre asociada.
+            </p>
+          </footer>
+
+        </div>
+      </main>
+      <footer id="pie" class="pie pie-minimo">
+        <div class="pie-final">
+          <span>© 2026 Moisés Soriano · AD ASTRA · Todos los derechos reservados</span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
