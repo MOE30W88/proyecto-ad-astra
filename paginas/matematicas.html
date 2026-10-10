@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/tema.css" />
     <link rel="stylesheet" href="../css/estructura.css" />
-    <link rel="stylesheet" href="../css/matematicas.css" />
+    <link rel="stylesheet" href="../css/menu-lateral.css" />
     <link rel="stylesheet" href="../css/pie.css" />
     <link rel="stylesheet" href="../css/fondo-estrellas.css" />
     <link rel="stylesheet" href="../css/fondo-lavado.css" />
@@ -20,6 +20,8 @@
     <script src="../scripts/ubicacion.js" defer></script>
     <script src="../scripts/tema.js" defer></script>
     <script src="../scripts/idioma.js" defer></script>
+    <script src="../scripts/menu-lateral-datos.js" defer></script>
+    <script src="../scripts/menu-lateral.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -55,27 +57,8 @@
           <p class="hero-etiqueta">Reloj astronómico</p>
           <h1 class="hero-titular">El cielo, el tiempo y la posición del Sol en una sola esfera.</h1>
         </section>
-        <div class="pagina-matematicas">
-          <nav class="menu-matematicas" aria-label="Capas del Astrolabio">
-            <a class="menu-matematicas-principal" href="../index.html">Astrolabio</a>
-            <details class="menu-matematicas-grupo"><summary>Reloj</summary><ul>
-              <li>Fondo del reloj</li><li>Marco y escala horaria</li><li>Escala de minutos</li><li>Aguja horaria</li><li>Aguja minutera</li><li>Segundero</li><li>Marcadores del reloj</li><li>Analema</li>
-            </ul></details>
-            <details class="menu-matematicas-grupo"><summary>Día y noche</summary><ul>
-              <li>Eventos solares</li><li>Sol</li><li>Luna</li><li>Planetas sobre el horizonte</li><li>Eclipse</li><li>Horizonte</li><li>Marcas de eventos</li>
-            </ul></details>
-            <details class="menu-matematicas-grupo"><summary>Lunario</summary><ul><li>Fase lunar</li></ul></details>
-            <details class="menu-matematicas-grupo"><summary>Zodíaco</summary><ul>
-              <li>Franja zodiacal</li><li>Indicador zodiacal</li><li>Referencias estacionales</li><li>Marcador estacional</li><li>Trópicos</li><li>Constelaciones</li><li>Sol central</li>
-            </ul></details>
-            <details class="menu-matematicas-grupo"><summary>Calendario</summary><ul>
-              <li>Calendario</li><li>Marcador de fecha</li><li>Estaciones</li><li>Calendario chino</li><li>Sol central</li>
-            </ul></details>
-            <details class="menu-matematicas-grupo"><summary>Sistema solar</summary><ul>
-              <li>Órbita terrestre</li><li>Órbitas planetarias</li><li>Asteroides</li><li>Alineación planetaria</li><li>Planetas</li><li>Sol central</li><li>Planetas en primer plano</li>
-            </ul></details>
-            <details class="menu-matematicas-grupo"><summary>Rotación</summary><ul><li>Representación de la rotación</li><li>Eje de rotación</li></ul></details>
-          </nav>
+        <div class="pagina-con-menu">
+          <nav class="menu-lateral" data-menu="capas" data-titulo="Matemáticas" data-descripcion="La ciencia detrás del tiempo, la posición y el movimiento de los astros." aria-label="Contenido de Matemáticas"></nav>
           <div class="contenido-pagina" aria-label="Espacio reservado para el contenido"></div>
         </div>
       </main>

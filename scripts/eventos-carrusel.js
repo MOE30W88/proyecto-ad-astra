@@ -1,9 +1,9 @@
-// scripts/infografias.js
-// Dibuja la sección Infografía a partir de obtenerEventosProximos() (scripts/datos-infografias.js):
+// scripts/infografias.js / eventos-carrusel.js
+// Dibuja la sección de eventos del carrusel a partir de obtenerEventosProximos() (scripts/eventos-datos.js):
 //   1 · carrusel de eventos (icono + título con enlace) que se mueve hacia la izquierda
 //   2 · visor: imagen de fondo con opacidad, panel glass con la información y galería de tarjetas
 //       (la seleccionada se expande; flechas y puntos dependen de las imágenes cargadas)
-// Depende de: datos-infografias.js (cargar antes)
+// Depende de: scripts/eventos-datos.js (cargar antes) / scripts/datos-infografias.js (antiguo)
 
 function colocarIconoEvento(contenedor, ruta) {
   if (!ruta) return;
@@ -23,15 +23,15 @@ function crearEventoTicker(evento, plantilla) {
   nodo.title = detalle;
   nodo.setAttribute("aria-label", detalle);
   nodo.querySelector(".evento-ticker-titulo").textContent = evento.titulo;
-  if (typeof decorarEventoTicker === "function") decorarEventoTicker(nodo, evento);
   colocarIconoEvento(nodo.querySelector(".evento-icono"), evento.icono);
+  if (typeof decorarEventoTicker === "function") decorarEventoTicker(nodo, evento); // evento-detalle.js: cuenta regresiva y viñeta
   return nodo;
 }
 
 function renderizarEventosProximos(eventos) {
   const pista = document.getElementById("eventos-pista");
   const plantilla = document.getElementById("plantilla-evento");
-  const botonPausa = document.getElementById("pausar-eventos");
+  const controles = document.getElementById("eventos-controles");
   pista.replaceChildren();
   pista.classList.remove("hay-eventos");
 
@@ -40,12 +40,11 @@ function renderizarEventosProximos(eventos) {
     estado.className = "estado-eventos";
     estado.textContent = "Los próximos eventos aparecerán aquí cuando estén disponibles los cálculos.";
     pista.appendChild(estado);
-    botonPausa.hidden = true;
+    controles.hidden = true;
     return;
   }
 
   eventos.forEach((evento) => pista.appendChild(crearEventoTicker(evento, plantilla)));
-  pista.style.animationDuration = `\${Math.max(40, eventos.length * (typeof EVD_SEGUNDOS_POR_EVENTO === "number" ? EVD_SEGUNDOS_POR_EVENTO : 14))}s`; // segundos por evento (ajusta EVD_SEGUNDOS_POR_EVENTO si es necesario)
   if (eventos.length > 1) { // copia del recorrido para que la cinta no tenga saltos
     const duplicado = document.createElement("div");
     duplicado.className = "eventos-pista-clon";
@@ -54,9 +53,10 @@ function renderizarEventosProximos(eventos) {
     duplicado.style.display = "contents";
     eventos.forEach((evento) => duplicado.appendChild(crearEventoTicker(evento, plantilla)));
     pista.appendChild(duplicado);
+    pista.style.animationDuration = `${Math.max(40, eventos.length * (typeof EVD_SEGUNDOS_POR_EVENTO === "number" ? EVD_SEGUNDOS_POR_EVENTO : 14))}s`; // más segundos por evento = más lento
     pista.classList.add("hay-eventos");
   }
-  botonPausa.hidden = eventos.length < 2;
+  controles.hidden = eventos.length < 2;
 }
 
 function escribirTextoPanel(descripcion, detalle) {
@@ -164,12 +164,20 @@ function inicializarInfografias() {
   renderizarEventosProximos(eventos);
   renderizarGaleria(eventos);
   const pista = document.getElementById("eventos-pista");
-  const botonPausa = document.getElementById("pausar-eventos");
-  botonPausa.addEventListener("click", () => {
-    const pausado = pista.classList.toggle("eventos-pausados");
-    botonPausa.textContent = pausado ? "Reanudar" : "Pausar";
-    botonPausa.setAttribute("aria-label", `${pausado ? "Reanudar" : "Pausar"} movimiento de eventos`);
-  });
+  // ❚❚ / ▷: el que corresponde al estado actual queda resaltado ("activa")
+  const botonPausa = document.getElementById("pausar-eventos"), botonPlay = document.getElementById("reanudar-eventos");
+  const fijarPausa = (pausado) => {
+    pista.classList.toggle("eventos-pausados", pausado);
+    pista.dataset.pausaUsuario = pausado ? "1" : "";
+    botonPausa.classList.toggle("activa", pausado);
+    botonPlay.classList.toggle("activa", !pausado);
+    botonPausa.setAttribute("aria-pressed", String(pausado));
+    botonPlay.setAttribute("aria-pressed", String(!pausado));
+  };
+  botonPausa.addEventListener("click", () => fijarPausa(true));
+  botonPlay.addEventListener("click", () => fijarPausa(false));
+  fijarPausa(false);
+
 }
 
 inicializarInfografias();

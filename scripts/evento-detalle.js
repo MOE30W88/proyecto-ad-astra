@@ -3,7 +3,7 @@
 // Muestra icono, título, cuenta regresiva (con el reloj de la app, no el del sistema), fecha y hora, nota, visibilidad y "ver en reloj ▶".
 // "Ver en reloj" fija fecha, hora y posición del evento y pone el tiempo en pausa; "⟲ Volver" devuelve la hora real y tu ubicación.
 // También refresca el carrusel cuando el reloj de la app cambia de hora (actualizarEventosSegunReloj, llamada desde main.js).
-// Depende de: infografias.js (colocarIconoEvento, renderizarEventosProximos, renderizarGaleria), datos-infografias.js, estado-tiempo.js,
+// Depende de: evento-detalle.js (propio), infografias.js / eventos-carrusel.js (colocarIconoEvento, renderizarEventosProximos, renderizarGaleria), eventos-datos.js, estado-tiempo.js,
 //             ubicacion.js (ubicacion, establecerUbicacionManual), eclipses.js (condicionesSolares), eclipse-vista.js (geometriaVistaLunar)
 
 const EVD_HORA_MS = 3600000;
@@ -21,7 +21,7 @@ function evdCuenta(ms, ahoraMs) {
   return d > 0 ? `en ${txt}` : `hace ${txt}`;
 }
 
-// Gancho que llama infografias.js al crear cada evento del carrusel
+// Gancho que llama evento-detalle.js / infografias.js al crear cada evento del carrusel
 function decorarEventoTicker(nodo, evento) {
   nodo.dataset.id = evento.id;
   evdEventos.set(evento.id, evento);
@@ -105,8 +105,8 @@ function evdCerrar() {
   const det = document.getElementById("evento-detalle");
   if (!det || det.hidden) return;
   det.hidden = true; evdAbierto = null;
-  const boton = document.getElementById("pausar-eventos");
-  if (!boton || boton.textContent !== "Reanudar") document.getElementById("eventos-pista").classList.remove("eventos-pausados");
+  const pista = document.getElementById("eventos-pista");
+  if (!pista.dataset.pausaUsuario) pista.classList.remove("eventos-pausados"); // si el usuario lo pausó con ❚❚, sigue pausado
 }
 
 // ───── Ver en reloj ─────

@@ -1,4 +1,4 @@
-/* css/infografias.css — sección Infografía: carrusel de próximos eventos (1) y visor con galería (2).
+/* css/infografias.css / eventos-carrusel.css — sección Infografía: carrusel de próximos eventos (1) y visor con galería (2).
    Colores: solo variables de css/tema.css. */
 
 /* el proyecto no usa un reset global: las medidas incluyen borde y relleno dentro de la sección */
@@ -40,20 +40,12 @@
   content: "";
 }
 .estado-eventos { width: 100%; margin: 0; color: var(--texto-suave); text-align: center; font-size: 0.9rem; }
-.eventos-pausa {
-  position: absolute;
-  top: 50%;
-  right: 0.5rem;
-  transform: translateY(-50%);
-  padding: 0.45rem 0.65rem;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  background: var(--panel);
-  color: var(--texto-suave);
-  font: inherit;
-  font-size: 0.72rem;
-  cursor: pointer;
-}
+/* Botones ❚❚ / ▷ centrados bajo la cinta (mismo aspecto que los de velocidad.css; clase propia porque velocidad.js captura .control-tiempo-boton) */
+.eventos-controles { display: flex; justify-content: center; gap: 0.6rem; margin-top: 0.75rem; }
+.eventos-controles[hidden] { display: none; }
+.eventos-boton { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--linea); border-radius: 50%; background: transparent; color: var(--texto-suave); cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+.eventos-boton:hover, .eventos-boton:focus-visible { background: color-mix(in srgb, var(--oro) 12%, transparent); border-color: var(--acento); color: var(--acento); }
+.eventos-boton.activa { border-color: var(--acento); color: var(--acento); background: color-mix(in srgb, var(--oro) 15%, transparent); }
 
 /* ───── 2 · Visor: recuadro punteado > marco > fondo + panel glass + galería ───── */
 .infografia-visor {

@@ -1,5 +1,5 @@
-// scripts/datos-infografias.js
-// PLANTILLA DE CONTENIDO: aquí solo se pega la información; scripts/infografias.js la dibuja.
+// scripts/datos-infografias.js / eventos-datos.js
+// PLANTILLA DE CONTENIDO: aquí solo se pega la información; scripts/infografias.js / eventos-carrusel.js la dibuja.
 // Cada evento alimenta el carrusel de arriba (icono + título con enlace) y la galería (una tarjeta por imagen).
 // Los puntos de selección y las tarjetas salen solos de las imágenes que listes.
 //

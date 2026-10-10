@@ -1,114 +1,5 @@
 /* css/alcance.css — Estilos específicos para la página de Alcance (modelos, precisión e incertidumbre) */
 
-/* Contenedor principal de lectura */
-.contenido-pagina {
-  width: min(calc(100% - 2.5rem), 980px);
-  margin: 1.5rem auto clamp(3rem, 6vh, 5rem);
-}
-
-/* ───────── INTRODUCCIÓN ───────── */
-.alcance-introduccion {
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--linea);
-}
-
-.alcance-introduccion h2 {
-  margin: 0 0 1.25rem;
-  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
-  font-weight: normal;
-  color: var(--texto);
-  line-height: 1.25;
-}
-
-.alcance-introduccion p {
-  margin: 0 0 1.15rem;
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: var(--tinta-suave);
-  max-width: 74ch;
-}
-
-.alcance-destacado {
-  margin: 1.75rem 0 0;
-  padding: 1.1rem 1.4rem;
-  border-left: 3px solid var(--acento);
-  border-radius: 0 8px 8px 0;
-  background: color-mix(in srgb, var(--oro) 8%, transparent);
-  font-size: 1.1rem !important;
-  font-style: italic;
-  color: var(--texto) !important;
-  line-height: 1.6;
-}
-
-/* ───────── ÍNDICE / NAVEGACIÓN INTERNA ───────── */
-.alcance-nav {
-  margin: 2.5rem 0 3.5rem;
-  padding: 1.75rem 2rem;
-  border: 1px solid var(--linea);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--panel) 50%, transparent);
-  backdrop-filter: blur(8px);
-}
-
-.alcance-nav-etiqueta {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0 0 1.25rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--acento);
-}
-
-.alcance-nav-etiqueta::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--linea);
-  opacity: 0.7;
-}
-
-.alcance-nav ol {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.alcance-nav a {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--linea) 80%, transparent);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--superficie) 40%, transparent);
-  text-decoration: none;
-  color: var(--texto);
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.alcance-nav a:hover {
-  border-color: var(--acento);
-  background: color-mix(in srgb, var(--panel) 90%, transparent);
-  color: var(--acento);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.alcance-nav a span {
-  font-family: var(--fuente);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--acento);
-  letter-spacing: 0.05em;
-  opacity: 0.85;
-}
-
 /* ───────── SECCIONES GENERALES ───────── */
 .alcance-seccion {
   margin-top: clamp(3rem, 6vh, 4.5rem);
@@ -385,12 +276,6 @@
 
 /* ───────── RESPONSIVE ───────── */
 @media (max-width: 768px) {
-  .alcance-nav {
-    padding: 1.25rem 1.25rem;
-  }
-  .alcance-nav ol {
-    grid-template-columns: 1fr;
-  }
   .alcance-conceptos,
   .alcance-fenomenos {
     grid-template-columns: 1fr;

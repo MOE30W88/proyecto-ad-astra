@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/tema.css" />
     <link rel="stylesheet" href="../css/estructura.css" />
+    <link rel="stylesheet" href="../css/menu-lateral.css" />
     <link rel="stylesheet" href="../css/alcance.css" />
     <link rel="stylesheet" href="../css/pie.css" />
     <link rel="stylesheet" href="../css/fondo-estrellas.css" />
@@ -20,6 +21,8 @@
     <script src="../scripts/ubicacion.js" defer></script>
     <script src="../scripts/tema.js" defer></script>
     <script src="../scripts/idioma.js" defer></script>
+    <script src="../scripts/menu-lateral-datos.js" defer></script>
+    <script src="../scripts/menu-lateral.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -58,6 +61,8 @@
           </h1>
         </section>
 
+        <div class="pagina-con-menu">
+          <nav class="menu-lateral" data-menu="alcance" data-titulo="Alcance" data-descripcion="Modelos, incertidumbre y límites de los cálculos astronómicos." aria-label="Contenido de Alcance"></nav>
         <div class="contenido-pagina">
 
           <!-- Introducción -->
@@ -84,50 +89,6 @@
               de comprender sus resultados.
             </p>
           </section>
-
-          <!-- Navegación interna -->
-          <nav class="alcance-nav" aria-label="Contenido de Alcance">
-            <p class="alcance-nav-etiqueta">Contenido</p>
-
-            <ol>
-              <li>
-                <a href="#precision">
-                  <span>01</span>
-                  Precisión e incertidumbre
-                </a>
-              </li>
-              <li>
-                <a href="#modelos">
-                  <span>02</span>
-                  Modelos de cálculo
-                </a>
-              </li>
-              <li>
-                <a href="#fenomenos">
-                  <span>03</span>
-                  Precisión por fenómeno
-                </a>
-              </li>
-              <li>
-                <a href="#condiciones">
-                  <span>04</span>
-                  Límites temporales y geográficos
-                </a>
-              </li>
-              <li>
-                <a href="#validacion">
-                  <span>05</span>
-                  Validación y limitaciones conocidas
-                </a>
-              </li>
-              <li>
-                <a href="#referencias">
-                  <span>06</span>
-                  Fuentes y referencias
-                </a>
-              </li>
-            </ol>
-          </nav>
 
           <!-- 01. Precisión e incertidumbre -->
           <section id="precision" class="alcance-seccion">
@@ -346,6 +307,7 @@
             </p>
           </footer>
 
+        </div>
         </div>
       </main>
       <footer id="pie" class="pie pie-minimo">

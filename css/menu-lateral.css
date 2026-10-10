@@ -1,0 +1,99 @@
+/* css/menu-lateral.css — menú lateral de las páginas internas (Alcance, Matemáticas, Infografía) y su disposición.
+   Se dibuja con scripts/menu-lateral.js. Colores: solo variables de css/tema.css. */
+
+.pagina-con-menu {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  width: min(calc(100% - 2rem), 1200px);
+  min-height: 65vh;
+  margin: clamp(1.5rem, 4vh, 3rem) auto clamp(3rem, 8vh, 6rem);
+}
+/* el contenido ocupa el resto; gana a cualquier regla suelta de .contenido-pagina de otras hojas */
+.pagina-con-menu .contenido-pagina { flex: 1 1 0; min-width: 0; width: 100%; margin: 0; }
+
+.menu-lateral {
+  position: sticky;
+  top: 6rem;
+  flex: 0 0 270px;
+  width: 270px;
+  max-height: calc(100vh - 7.5rem);
+  overflow-y: auto;
+  padding-right: 1.25rem;
+  border-right: 1px solid var(--linea);
+}
+
+/* Cabecera: título + descripción (en móvil es el botón que despliega el menú) */
+.ml-toggle {
+  display: block;
+  width: 100%;
+  padding: 0 0 1.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--linea);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+.ml-titulo { display: block; font-size: 0.95rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--texto); }
+.ml-descripcion { display: block; margin-top: 0.7rem; font-size: 0.85rem; line-height: 1.5; color: var(--texto-suave); }
+
+/* Grupos (acordeón) */
+.ml-grupo { border-bottom: 1px solid var(--linea); }
+.ml-grupo summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--texto);
+  list-style: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.ml-grupo summary::-webkit-details-marker { display: none; }
+.ml-grupo summary::after { content: "›"; font-size: 1.1rem; letter-spacing: 0; color: var(--texto-suave); transition: transform 0.2s; }
+.ml-grupo[open] summary::after { transform: rotate(90deg); }
+.ml-grupo summary:hover, .ml-grupo summary:focus-visible { color: var(--acento); }
+
+/* Ítems: línea vertical a la izquierda; el activo lleva un punto dorado sobre la línea */
+.ml-grupo ol { margin: 0 0 1rem 0.35rem; padding: 0 0 0 1.1rem; border-left: 1px solid var(--linea); list-style: none; display: grid; gap: 0.15rem; }
+.ml-grupo a {
+  position: relative;
+  display: block;
+  padding: 0.3rem 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--texto-suave);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.ml-grupo a:hover, .ml-grupo a:focus-visible { color: var(--texto); }
+.ml-num { display: inline-block; min-width: 1.4em; }
+.ml-grupo a.activa { color: var(--acento); }
+.ml-grupo a.activa::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.1rem - 4px);
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--acento);
+  transform: translateY(-50%);
+}
+.ml-grupo a.pendiente { opacity: 0.55; cursor: default; }
+
+/* Móvil / tablet: el menú se pliega bajo su título */
+@media (max-width: 900px) {
+  .pagina-con-menu { flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
+  .menu-lateral { position: static; flex: none; width: 100%; max-height: none; padding-right: 0; border-right: 0; border-bottom: 1px solid var(--linea); overflow: visible; }
+  .ml-toggle { position: relative; padding-bottom: 1rem; border-bottom: 0; cursor: pointer; }
+  .ml-toggle::after { content: "+"; position: absolute; top: 0; right: 0.2rem; font-size: 1.3rem; color: var(--acento); }
+  .menu-lateral.abierto .ml-toggle::after { content: "−"; }
+  .ml-cuerpo { display: none; border-top: 1px solid var(--linea); }
+  .menu-lateral.abierto .ml-cuerpo { display: block; }
+}

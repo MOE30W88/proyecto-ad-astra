@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/rotacion.css" />
     <link rel="stylesheet" href="css/velocidad.css" />
     <link rel="stylesheet" href="css/secciones.css" />
-    <link rel="stylesheet" href="css/infografias.css" />
+    <link rel="stylesheet" href="css/eventos-carrusel.css" />
     <link rel="stylesheet" href="css/pie.css" />
     <link rel="stylesheet" href="css/fondo-estrellas.css" />
     <link rel="stylesheet" href="css/fondo-lavado.css" />
@@ -108,8 +108,8 @@
     <script src="scripts/evento-visibilidad.js" defer></script>
     <script src="scripts/evento-detalle.js" defer></script>
     <script src="scripts/evento-mejor-lugar.js" defer></script>
-    <script src="scripts/datos-infografias.js" defer></script>
-    <script src="scripts/infografias.js" defer></script>
+    <script src="scripts/eventos-datos.js" defer></script>
+    <script src="scripts/eventos-carrusel.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -474,8 +474,11 @@
               <div id="eventos-pista" class="eventos-pista">
                 <p class="estado-eventos">Los próximos eventos aparecerán aquí cuando estén disponibles los cálculos.</p>
               </div>
-              <button id="pausar-eventos" class="eventos-pausa" type="button" aria-label="Pausar movimiento de eventos" hidden>Pausar</button>
             </div>
+<div id="eventos-controles" class="eventos-controles" role="group" aria-label="Controles del carrusel" hidden>
+  <button id="pausar-eventos" class="eventos-boton" type="button" title="Pausar el carrusel" aria-label="Pausar el carrusel"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4.5h4v15H6zM14 4.5h4v15h-4z"/></svg></button>
+  <button id="reanudar-eventos" class="eventos-boton" type="button" title="Reanudar el carrusel" aria-label="Reanudar el carrusel"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+</div>
           </div>
         </section>
         <template id="plantilla-evento">

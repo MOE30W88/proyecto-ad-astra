@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/tema.css" />
     <link rel="stylesheet" href="../css/estructura.css" />
+    <link rel="stylesheet" href="../css/menu-lateral.css" />
     <link rel="stylesheet" href="../css/pie.css" />
     <link rel="stylesheet" href="../css/fondo-estrellas.css" />
     <link rel="stylesheet" href="../css/fondo-lavado.css" />
@@ -19,6 +20,8 @@
     <script src="../scripts/ubicacion.js" defer></script>
     <script src="../scripts/tema.js" defer></script>
     <script src="../scripts/idioma.js" defer></script>
+    <script src="../scripts/menu-lateral-datos.js" defer></script>
+    <script src="../scripts/menu-lateral.js" defer></script>
   </head>
   <body>
     <div id="fondo-lavado" aria-hidden="true"></div>
@@ -54,7 +57,10 @@
           <p class="hero-etiqueta">Reloj astronómico</p>
           <h1 class="hero-titular">El cielo, el tiempo y la posición del Sol en una sola esfera.</h1>
         </section>
-        <div class="contenido-pagina" aria-label="Espacio reservado para el contenido"></div>
+        <div class="pagina-con-menu">
+          <nav class="menu-lateral" data-menu="capas" data-titulo="Infografía" data-descripcion="El cielo explicado a través de imágenes, diagramas y ciclos." aria-label="Contenido de Infografía"></nav>
+          <div class="contenido-pagina" aria-label="Espacio reservado para el contenido"></div>
+        </div>
       </main>
       <footer id="pie" class="pie pie-minimo">
         <div class="pie-final">
