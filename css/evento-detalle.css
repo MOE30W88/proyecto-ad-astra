@@ -1,0 +1,26 @@
+/* css/evento-detalle.css — viñeta de detalle de un evento del carrusel y pastilla "viendo en el reloj". Colores: solo variables de css/tema.css. */
+.evento-ticker-cuenta { margin-left: 0.15rem; padding: 0.1rem 0.5rem; border: 1px solid var(--linea); border-radius: 999px; color: var(--texto-suave); font-size: 0.75rem; white-space: nowrap; }
+.evento-ticker-cuenta:empty { display: none; }
+.evento-ticker-item { cursor: pointer; }
+
+#evento-detalle { position: fixed; z-index: 70; box-sizing: border-box; width: min(22rem, calc(100vw - 1rem)); padding: 1rem 1.1rem 1.1rem; border: 1px solid var(--linea); border-radius: 0.8rem; background: var(--panel); color: var(--texto); box-shadow: var(--sombra); backdrop-filter: blur(8px); }
+#evento-detalle[hidden] { display: none; }
+#evento-detalle .ed-cerrar { position: absolute; top: 0.4rem; right: 0.5rem; border: 0; background: none; color: var(--texto-suave); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+#evento-detalle .ed-cab { display: flex; align-items: center; gap: 0.75rem; padding-right: 1.5rem; }
+#evento-detalle .ed-titulo { margin: 0; font-size: 1.05rem; line-height: 1.25; }
+#evento-detalle .ed-cuenta { margin: 0.15rem 0 0; color: var(--acento); font-size: 0.85rem; }
+#evento-detalle p { margin: 0.7rem 0 0; font-size: 0.9rem; line-height: 1.4; }
+#evento-detalle .ed-fecha { color: var(--texto-suave); }
+#evento-detalle .ed-vis { display: flex; flex-direction: column; gap: 0.15rem; padding-top: 0.6rem; border-top: 1px solid var(--linea); }
+#evento-detalle .ed-vis-etq { color: var(--texto-suave); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
+#evento-detalle .ed-vis-val[data-estado="si"] { color: var(--tropico-cancer); }
+#evento-detalle .ed-vis-val[data-estado="regular"] { color: var(--acento); }
+#evento-detalle .ed-vis-val[data-estado="no"] { color: var(--alerta); }
+#evento-detalle .ed-vis-val[data-estado="reloj"] { color: var(--hielo); }
+#evento-detalle .ed-ver { margin-top: 0.9rem; width: 100%; padding: 0.55rem; border: 1px solid var(--borde-oro); border-radius: 0.5rem; background: none; color: var(--acento); font: inherit; cursor: pointer; }
+#evento-detalle .ed-ver:hover, #evento-detalle .ed-ver:focus-visible { background: var(--acento); color: var(--superficie); }
+
+#evento-en-reloj { position: fixed; z-index: 70; left: 50%; bottom: 1rem; transform: translateX(-50%); display: flex; align-items: center; gap: 0.75rem; max-width: calc(100vw - 1rem); padding: 0.45rem 0.6rem 0.45rem 1rem; border: 1px solid var(--borde-oro); border-radius: 999px; background: var(--panel); color: var(--texto); box-shadow: var(--sombra); font-size: 0.85rem; }
+#evento-en-reloj[hidden] { display: none; }
+#evento-en-reloj .ep-texto { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#evento-en-reloj .ep-volver { flex: none; padding: 0.25rem 0.75rem; border: 1px solid var(--borde-oro); border-radius: 999px; background: none; color: var(--acento); font: inherit; cursor: pointer; }

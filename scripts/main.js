@@ -21,6 +21,7 @@ let anioCalendarioDibujado = null;
 function actualizar() {
   const ahora = obtenerFechaActual();
   actualizarEventosSolaresSiCambio(ahora);
+  if (typeof actualizarEventosSegunReloj === "function") actualizarEventosSegunReloj(ahora);
   actualizarPanelResultados(ahora);
   actualizarPanelPlanetas(ahora);
  

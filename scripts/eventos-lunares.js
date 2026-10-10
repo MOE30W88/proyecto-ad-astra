@@ -144,7 +144,7 @@ const evlClave = (e) => (e.eclipse ? `${e.tipo}-${e.clase}` : e.tipo);
 const evlCache = { clave: null, lista: null };
 function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 40) {
   const u = typeof ubicacion !== "undefined" && typeof ubicacion.latitud === "number" ? `${ubicacion.latitud.toFixed(1)},${ubicacion.longitud.toFixed(1)}` : "sin-lugar";
-  const clave = `${Math.floor(desdeMs / EVL.DIA_MS)}|${meses}|${maximo}|${u}`;
+  const clave = `${Math.floor(desdeMs / 3600000)}|${meses}|${maximo}|${u}`;
   if (evlCache.clave === clave) return evlCache.lista;
   const fmt = new Intl.DateTimeFormat("es", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" });
   const hasta = desdeMs + meses * 30.44 * EVL.DIA_MS;
@@ -166,6 +166,7 @@ function eventosParaCarrusel(desdeMs = Date.now(), meses = 12, maximo = 40) {
       icono: e.icono ?? ICONOS_EVENTOS_LUNARES[clave2],
       destino: "#eventos-proximos",
       imagenes: [],
+      visibilidad: typeof visibilidadEvento === "function" ? visibilidadEvento(e) : null,
       _evento: e,
     };
   });

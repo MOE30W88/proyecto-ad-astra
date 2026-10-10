@@ -23,6 +23,7 @@ function crearEventoTicker(evento, plantilla) {
   nodo.title = detalle;
   nodo.setAttribute("aria-label", detalle);
   nodo.querySelector(".evento-ticker-titulo").textContent = evento.titulo;
+  if (typeof decorarEventoTicker === "function") decorarEventoTicker(nodo, evento);
   colocarIconoEvento(nodo.querySelector(".evento-icono"), evento.icono);
   return nodo;
 }
@@ -44,7 +45,7 @@ function renderizarEventosProximos(eventos) {
   }
 
   eventos.forEach((evento) => pista.appendChild(crearEventoTicker(evento, plantilla)));
-  pista.style.animationDuration = `\${Math.max(30, eventos.length * 9)}s`; // 9 s por evento (sube/baja el 9 para ajustar)
+  pista.style.animationDuration = `\${Math.max(40, eventos.length * (typeof EVD_SEGUNDOS_POR_EVENTO === "number" ? EVD_SEGUNDOS_POR_EVENTO : 14))}s`; // segundos por evento (ajusta EVD_SEGUNDOS_POR_EVENTO si es necesario)
   if (eventos.length > 1) { // copia del recorrido para que la cinta no tenga saltos
     const duplicado = document.createElement("div");
     duplicado.className = "eventos-pista-clon";
