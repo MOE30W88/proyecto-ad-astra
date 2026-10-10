@@ -31,7 +31,7 @@
 .pie-final { display: grid; justify-items: center; gap: 0.7rem; width: min(100%, 1500px); margin: 3rem auto 0; color: var(--texto-suave); font-size: 0.78rem; letter-spacing: 0.08em; text-align: center; }
 .pie-final::before { width: min(100%, 36rem); border-top: 1px solid var(--borde-oro); content: ""; }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .pie-contenido { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .pie-logo { grid-column: 1 / -1; justify-self: center; }
 }

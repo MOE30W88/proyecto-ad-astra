@@ -74,7 +74,7 @@ function actualizarPanelDatosDinamicos(ahora) {
   }
 
   if (enfoquePanelActivo === "dia-noche") {
-    const valor = (id) => document.getElementById(id)?.textContent || "—";
+    const valor = (k) => refsPanel[k]?.valor.textContent || "—";
     document.getElementById("dato-alba-astronomica").textContent = valor("albaAstro");
     document.getElementById("dato-alba-nautica").textContent = valor("albaNautico");
     document.getElementById("dato-alba-civil").textContent = valor("albaCivil");

@@ -49,6 +49,8 @@ function actualizar() {
   actualizarTraslacion(ahora);
   actualizarAsteroides(ahora);
   actualizarAlineacion(ahora);
+  if (typeof actualizarCometas === "function") actualizarCometas(ahora);
+  if (typeof actualizarLluviasOrbita === "function") actualizarLluviasOrbita(ahora);
   actualizarEtiquetasZodiaco(anguloZod);
   actualizarIndicadorZodiaco(anguloZod);
   actualizarEventoEstacional(ahora, anguloZod);
@@ -162,7 +164,7 @@ function actualizarLuna(fecha, alturaSolar) {
     ubicacion.latitud,
     ubicacion.longitud,
   );
-  const angulo = typeof anguloDialDeLaLuna === "function" ? (anguloDialDeLaLuna(fecha) ?? anguloDeLaHora(fecha)) : anguloDeLaHora(fecha);
+  const angulo = anguloDeLaLuna(fecha);
   const p = polar(RADIO_ORBITA_LUNA, angulo);
  
   const intensidad = intensidadLunar(altura, alturaSolar, 1);

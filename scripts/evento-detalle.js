@@ -7,7 +7,7 @@
 //             ubicacion.js (ubicacion, establecerUbicacionManual), eclipses.js (condicionesSolares), eclipse-vista.js (geometriaVistaLunar)
 
 const EVD_HORA_MS = 3600000;
-const EVD_SEGUNDOS_POR_EVENTO = 3; // velocidad del carrusel: más segundos = más lento
+const EVD_SEGUNDOS_POR_EVENTO = 2.5; // velocidad del carrusel: más segundos = más lento
 const EVD_ETIQUETA = { si: "Sí", regular: "Regular", no: "No", reloj: "En el reloj" };
 
 let evdEventos = new Map();   // id → evento del carrusel
@@ -66,10 +66,12 @@ function evdCrear() {
       <div><h3 class="ed-titulo"></h3><p class="ed-cuenta"></p></div></div>
     <p class="ed-fecha"></p><p class="ed-nota"></p>
     <p class="ed-vis"><span class="ed-vis-etq">Visibilidad desde tu ubicación</span><strong class="ed-vis-val"></strong></p>
-    <button type="button" class="ed-ver">ver en reloj ▶</button>`;
+    <button type="button" class="ed-ver">ver en reloj ▶</button>
+    <button type="button" class="ed-mejor" hidden>ir al mejor lugar ▶</button>`;
   document.body.appendChild(det);
   det.querySelector(".ed-cerrar").addEventListener("click", evdCerrar);
   det.querySelector(".ed-ver").addEventListener("click", () => { const ev = evdEventos.get(evdAbierto); if (ev) { evdCerrar(); evdVerEnReloj(ev); } });
+  det.querySelector(".ed-mejor").addEventListener("click", () => { const ev = evdEventos.get(evdAbierto); if (ev) { evdCerrar(); evdVerEnReloj(ev, true); } });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") evdCerrar(); });
   document.addEventListener("pointerdown", (e) => { if (evdAbierto && !det.contains(e.target) && !e.target.closest(".evento-ticker-item")) evdCerrar(); });
   return det;
@@ -85,6 +87,9 @@ function evdAbrir(id, nodo) {
   det.querySelector(".ed-nota").hidden = !ev.alcance;
   const vis = ev.visibilidad || { estado: null, texto: "No aplica" }, val = det.querySelector(".ed-vis-val");
   val.textContent = vis.texto; val.dataset.estado = vis.estado || "";
+  // "Mejor lugar": solo si el evento no se ve (bien) desde aquí y existe un lugar mejor (evento-mejor-lugar.js)
+  const mejor = det.querySelector(".ed-mejor");
+  mejor.hidden = !(["no", "regular"].includes(vis.estado) && typeof evdMejorLugar === "function" && evdMejorLugar(ev._evento));
   const icono = det.querySelector(".ed-icono");
   icono.classList.remove("con-icono"); icono.style.removeProperty("--icono");
   colocarIconoEvento(icono, ev.icono);
@@ -132,15 +137,45 @@ function evdVista(e) {
   return { ms, punto };
 }
 
-function evdVerEnReloj(evento) {
-  const { ms, punto } = evdVista(evento._evento);
-  if (!evdRespaldo) evdRespaldo = { lat: ubicacion.latitud, lon: ubicacion.longitud, manual: ubicacion.esManual };
+// Capa del menú que mejor muestra cada tipo de evento
+function evdCapaDelEvento(e) {
+  const t = e.tipo || "";
+  if (e.eclipse) return "dia-noche";
+  if (/^(lluvia|cometa|oposicion|elongacion|alineacion)/.test(t)) return "sistema-solar";
+  if (/^(estacion|anio-nuevo)/.test(t)) return "calendario";
+  return "lunario"; // superluna, microluna, luna azul/negra/cosecha, mareas vivas
+}
+let evdClicInterno = false, evdPastillaOn = false, evdRelojVisible = true;
+const evdBotonCapa = (clave) => document.querySelector(`.nav-capas button[data-enfoque="${clave}"]`);
+function evdClicCapa(clave) { evdClicInterno = true; evdBotonCapa(clave)?.click(); evdClicInterno = false; }
+
+// La pastilla solo se ve mientras se muestra el evento: se oculta al cambiar de capa a mano o al alejarse del reloj
+function evdSincronizarPastilla() {
+  if (evdPastillaOn) evdPastilla().hidden = !evdRelojVisible;
+  else document.getElementById("evento-en-reloj")?.setAttribute("hidden", "");
+}
+document.querySelectorAll(".nav-capas button").forEach((b) => b.addEventListener("click", () => {
+  if (evdClicInterno || !evdPastillaOn) return;
+  evdPastillaOn = false; // cambio de capa manual: se abandona la vista del evento (el botón "Ahora" sigue restaurando el lugar)
+  if (evdRespaldo) evdRespaldo.capa = null;
+  evdSincronizarPastilla();
+}));
+const evdSvgReloj = document.getElementById("reloj");
+if (evdSvgReloj && "IntersectionObserver" in window) {
+  new IntersectionObserver(([en]) => { evdRelojVisible = en.isIntersecting; evdSincronizarPastilla(); }, { threshold: 0.15 }).observe(evdSvgReloj);
+}
+
+function evdVerEnReloj(evento, mejorLugar = false) {
+  const { ms, punto } = (mejorLugar && evdMejorLugar(evento._evento)) || evdVista(evento._evento);
+  if (!evdRespaldo) evdRespaldo = { lat: ubicacion.latitud, lon: ubicacion.longitud, manual: ubicacion.esManual, capa: document.querySelector(".nav-capas button.activa")?.dataset.enfoque, trayectorias: trayectoriasActivas?.() };
+  evdClicCapa(evdCapaDelEvento(evento._evento)); // enfoca la capa adecuada
+  if (typeof establecerTrayectorias === "function") establecerTrayectorias(/^(lluvia|cometa)/.test(evento._evento.tipo)); // órbitas solo para lluvias y cometas
   if (punto) establecerUbicacionManual(punto.lat, punto.lon);
   establecerFechaViajero(new Date(ms));
-  establecerMultiplicador(0);
-  const pastilla = evdPastilla();
-  pastilla.querySelector(".ep-texto").textContent = evento.titulo;
-  pastilla.hidden = false;
+  if (typeof pausarControlesVelocidad === "function") pausarControlesVelocidad(); else establecerMultiplicador(0); // velocidad.js: congela y muestra ❚❚
+  evdPastilla().querySelector(".ep-texto").textContent = evento.titulo;
+  evdPastillaOn = true;
+  evdSincronizarPastilla();
   document.getElementById("reloj")?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
@@ -158,9 +193,12 @@ function evdPastilla() {
 
 // Se ejecuta con cualquier "Ahora" (el del viajero o el de la pastilla): devuelve tu lugar
 function evdRestaurar() {
-  document.getElementById("evento-en-reloj")?.setAttribute("hidden", "");
+  evdPastillaOn = false;
+  evdSincronizarPastilla();
   if (!evdRespaldo) return;
   const r = evdRespaldo; evdRespaldo = null;
+  if (r.capa) evdClicCapa(r.capa);
+  if (typeof establecerTrayectorias === "function") establecerTrayectorias(Boolean(r.trayectorias));
   if (typeof r.lat === "number") { establecerUbicacionManual(r.lat, r.lon); ubicacion.esManual = r.manual; }
 }
 document.getElementById("boton-ahora")?.addEventListener("click", evdRestaurar);

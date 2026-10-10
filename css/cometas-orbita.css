@@ -1,0 +1,5 @@
+/* css/cometas-orbita.css — cometas en la vista Sistema solar. Colores: solo variables de css/tema.css. */
+#capa-cometas { display: none; }
+.orbita-cometa { fill: none; stroke: var(--hielo); stroke-width: 1.2; stroke-dasharray: 2 5; opacity: 0.85; vector-effect: non-scaling-stroke; }
+.cola-cometa { stroke: var(--tinta-suave); stroke-width: 1.6; stroke-linecap: round; opacity: 0.75; }
+.cometa { fill: var(--luna-luz); stroke: var(--tinta); stroke-width: 1.2; cursor: pointer; }

@@ -1,0 +1,8 @@
+/* css/lluvias-orbita.css — marcas de lluvias de estrellas sobre la órbita terrestre (vista Sistema solar). Colores: solo variables de css/tema.css. */
+#capa-lluvias-orbita { display: none; }
+.marca-lluvia { fill: none; stroke: var(--acento); stroke-width: 1.2; opacity: 0.6; cursor: pointer; vector-effect: non-scaling-stroke; }
+.texto-lluvia { fill: var(--texto); font-family: var(--fuente); font-size: 15px; dominant-baseline: central; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.lluvia-orbita.activa .marca-lluvia { fill: var(--acento); opacity: 1; animation: pulso-lluvia 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.lluvia-orbita.activa .texto-lluvia, .lluvia-orbita:hover .texto-lluvia { opacity: 1; }
+@keyframes pulso-lluvia { 50% { transform: scale(1.6); } }
+@media (prefers-reduced-motion: reduce) { .lluvia-orbita.activa .marca-lluvia { animation: none; } }

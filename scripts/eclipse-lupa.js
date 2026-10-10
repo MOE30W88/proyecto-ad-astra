@@ -120,9 +120,8 @@ function contenidoLupa(e) {
   return s + "</g>";
 }
 
-function posicionDelAstro(fecha, tipo) {
-  const luna = tipo === "lunar" && typeof anguloDialDeLaLuna === "function" ? anguloDialDeLaLuna(fecha) : null;
-  return polar(RADIO_ORBITA_SOL, luna ?? anguloDeLaHora(fecha));
+function posicionDelAstro(fecha, lunar = false) {
+  return polar(RADIO_ORBITA_SOL, lunar ? anguloDeLaLuna(fecha) : anguloDeLaHora(fecha));
 }
 
 // Se llama en cada fotograma desde main.js, ANTES de dibujar el Sol y la Luna
@@ -140,7 +139,7 @@ function actualizarEclipse(fecha, alturaSolar) {
   el.capa.classList.add("activo");
 
   // Dial: halo sobre el astro y, si es solar, la Luna cubriendo al Sol
-  const p = posicionDelAstro(fecha, e.tipo);
+  const p = posicionDelAstro(fecha, e.tipo !== "solar");
   el.posicion.setAttribute("transform", `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
   let opacidad;
   if (e.tipo === "solar") {

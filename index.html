@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="css/ayudas-contextuales.css" />
     <link rel="stylesheet" href="css/eclipse.css" />
     <link rel="stylesheet" href="css/planetas-horizonte.css" />
+    <link rel="stylesheet" href="css/cometas-orbita.css" />
+    <link rel="stylesheet" href="css/trayectorias-solar.css" />
+    <link rel="stylesheet" href="css/lluvias-orbita.css" />
     <link rel="stylesheet" href="css/vinetas-eventos.css" />
     <link rel="stylesheet" href="css/evento-detalle.css" />
     <link rel="stylesheet" href="css/vineta-eventos.css" />
@@ -95,11 +98,16 @@
     <script src="scripts/velocidad.js" defer></script>
     <script src="scripts/tema.js" defer></script>
     <script src="scripts/idioma.js" defer></script>
+    <script src="scripts/luna-angulo.js" defer></script>
+    <script src="scripts/cometas-orbita.js" defer></script>
+    <script src="scripts/trayectorias-solar.js" defer></script>
+    <script src="scripts/lluvias-orbita.js" defer></script>
     <script src="scripts/main.js" defer></script>
     <script src="scripts/nav-scroll.js" defer></script>
     <script src="scripts/paneles-laterales.js" defer></script>
     <script src="scripts/evento-visibilidad.js" defer></script>
     <script src="scripts/evento-detalle.js" defer></script>
+    <script src="scripts/evento-mejor-lugar.js" defer></script>
     <script src="scripts/datos-infografias.js" defer></script>
     <script src="scripts/infografias.js" defer></script>
   </head>
@@ -162,6 +170,9 @@
           </a>
           <button type="button" id="boton-vista-solar" class="boton-vista-solar" data-vista="xy" aria-label="Cambiar a vista XZ" title="Vista XY · cambiar a XZ" aria-pressed="false" hidden>
             <span class="icono-vista-solar" aria-hidden="true"></span>
+          </button>
+          <button type="button" id="boton-trayectorias" class="boton-trayectorias" aria-pressed="false" title="Mostrar órbitas de cometas y lluvias" aria-label="Mostrar órbitas de cometas y lluvias" hidden>
+            <span class="icono-trayectorias" aria-hidden="true"></span>
           </button>
           <aside id="cajon-viajero" class="panel-flotante panel-izq" aria-label="Panel de fecha y hora" aria-hidden="true" inert>
             <section class="seccion-viajero">

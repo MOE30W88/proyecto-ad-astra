@@ -1,0 +1,36 @@
+/* css/trayectorias-solar.css — botón de órbitas de cometas y lluvias (vista Sistema solar). Colores: solo variables de css/tema.css. */
+.boton-trayectorias {
+  position: absolute;
+  top: calc(clamp(2.5rem, 6vw, 4rem) + 42px); /* bajo el botón XY/XZ (34 px + 8 px) */
+  right: max(1rem, calc((100% - var(--ancho-reloj)) / 2 - 4rem));
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--borde-sutil);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto-suave);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.boton-trayectorias[hidden] { display: none; }
+.boton-trayectorias:hover,
+.boton-trayectorias:focus-visible,
+.boton-trayectorias[aria-pressed="true"] {
+  border-color: var(--acento);
+  background: color-mix(in srgb, var(--oro) 12%, transparent);
+  color: var(--acento);
+}
+.icono-trayectorias {
+  width: 32px;
+  height: 32px;
+  background: currentColor;
+  -webkit-mask: url("../svg/panel-control/trayectorias.svg") center / 30px 30px no-repeat;
+  mask: url("../svg/panel-control/trayectorias.svg") center / 30px 30px no-repeat;
+}
+/* Por defecto ocultas: solo con el botón activo (o desde "ver en reloj") */
+#reloj.enfoque-sistema-solar.ver-trayectorias #capa-cometas,
+#reloj.enfoque-sistema-solar.ver-trayectorias #capa-lluvias-orbita { display: inline; }
